@@ -10,13 +10,11 @@ services:
       GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
       GF_SERVER_HTTP_PORT: ${GF_PORT:-3000}
-      GF_GITHUB_PLUGINS: "https://github.com/grafana/grafana-infinity-datasource/releases/download/v2.11.4/yesoreyeram-infinity-datasource-2.11.4.zip"
       PROMETHEUS_URL: "http://${PROMETHEUS_TARGET:-localhost:9090}"
       ALERTMANAGER_URL: "http://${ALERTMANAGER_TARGET:-localhost:9093}"
-      WALRUS_NODE_TARGET: ${WALRUS_NODE_TARGET:-}
-      WALRUS_AGGREGATOR_TARGET: ${WALRUS_AGGREGATOR_TARGET:-}
-      WALRUS_PUBLISHER_TARGET: ${WALRUS_PUBLISHER_TARGET:-}
-      WALRUS_NODE_URL: ${WALRUS_NODE_URL}
+      SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
+      SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
+      SUI_VALIDATOR: ${SUI_VALIDATOR:-}
     volumes:
       - ./grafana/dashboards:/tmp/dashboards
       - ./grafana/provisioning:/etc/grafana/provisioning
@@ -34,10 +32,9 @@ services:
       - ./prometheus/entrypoint.sh:/entrypoint.sh
       - ./prometheus/rules:/etc/prometheus/rules
     environment:
+      SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
+      SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
       PROMETHEUS_TARGET: ${PROMETHEUS_TARGET:-localhost:9090}
-      WALRUS_NODE_TARGET: ${WALRUS_NODE_TARGET:-}
-      WALRUS_AGGREGATOR_TARGET: ${WALRUS_AGGREGATOR_TARGET:-}
-      WALRUS_PUBLISHER_TARGET: ${WALRUS_PUBLISHER_TARGET:-}
       ALERTMANAGER_TARGET: ${ALERTMANAGER_TARGET:-localhost:9093}
     entrypoint: ["/entrypoint.sh"]
 

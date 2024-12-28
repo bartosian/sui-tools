@@ -11,7 +11,6 @@ services:
       GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
       GF_SERVER_HTTP_PORT: ${GF_PORT:-3000}
-      GF_GITHUB_PLUGINS: "https://github.com/grafana/grafana-infinity-datasource/releases/download/v2.11.4/yesoreyeram-infinity-datasource-2.11.4.zip"
       PROMETHEUS_URL: "http://${PROMETHEUS_TARGET:-localhost:9090}"
       ALERTMANAGER_URL: "http://${ALERTMANAGER_TARGET:-localhost:9093}"
       SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
