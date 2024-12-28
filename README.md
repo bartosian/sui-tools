@@ -1,8 +1,8 @@
-<img src="./assets/walrus_header.png" alt="Walrus Tools Header"/>
+# 🚀 **Sui Tools**
 
-# 🚀 **Walrus Tools**
+<img src="./assets/sui_header.png" alt="Sui Tools Header"/>
 
-This repository contains configurations and tools for monitoring and managing the **Walrus network**. It includes setup files for **Grafana**, **Prometheus**, and **Alertmanager**, along with pre-configured dashboards for monitoring the **Walrus Storage Node**, **Aggregator**, and **Publisher services**.
+This repository provides tools and configurations for **monitoring and managing Sui Nodes**. It includes setup files for **Grafana**, **Prometheus**, and **Alertmanager**, along with pre-configured dashboards for monitoring various **Sui Node services**.
 
 ---
 
@@ -11,13 +11,13 @@ This repository contains configurations and tools for monitoring and managing th
 ### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/walrus-network/walrus-tools.git
+git clone https://github.com/sui-network/sui-tools.git
 ```
 
 ### **2. Navigate to the Directory**
 
 ```bash
-cd walrus-tools
+cd sui-tools
 ```
 
 ### **3. Configure Environment Variables**
@@ -45,22 +45,22 @@ ALERTMANAGER_PORT=9093
 ALERTMANAGER_TARGET=localhost:9093
 ALERTMANAGER_DEFAULT_WEBHOOK_PORT=3001
 
-# Walrus Targets
-WALRUS_NODE_TARGET=localhost:9184
-WALRUS_AGGREGATOR_TARGET=localhost:27182
-WALRUS_PUBLISHER_TARGET=localhost:27183
-WALRUS_NODE_URL=https://localhost:9185
+# Sui Configuration
+SUI_BRIDGE_MAINNET_TARGET=localhost:9186
+SUI_BRIDGE_TESTNET_TARGET=localhost:9185
+SUI_VALIDATOR=<validator_name>
 
-# PagerDuty Integration
+# PagerDuty Integration Key
 PAGERDUTY_INTEGRATION_KEY=<your-pagerduty-key>
 
-# Telegram Integration
+# Telegram Bot Token
 TELEGRAM_BOT_TOKEN=<your-telegram-bot-token>
-TELEGRAM_CHAT_ID=<your-telegram-chat-id>
 
-# Discord Integration
+# Discord Webhook URL
 DISCORD_WEBHOOK_URL=<your-discord-webhook-url>
 ```
+
+> **Note:** If your targets (`SUI_BRIDGE_MAINNET_TARGET`, `SUI_BRIDGE_TESTNET_TARGET`) are HTTPS endpoints, make sure to include the `https://` protocol explicitly in the variable, e.g., `SUI_BRIDGE_MAINNET_TARGET=https://bridge-mainnet.example.com`.
 
 ---
 
@@ -88,22 +88,12 @@ docker compose logs <service_name>
 
 ## 📊 **Access Pre-Configured Dashboards**
 
-### **Grafana Dashboards**
+### **Grafana Dashboard**
 
-1. **Walrus Storage Node Dashboard**  
-   - **Description**: Insights into the performance and status of the Walrus Storage Node, including storage usage, retrieval rates, and latency.
-   - **Dashboard File**: [walrus_storage_node.json](./grafana/dashboards/walrus_storage_node.json)  
-   ![Walrus Storage Node Dashboard](./assets/walrus_storage_node.png)
-
-2. **Walrus Aggregator Dashboard**  
-   - **Description**: Tracks Aggregator performance metrics such as blob reconstruction rates and operational health.
-   - **Dashboard File**: [walrus_aggregator.json](./grafana/dashboards/walrus_aggregator.json)  
-   ![Walrus Aggregator Dashboard](./assets/walrus_aggregator.png)
-
-3. **Walrus Publisher Dashboard**  
-   - **Description**: Monitors Publisher service metrics, including HTTP request durations, error rates, and latency.
-   - **Dashboard File**: [walrus_publisher.json](./grafana/dashboards/walrus_publisher.json)  
-   ![Walrus Publisher Dashboard](./assets/walrus_publisher.png)
+1. **Sui Bridge Dashboard**  
+   - **Description:** Insights into the performance and status of the **Sui Bridge Node**, including metrics for uptime, ETH watcher, SUI watcher, transaction errors, and validator statuses.  
+   - **Dashboard File:** [sui_bridge.json](./grafana/dashboards/sui_bridge.json)  
+   ![Sui Bridge Dashboard](./assets/sui_bridge.png)
 
 ---
 
@@ -115,39 +105,42 @@ Alerts are dynamically generated based on environment variables and split into i
 
 ```
 /prometheus/rules/
-├── walrus_node_alerts.yml
-├── walrus_aggregator_alerts.yml
-└── walrus_publisher_alerts.yml
+└── sui_bridge_alerts.yml
 ```
 
 ### 📑 **Sample Rules**
 
-#### **Walrus Storage Node Alerts**
+#### **Sui Bridge Alerts**
 
 - **Node Restarted Alert**  
    Triggers if the node uptime hasn’t increased for 5 minutes.  
 
-- **Checkpoint Stuck Alert**  
-   Detects if no new checkpoints have been downloaded in the last 5 minutes.  
+- **ETH Watcher Unrecognized Events Alert**  
+   Detects if the ETH watcher has encountered unrecognized events in the last 5 minutes.  
 
-- **Persisted Events Stuck Alert**  
-   Checks if no persisted events were recorded in 5 minutes.
+- **SUI Watcher Unrecognized Events Alert**  
+   Detects if the SUI watcher has encountered unrecognized events in the last 5 minutes.  
 
-#### **Walrus Aggregator Alerts**
+- **Zero Voting Rights Alert**  
+   Triggers when the validator's authority has zero voting rights.  
 
-- **High HTTP Server Errors Alert**  
-   Triggers when the server error rate (`5xx`) crosses a threshold.  
+- **Error Requests Alert**  
+   Detects errors during SUI transaction digest handling.  
 
-- **High Client Error Rate Alert**  
-   Triggers when the client error rate (`4xx`) crosses a threshold. 
+- **SUI Transaction Submission Errors Alert**  
+   Triggers on errors during SUI transaction submissions.  
 
-#### **Walrus Publisher Alerts**
+- **Continuous SUI Transaction Submission Failures Alert**  
+   Detects continuous failures during SUI transaction submissions.  
 
-- **High HTTP Server Errors Alert**  
-   Triggers when the server error rate (`5xx`) crosses a threshold.  
+- **Build SUI Transaction Errors Alert**  
+   Alerts if there are errors while building SUI transactions.  
 
-- **High Client Error Rate Alert**  
-   Triggers when the client error rate (`4xx`) crosses a threshold.  
+- **Validator Signature Aggregation Failures Alert**  
+   Detects failures during validator signature aggregation.  
+
+- **SUI Transaction Submission Too Many Failures Alert**  
+   Triggers on repeated failures during SUI transaction submissions.
 
 ---
 
@@ -173,20 +166,20 @@ docker compose restart prometheus alertmanager
 
 ---
 
-## 🖥️ Platform-Specific Docker Compose Configurations
+## 🖥️ **Platform-Specific Docker Compose Configurations**
 
-Docker's network_mode: host works differently on Linux and macOS, requiring separate configurations.
+Docker's `network_mode: host` works differently on Linux and macOS, requiring separate configurations.
 
-### ⚙️ How to Use Platform-Specific Configurations
+### ⚙️ **How to Use Platform-Specific Configurations**
 
-- **Linux**: Use `docker-compose.yml` for standard setup.
-- **macOS**: Use `docker-compose.macos.yml` for network_mode: host setup.
+- **Linux:** Use `docker-compose.yml` for standard setup.  
+- **macOS:** Use `docker-compose.macos.yml` for network_mode: host setup.
 
 ---
 
 ## 🤝 **Contributing**
 
-Contributions are welcome! If you find an issue or have an improvement, please open a pull request or create an issue.
+Contributions are welcome! If you find an issue or have an improvement, please open a **Pull Request** or create an **Issue**.
 
 ---
 
