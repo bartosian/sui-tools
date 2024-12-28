@@ -1,0 +1,3258 @@
+{
+    "annotations": {
+        "list": [{
+            "builtIn": 1,
+            "datasource": {
+                "type": "grafana",
+                "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+            },
+            "type": "dashboard"
+        }]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "panels": [{
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 272,
+            "panels": [],
+            "title": "Bridge Overview",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the current build version of the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 5,
+                "x": 0,
+                "y": 1
+            },
+            "id": 44,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "name",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "be65m7mkyeh34c"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "uptime{process=\"bridge\", instance=\"$instance\"}",
+                "fullMetaSearch": false,
+                "includeNullMetadata": true,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Build Version",
+            "transformations": [{
+                "id": "labelsToFields",
+                "options": {
+                    "keepLabels": [
+                        "version"
+                    ],
+                    "valueLabel": "version"
+                }
+            }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the chain identifier of the SUI Chain.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 5,
+                "y": 1
+            },
+            "id": 45,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "name",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "be65m7mkyeh34c"
+                },
+                "editorMode": "code",
+                "expr": "uptime{process=\"bridge\", instance=\"$instance\"}",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "SUI Chain ID",
+            "transformations": [{
+                "id": "labelsToFields",
+                "options": {
+                    "keepLabels": [
+                        "chain_identifier",
+                        "sui_chain_identifier"
+                    ],
+                    "valueLabel": "sui_chain_identifier"
+                }
+            }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the chain identifier of the Ethereum Chain.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 11,
+                "y": 1
+            },
+            "id": 274,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "name",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "be65m7mkyeh34c"
+                },
+                "editorMode": "code",
+                "expr": "uptime{process=\"bridge\", instance=\"$instance\"}",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "ETH Chain ID",
+            "transformations": [{
+                "id": "labelsToFields",
+                "options": {
+                    "keepLabels": [
+                        "chain_identifier",
+                        "sui_chain_identifier",
+                        "eth_chain_identifier"
+                    ],
+                    "valueLabel": "eth_chain_identifier"
+                }
+            }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the current voting power distribution within the bridge committee, offering insights into the committee's decision-making influence and individual authority contributions.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.1
+                            }
+                        ]
+                    },
+                    "unit": "percent"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 5,
+                "x": 15,
+                "y": 1
+            },
+            "id": 288,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "value",
+                "wideLayout": false
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "max(current_bridge_voting_rights{authority=\"${SUI_VALIDATOR}\", instance=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{instance=\"$instance\"}) \n* 100",
+                "legendFormat": "Voting Power %",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Voting Power",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Indicates whether the SUI Bridge client is enabled, showing 'true' or 'false' based on its current status.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [{
+                        "options": {
+                            "false": {
+                                "color": "orange",
+                                "index": 0,
+                                "text": "false"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 20,
+                "y": 1
+            },
+            "id": 273,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "name",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "be65m7mkyeh34c"
+                },
+                "editorMode": "code",
+                "expr": "uptime{process=\"bridge\", instance=\"$instance\"}",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Client Enabled",
+            "transformations": [{
+                "id": "labelsToFields",
+                "options": {
+                    "keepLabels": [
+                        "chain_identifier",
+                        "sui_chain_identifier",
+                        "eth_chain_identifier",
+                        "client_enabled"
+                    ],
+                    "valueLabel": "client_enabled"
+                }
+            }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the total uptime of the SUI Bridge Node, indicating its operational status.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.1
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 5,
+                "x": 0,
+                "y": 5
+            },
+            "id": 2,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "value",
+                "wideLayout": false
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "uptime{process=\"bridge\", instance=\"$instance\"}",
+                "legendFormat": "",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Uptime",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the uptime trend status of the SUI Bridge Node. Green indicates uptime is increasing, and red indicates it is not.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 1,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "log": 2,
+                            "type": "symlog"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "red",
+                                "index": 1,
+                                "text": "DOWN"
+                            },
+                            "1": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "UP"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "max": 1,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 10,
+                "x": 5,
+                "y": 5
+            },
+            "id": 275,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "be65m7mkyeh34c"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(uptime{process=\"bridge\", instance=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{process}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Uptime Timeline",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the pause status for both ETH and SUI bridges.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 0,
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "ok"
+                            },
+                            "1": {
+                                "color": "orange",
+                                "index": 1,
+                                "text": "paused"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byName",
+                            "options": "eth"
+                        },
+                        "properties": [{
+                            "id": "displayName",
+                            "value": "ETH Bridge"
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "sui"
+                        },
+                        "properties": [{
+                            "id": "displayName",
+                            "value": "SUI Bridge"
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 5,
+                "x": 15,
+                "y": 5
+            },
+            "id": 267,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "vertical",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value_and_name",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "editorMode": "code",
+                    "expr": "max(bridge_eth_bridge_paused{instance=\"$instance\"})",
+                    "hide": false,
+                    "legendFormat": "eth",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(bridge_sui_bridge_paused{instance=\"$instance\"})",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "sui",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Bridge Pause Status",
+            "type": "stat"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 10
+            },
+            "id": 276,
+            "panels": [],
+            "title": "Balances",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the current balance of the Ethereum vault for the SUI Bridge node. The balance is shown in ETH units, with regular updates reflecting the latest state.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 11
+            },
+            "id": 266,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "avg(bridge_eth_vault_balance{instance=\"$instance\"}) / 100000000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "ETH Vault Balance",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the current balance of the USDT vault for the SUI Bridge node. The balance is shown in USDT units, with regular updates reflecting the latest state.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 6,
+                "y": 11
+            },
+            "id": 277,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "avg(bridge_usdt_vault_balance{instance=\"$instance\"}) / 1000000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "USDT Vault Balance",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the current balance of the gas coin for the SUI Bridge node. The balance is shown in SUI units, with regular updates reflecting the latest state.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 12,
+                "y": 11
+            },
+            "id": 278,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "avg(bridge_gas_coin_balance{instance=\"$instance\"}) / 1000000000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "SUI Gas Coin Balance",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "ETH",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 0,
+                "y": 15
+            },
+            "id": 283,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "avg(bridge_eth_vault_balance{instance=\"$instance\"}) / 100000000",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Balance",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "ETH Vault Balance Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "USDT",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 6,
+                "y": 15
+            },
+            "id": 284,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "bridge_usdt_vault_balance / 1000000",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Balance",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "USDT Vault Balance Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "SUI",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 12,
+                "y": 15
+            },
+            "id": 225,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "avg(bridge_gas_coin_balance{instance=\"$instance\"}) / 1000000000",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Balance",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "SUI Gas Coin Balance Over Time",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 23
+            },
+            "id": 290,
+            "panels": [],
+            "title": "Events",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Provides an overview of key metrics for bridge event processing, including received, successful, and unrecognized events for both ETH and SUI networks. This panel offers insights into event volume, anomalies, and potential processing issues across different blockchain integrations.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 24,
+                "x": 0,
+                "y": 24
+            },
+            "id": 295,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_eth_watcher_received_events{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "Received - ETH",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_sui_watcher_received_events{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "Received - SUI",
+                    "range": true,
+                    "refId": "C",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "bridge_sui_watcher_unrecognized_events{instance=\"$instance\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Unrecognized - SUI ",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "bridge_eth_watcher_unrecognized_events{instance=\"$instance\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Unrecognized - ETH",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "Events Overview",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of received events in the Sui Watcher over time, providing insights into event processing throughput and anomaly detection.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (events/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 100,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 28
+            },
+            "id": 217,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_eth_watcher_received_events{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "ETH",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(bridge_sui_watcher_received_events{instance=\"$instance\"}[$__rate_interval])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "SUI",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Events Rate Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of unrecognized events in the Sui Watcher over time, providing insights into event processing throughput and anomaly detection.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (events/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 100,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 28
+            },
+            "id": 296,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(bridge_sui_watcher_unrecognized_events{instance=\"$instance\"}[$__rate_interval])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "SUI",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(bridge_eth_watcher_unrecognized_events{instance=\"$instance\"}[$__rate_interval])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "ETH",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "Unrecognized Events Rate Over Time",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 36
+            },
+            "id": 291,
+            "panels": [],
+            "title": "Requests",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Provides an aggregated overview of bridge requests, including total received, successfully processed (OK), and error requests. Data is categorized by request type, offering insights into system throughput and reliability.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 24,
+                "x": 0,
+                "y": 37
+            },
+            "id": 231,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_requests_received{instance=\"$instance\"}",
+                    "hide": false,
+                    "legendFormat": "Received - {{type}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_requests_ok{instance=\"$instance\"}",
+                    "hide": false,
+                    "legendFormat": "Processed OK - {{type}}",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "bridge_err_requests{instance=\"$instance\"}",
+                    "hide": false,
+                    "legendFormat": "Error - {{type}}",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "Requests Overview",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the number of inflight requests over time, categorized by request type, providing visibility into ongoing operations and potential bottlenecks in request handling.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Requests",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 41
+            },
+            "id": 216,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "max(bridge_requests_inflight{instance=\"$instance\"}) by (type)",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Inflight Requests Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of received requests over time, categorized by request type, providing visibility into ongoing operations and potential bottlenecks in request handling.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Requests",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 41
+            },
+            "id": 293,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_requests_received{instance=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "received - {{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Received Requests Rate Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of error requests over time, categorized by request type.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Requests",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 41
+            },
+            "id": 294,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_requests{instance=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Error Requests Rate Over Time",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 49
+            },
+            "id": 286,
+            "panels": [],
+            "title": "Actions",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "This panel provides an aggregated overview of bridge actions, including the total number of received, successfully processed (OK), and error requests. The data is categorized by request type, offering valuable insights into the system's throughput and reliability. It helps monitor the performance of different bridge action components, such as SUI -> ETH and ETH -> SUI data flows, allowing you to track received, processed, and skipped actions efficiently.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 24,
+                "x": 0,
+                "y": 50
+            },
+            "id": 297,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Received",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_already_processed_actions{instance=\"$instance\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Processed",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Skipped",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_sui_watcher_received_actions{instance=\"$instance\"}",
+                    "hide": false,
+                    "legendFormat": "SUI -> ETH",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_eth_watcher_received_actions{instance=\"$instance\"}",
+                    "hide": false,
+                    "legendFormat": "ETH -> SUI",
+                    "range": true,
+                    "refId": "E"
+                }
+            ],
+            "title": "Actions Overview",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows key metrics for the Bridge Action Executor queue, including totals for received, skipped, and already processed actions, helping monitor queue performance and efficiency.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Actions",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 54
+            },
+            "id": 292,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "received {{host}} ",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_already_processed_actions{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "already processed {{host}} ",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "skipped {{host}} ",
+                    "range": true,
+                    "refId": "C",
+                    "useBackend": false
+                }
+            ],
+            "title": "Action Executor Signing Queue Actions",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays metrics for the execution queue in the Bridge Action Executor, including totals for received actions and actions skipped due to pausing, providing insights into queue activity and processing behavior.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Actions",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 54
+            },
+            "id": 232,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_execution_queue_received_actions{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "received {{host}} ",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_action_executor_execution_queue_skipped_actions_due_to_pausing{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "skipped processed {{host}} ",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                }
+            ],
+            "title": "Action Executor Execution Queue Actions",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays error metrics for the Bridge Action Executor, including failures during Sui transaction execution, submission errors, and continuous submission failures, helping identify and address recurring issues.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Errors",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "red",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 54
+            },
+            "id": 230,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_err_build_sui_transaction{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "build sui tx {{host}} ",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_err_signature_aggregation{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "sig aggregation {{host}} ",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_err_sui_transaction_submission{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "submit sui tx {{host}} ",
+                    "range": true,
+                    "refId": "C",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_err_sui_transaction_submission_too_many_failures{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "submit sui tx too many failure {{host}} ",
+                    "range": true,
+                    "refId": "D",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_err_sui_transaction_execution{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "execute sui tx {{host}} ",
+                    "range": true,
+                    "refId": "E",
+                    "useBackend": false
+                }
+            ],
+            "title": "Action Executor Errors",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the number of inflight items across monitored channels and the count of running tasks per callsite, providing visibility into system activity and task processing states.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (req/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 62
+            },
+            "id": 226,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "max(monitored_channel_inflight{instance=\"$instance\"}) by (name)",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{name}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Channel Inflight Items",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 62
+            },
+            "id": 219,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_sui_watcher_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "sui -> eth {{host}}",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_eth_watcher_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "eth -> sui {{host}}",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                }
+            ],
+            "title": "Transfer Requests Rate",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 62
+            },
+            "id": 229,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "bridge_signer_with_cache_miss{instance=\"$instance\"} / (bridge_signer_with_cache_hit{instance=\"$instance\"} + bridge_signer_with_cache_miss{instance=\"$instance\"})",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "{{host}}  {{type}}",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "signer_with_cache_miss{instance=\"$instance\"}",
+                    "fullMetaSearch": false,
+                    "hide": true,
+                    "includeNullMetadata": true,
+                    "legendFormat": "miss {{host}} ",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                }
+            ],
+            "title": "Request Signer Cache Miss Rate",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 70
+            },
+            "id": 287,
+            "panels": [],
+            "title": "ETH RPC Queries",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of Ethereum RPC queries processed over time, providing insights into query frequency and system workload trends.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (req/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 71
+            },
+            "id": 289,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "sum(rate(bridge_eth_rpc_queries{instance=\"$instance\"}[$__rate_interval])) by (type)",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "ETH RPC Query Rate Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the latency distribution for Ethereum RPC queries, categorized by method name.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Latency(s)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 5,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 71
+            },
+            "id": 227,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "histogram_quantile(0.95, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, host, type))",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{host}} {{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "ETH RPC Query Latency Distribution",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 79
+            },
+            "id": 281,
+            "panels": [],
+            "title": "Span Latency",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the latency distribution for spans in the bridge node service, categorized by span names. Latency is measured in milliseconds and displayed across the 50th, 95th, and 99th percentiles.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Latency (ms)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "ns"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 80
+            },
+            "id": 60,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.95, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
+                    "legendFormat": "95th percentile - {{span_name}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.50, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
+                    "legendFormat": "50th percentile - {{span_name}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.99, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
+                    "legendFormat": "99th percentile - {{span_name}}",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Tracing Span Latency Distribution",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the average latency for spans in the bridge node service.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": true,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Latency (ms)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "ns"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 80
+            },
+            "id": 282,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "tracing_span_latencies_sum{instance=\"$instance\"} / tracing_span_latencies_count{instance=\"$instance\"}",
+                "legendFormat": "{{span_name}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Tracing Span Average Latency",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 89
+            },
+            "id": 210,
+            "panels": [],
+            "title": "Bridge Node",
+            "type": "row"
+        }
+    ],
+    "preload": false,
+    "schemaVersion": 40,
+    "tags": [],
+    "templating": {
+        "list": [{
+            "definition": "label_values(uptime{process=\"bridge\"},instance)",
+            "description": "This variable dynamically fetches and displays all available SUI Node Bridge targets based on the instance label from your Prometheus metrics.",
+            "label": "Bridge Node Target",
+            "name": "instance",
+            "options": [],
+            "query": {
+                "qryType": 1,
+                "query": "label_values(uptime{process=\"bridge\"},instance)",
+                "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "type": "query"
+        }]
+    },
+    "time": {
+        "from": "now-6h",
+        "to": "now"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ]
+    },
+    "timezone": "",
+    "title": "Sui Bridge Node",
+    "uid": "ctles38bbprkmttbdkv0hijk",
+    "version": 1,
+    "weekStart": ""
+}
