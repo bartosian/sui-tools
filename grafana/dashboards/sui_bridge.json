@@ -1129,7 +1129,7 @@
             "targets": [{
                 "disableTextWrap": false,
                 "editorMode": "code",
-                "expr": "bridge_usdt_vault_balance / 1000000",
+                "expr": "avg(bridge_usdt_vault_balance{instance=\"$instance\"}) / 1000000",
                 "fullMetaSearch": false,
                 "hide": false,
                 "includeNullMetadata": true,
