@@ -43,6 +43,7 @@ services:
     container_name: alertmanager
     command:
       - '--web.listen-address=:${ALERTMANAGER_PORT:-9093}'
+      - '--cluster.listen-address='
     volumes:
       - ./alertmanager/entrypoint.sh:/entrypoint.sh
     network_mode: host
