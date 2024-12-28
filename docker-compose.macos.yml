@@ -14,7 +14,8 @@ services:
       GF_GITHUB_PLUGINS: "https://github.com/grafana/grafana-infinity-datasource/releases/download/v2.11.4/yesoreyeram-infinity-datasource-2.11.4.zip"
       PROMETHEUS_URL: "http://${PROMETHEUS_TARGET:-localhost:9090}"
       ALERTMANAGER_URL: "http://${ALERTMANAGER_TARGET:-localhost:9093}"
-      SUI_BRIDGE_TARGET: ${SUI_BRIDGE_TARGET:-}
+      SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
+      SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
       SUI_VALIDATOR: ${SUI_VALIDATOR:-}
     volumes:
       - ./grafana/dashboards:/tmp/dashboards
@@ -34,7 +35,8 @@ services:
       - ./prometheus/entrypoint.sh:/entrypoint.sh
       - ./prometheus/rules:/etc/prometheus/rules
     environment:
-      SUI_BRIDGE_TARGET: ${SUI_BRIDGE_TARGET:-}
+      SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
+      SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
       PROMETHEUS_TARGET: ${PROMETHEUS_TARGET:-localhost:9090}
       ALERTMANAGER_TARGET: ${ALERTMANAGER_TARGET:-localhost:9093}
     entrypoint: ["/entrypoint.sh"]

@@ -2,7 +2,8 @@
 
 # Display configuration environment variables
 echo "PROMETHEUS_TARGET=${PROMETHEUS_TARGET}"
-echo "SUI_BRIDGE_TARGET=${SUI_BRIDGE_TARGET}"
+echo "SUI_BRIDGE_MAINNET_TARGET=${SUI_BRIDGE_MAINNET_TARGET}"
+echo "SUI_BRIDGE_TESTNET_TARGET=${SUI_BRIDGE_TESTNET_TARGET}"
 echo "ALERTMANAGER_TARGET=${ALERTMANAGER_TARGET}"
 echo "SUI_VALIDATOR=${SUI_VALIDATOR}"
 
@@ -30,8 +31,13 @@ rule_files:
 EOF
 
 # Include Alert Rules Conditionally
-if [ -n "${SUI_BRIDGE_TARGET}" ]; then
-  echo "  - /etc/prometheus/rules/sui_bridge_alerts.yml" >> /etc/prometheus/prometheus.yml
+if [ -n "${SUI_BRIDGE_MAINNET_TARGET}" ] || [ -n "${SUI_BRIDGE_TESTNET_TARGET}" ]; then
+  echo "Including SUI Bridge alert rules"
+  cat <<EOF >> /etc/prometheus/prometheus.yml
+  - /etc/prometheus/rules/sui_bridge_alerts.yml
+EOF
+else
+  echo "No SUI Bridge targets detected. Skipping alert rules inclusion."
 fi
 
 # Add Scrape Configurations
@@ -42,15 +48,31 @@ scrape_configs:
       - targets: ['${PROMETHEUS_TARGET}']
 EOF
 
-# Add Sui Bridge Job
-if [ -n "${SUI_BRIDGE_TARGET}" ]; then
+# Add SUI Bridge Mainnet Scrape Config
+if [ -n "${SUI_BRIDGE_MAINNET_TARGET}" ]; then
+  echo "Adding scrape config for SUI Bridge Mainnet"
   cat <<EOF >> /etc/prometheus/prometheus.yml
-  - job_name: 'sui_bridge'
+  - job_name: 'sui_bridge_mainnet'
     scheme: 'https'
     static_configs:
-      - targets: ['${SUI_BRIDGE_TARGET}']
+      - targets: ['${SUI_BRIDGE_MAINNET_TARGET}']
         labels:
-          service: 'sui_bridge'          
+          service: 'sui_bridge'
+          environment: 'mainnet'
+EOF
+fi
+
+# Add SUI Bridge Testnet Scrape Config
+if [ -n "${SUI_BRIDGE_TESTNET_TARGET}" ]; then
+  echo "Adding scrape config for SUI Bridge Testnet"
+  cat <<EOF >> /etc/prometheus/prometheus.yml
+  - job_name: 'sui_bridge_testnet'
+    scheme: 'https'
+    static_configs:
+      - targets: ['${SUI_BRIDGE_TESTNET_TARGET}']
+        labels:
+          service: 'sui_bridge'
+          environment: 'testnet'
 EOF
 fi
 

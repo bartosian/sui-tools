@@ -32,7 +32,7 @@ rm -f "${TARGET_DASHBOARD_DIR}"/*.json
 mkdir -p "${TARGET_DASHBOARD_DIR}"
 
 # Add dashboards based on environment variables
-if [ -n "${SUI_BRIDGE_TARGET}" ]; then
+if [ -n "${SUI_BRIDGE_MAINNET_TARGET}" ] || [ -n "${SUI_BRIDGE_TESTNET_TARGET}" ]; then
   echo "Enabling Sui Bridge Dashboard..."
   cp "${SOURCE_DASHBOARD_DIR}/sui_bridge.json" "${TARGET_DASHBOARD_DIR}/" || echo "Failed to copy Sui Bridge Dashboard."
 
@@ -43,6 +43,8 @@ if [ -n "${SUI_BRIDGE_TARGET}" ]; then
   else
     echo "SUI_VALIDATOR is not set. Skipping JSON replacement."
   fi
+else
+  echo "No SUI Bridge targets detected. Skipping alert rules inclusion."
 fi
 
 # Start Grafana server
