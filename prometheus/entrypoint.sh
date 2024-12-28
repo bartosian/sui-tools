@@ -14,13 +14,13 @@ RULES_FILE="/etc/prometheus/rules/sui_bridge_alerts.yml"
 sanitize_target() {
   TARGET="$1"
   if echo "$TARGET" | grep -q '^https://'; then
-    echo "https"  # Return https as the scheme
-    echo "$TARGET" | sed 's|^https://||'  # Remove https:// from target
+    echo "https"
+    echo "$TARGET" | sed 's|^https://||'
   elif echo "$TARGET" | grep -q '^http://'; then
-    echo "http"  # Return http as the scheme
-    echo "$TARGET" | sed 's|^http://||'  # Remove http:// from target
+    echo "http"
+    echo "$TARGET" | sed 's|^http://||'
   else
-    echo "http"  # Default to http if no scheme is detected
+    echo "http"
     echo "$TARGET"
   fi
 }
