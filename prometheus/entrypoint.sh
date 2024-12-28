@@ -10,6 +10,21 @@ echo "SUI_VALIDATOR=${SUI_VALIDATOR}"
 # Substitute ${SUI_VALIDATOR} in Alert Rules if set
 RULES_FILE="/etc/prometheus/rules/sui_bridge_alerts.yml"
 
+# Function to extract the scheme and clean the target
+sanitize_target() {
+  TARGET="$1"
+  if echo "$TARGET" | grep -q '^https://'; then
+    echo "https"  # Return https as the scheme
+    echo "$TARGET" | sed 's|^https://||'  # Remove https:// from target
+  elif echo "$TARGET" | grep -q '^http://'; then
+    echo "http"  # Return http as the scheme
+    echo "$TARGET" | sed 's|^http://||'  # Remove http:// from target
+  else
+    echo "http"  # Default to http if no scheme is detected
+    echo "$TARGET"
+  fi
+}
+
 if [ -n "$SUI_VALIDATOR" ]; then
   echo "Substituting SUI_VALIDATOR: $SUI_VALIDATOR in alert rules"
   sed -i "s/\${SUI_VALIDATOR}/$SUI_VALIDATOR/g" "$RULES_FILE"
@@ -51,11 +66,20 @@ EOF
 # Add SUI Bridge Mainnet Scrape Config
 if [ -n "${SUI_BRIDGE_MAINNET_TARGET}" ]; then
   echo "Adding scrape config for SUI Bridge Mainnet"
+  MAINNET_SCHEME=$(sanitize_target "${SUI_BRIDGE_MAINNET_TARGET}" | head -n 1)
+  MAINNET_TARGET=$(sanitize_target "${SUI_BRIDGE_MAINNET_TARGET}" | tail -n 1)
+  
   cat <<EOF >> /etc/prometheus/prometheus.yml
   - job_name: 'sui_bridge_mainnet'
+EOF
+  if [ "$MAINNET_SCHEME" = "https" ]; then
+    cat <<EOF >> /etc/prometheus/prometheus.yml
     scheme: 'https'
+EOF
+  fi
+  cat <<EOF >> /etc/prometheus/prometheus.yml
     static_configs:
-      - targets: ['${SUI_BRIDGE_MAINNET_TARGET}']
+      - targets: ['${MAINNET_TARGET}']
         labels:
           service: 'sui_bridge'
           environment: 'mainnet'
@@ -65,11 +89,20 @@ fi
 # Add SUI Bridge Testnet Scrape Config
 if [ -n "${SUI_BRIDGE_TESTNET_TARGET}" ]; then
   echo "Adding scrape config for SUI Bridge Testnet"
+  TESTNET_SCHEME=$(sanitize_target "${SUI_BRIDGE_TESTNET_TARGET}" | head -n 1)
+  TESTNET_TARGET=$(sanitize_target "${SUI_BRIDGE_TESTNET_TARGET}" | tail -n 1)
+  
   cat <<EOF >> /etc/prometheus/prometheus.yml
   - job_name: 'sui_bridge_testnet'
+EOF
+  if [ "$TESTNET_SCHEME" = "https" ]; then
+    cat <<EOF >> /etc/prometheus/prometheus.yml
     scheme: 'https'
+EOF
+  fi
+  cat <<EOF >> /etc/prometheus/prometheus.yml
     static_configs:
-      - targets: ['${SUI_BRIDGE_TESTNET_TARGET}']
+      - targets: ['${TESTNET_TARGET}']
         labels:
           service: 'sui_bridge'
           environment: 'testnet'
