@@ -83,6 +83,7 @@ EOF
         labels:
           service: 'sui_bridge'
           environment: 'mainnet'
+          configured: 'true'
     scrape_interval: 15s
     metrics_path: /metrics
     scrape_timeout: 10s
@@ -111,6 +112,7 @@ EOF
         labels:
           service: 'sui_bridge'
           environment: 'testnet'
+          configured: 'true'
     scrape_interval: 15s
     metrics_path: /metrics
     scrape_timeout: 10s

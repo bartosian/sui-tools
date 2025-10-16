@@ -3242,7 +3242,7 @@
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
-                "definition": "label_values(up{job=~\"sui_bridge.*\"},instance)",
+                "definition": "label_values(up{configured=\"true\"},instance)",
                 "description": "This variable dynamically fetches and displays all available SUI Node Bridge targets based on configured jobs.",
                 "hide": 0,
                 "includeAll": false,
@@ -3252,7 +3252,7 @@
                 "options": [],
                 "query": {
                     "qryType": 1,
-                    "query": "label_values(up{job=~\"sui_bridge.*\"},instance)",
+                    "query": "label_values(up{configured=\"true\"},instance)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,
