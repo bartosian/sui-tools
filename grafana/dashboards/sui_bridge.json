@@ -946,6 +946,193 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
+            "description": "Displays the current balance of the WBTC vault for the SUI Bridge node. The balance is shown in WBTC units, with regular updates reflecting the latest state.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 18,
+                "y": 11
+            },
+            "id": 279,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "avg(bridge_wbtc_vault_balance{instance=\"$instance\"}) / 100000000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "WBTC Vault Balance",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the current balance of the LBTC vault for the SUI Bridge node. The balance is shown in LBTC units, with regular updates reflecting the latest state.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 15
+            },
+            "id": 280,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "avg(bridge_lbtc_vault_balance{instance=\"$instance\"}) / 100000000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "LBTC Vault Balance",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the latest finalized ETH block number observed by the bridge.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 6,
+                "y": 15
+            },
+            "id": 281,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "bridge_last_finalized_eth_block{instance=\"$instance\"}",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Last Finalized ETH Block",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
             "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
             "fieldConfig": {
                 "defaults": {
@@ -2018,7 +2205,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "Received",
@@ -2031,7 +2218,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_already_processed_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_already_processed_actions{instance=\"$instance\"}[$__rate_interval])",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "Processed",
@@ -2044,7 +2231,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}[$__rate_interval])",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "Skipped",
@@ -2096,7 +2283,7 @@
                         "axisBorderShow": true,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Actions",
+                        "axisLabel": "Actions/sec",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "barWidthFactor": 0.6,
@@ -2164,7 +2351,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2180,7 +2367,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_already_processed_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_already_processed_actions{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2196,7 +2383,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2206,7 +2393,7 @@
                     "useBackend": false
                 }
             ],
-            "title": "Action Executor Signing Queue Actions",
+            "title": "Action Executor Signing Queue Action Rates",
             "type": "timeseries"
         },
         {
@@ -2224,7 +2411,7 @@
                         "axisBorderShow": true,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Actions",
+                        "axisLabel": "Actions/sec",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "barWidthFactor": 0.6,
@@ -2292,7 +2479,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_execution_queue_received_actions{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_execution_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2308,7 +2495,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_action_executor_execution_queue_skipped_actions_due_to_pausing{instance=\"$instance\"}",
+                    "expr": "rate(bridge_action_executor_execution_queue_skipped_actions_due_to_pausing{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2318,7 +2505,7 @@
                     "useBackend": false
                 }
             ],
-            "title": "Action Executor Execution Queue Actions",
+            "title": "Action Executor Execution Queue Action Rates",
             "type": "timeseries"
         },
         {
@@ -2404,7 +2591,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_err_build_sui_transaction{instance=\"$instance\"}",
+                    "expr": "rate(bridge_err_build_sui_transaction{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2420,7 +2607,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_err_signature_aggregation{instance=\"$instance\"}",
+                    "expr": "rate(bridge_err_signature_aggregation{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2436,7 +2623,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_err_sui_transaction_submission{instance=\"$instance\"}",
+                    "expr": "rate(bridge_err_sui_transaction_submission{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2452,7 +2639,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_err_sui_transaction_submission_too_many_failures{instance=\"$instance\"}",
+                    "expr": "rate(bridge_err_sui_transaction_submission_too_many_failures{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2468,7 +2655,7 @@
                     },
                     "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "bridge_err_sui_transaction_execution{instance=\"$instance\"}",
+                    "expr": "rate(bridge_err_sui_transaction_execution{instance=\"$instance\"}[$__rate_interval])",
                     "fullMetaSearch": false,
                     "hide": false,
                     "includeNullMetadata": true,
@@ -2478,7 +2665,7 @@
                     "useBackend": false
                 }
             ],
-            "title": "Action Executor Errors",
+            "title": "Action Executor Error Rates",
             "type": "timeseries"
         },
         {
@@ -2558,18 +2745,35 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "max(monitored_channel_inflight{instance=\"$instance\"}) by (name)",
-                "fullMetaSearch": false,
-                "hide": false,
-                "includeNullMetadata": true,
-                "legendFormat": "{{name}}",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }],
-            "title": "Channel Inflight Items",
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "max(monitored_channel_inflight{instance=\"$instance\"}) by (name)",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "{{name}}",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "max(monitored_tasks{instance=\"$instance\"}) by (callsite)",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "{{callsite}}",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                }
+            ],
+            "title": "Channel Inflight Items & Monitored Tasks",
             "type": "timeseries"
         },
         {
@@ -2677,6 +2881,70 @@
                     "legendFormat": "eth -> sui {{host}}",
                     "range": true,
                     "refId": "B",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_eth_sui_token_transfer_approved{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "ETH->SUI approved {{host}}",
+                    "range": true,
+                    "refId": "C",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_eth_sui_token_transfer_claimed{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "ETH->SUI claimed {{host}}",
+                    "range": true,
+                    "refId": "D",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_sui_eth_token_transfer_approved{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "SUI->ETH approved {{host}}",
+                    "range": true,
+                    "refId": "E",
+                    "useBackend": false
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_sui_eth_token_transfer_claimed{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "SUI->ETH claimed {{host}}",
+                    "range": true,
+                    "refId": "F",
                     "useBackend": false
                 }
             ],
