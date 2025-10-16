@@ -1,0 +1,162 @@
+groups:
+  - name: sui_bridge_node_alerts
+    rules:
+      # 1. Node Restarted Alert
+      - alert: SuiBridgeNode_NodeRestarted
+        expr: increase(uptime{service="sui_bridge"}[5m]) == 0
+        for: 5m
+        labels:
+          severity: critical
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: node_restarted
+        annotations:
+          summary: "SUI Bridge Node Restarted (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            The uptime for SUI Bridge Node instance {{ $labels.instance }} in environment {{ $labels.environment }}
+            has not increased in the last 5 minutes, suggesting a restart or failure.
+
+      # 2. ETH Watcher Unrecognized Events
+      - alert: SuiBridgeNode_ETHWatcherUnrecognizedEvents
+        expr: increase(bridge_eth_watcher_unrecognized_events{service="sui_bridge"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: eth_watcher_unrecognized_events
+        annotations:
+          summary: "ETH Watcher Unrecognized Events Detected (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            The SUI Bridge Node instance {{ $labels.instance }} in environment {{ $labels.environment }}
+            detected unrecognized events in the ETH watcher in the last 5 minutes.
+
+      # 3. SUI Watcher Unrecognized Events
+      - alert: SuiBridgeNode_SUIWatcherUnrecognizedEvents
+        expr: increase(bridge_sui_watcher_unrecognized_events{service="sui_bridge"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: sui_watcher_unrecognized_events
+        annotations:
+          summary: "SUI Watcher Unrecognized Events Detected (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            The SUI Bridge Node instance {{ $labels.instance }} in environment {{ $labels.environment }}
+            detected unrecognized events in the SUI watcher in the last 5 minutes.
+
+      # 4. Current Bridge Voting Rights Zero
+      - alert: SuiBridgeNode_ZeroVotingRights
+        expr: current_bridge_voting_rights{service="sui_bridge", authority="${SUI_VALIDATOR}"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: zero_voting_rights
+        annotations:
+          summary: "Zero Bridge Voting Rights (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            The SUI Bridge Node instance {{ $labels.instance }} in environment {{ $labels.environment }}
+            has zero voting rights, indicating a potential issue with the validator's authority.
+
+      # 5. Error Requests
+      - alert: SuiBridgeNode_ErrorRequests
+        expr: increase(bridge_err_requests{service="sui_bridge", type="handle_sui_tx_digest"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: critical
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: error_requests
+        annotations:
+          summary: "Error Requests Detected (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            The SUI Bridge Node instance {{ $labels.instance }} in environment {{ $labels.environment }}
+            detected errors while handling SUI transaction digests in the last 5 minutes.
+
+      # 6. SUI Transaction Submission Errors
+      - alert: SuiBridgeNode_SUITransactionSubmissionErrors
+        expr: increase(bridge_err_sui_transaction_submission{service="sui_bridge"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: sui_transaction_submission_errors
+        annotations:
+          summary: "SUI Transaction Submission Errors (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            Errors occurred during SUI transaction submissions in the last 5 minutes on 
+            instance {{ $labels.instance }} in environment {{ $labels.environment }}.
+
+      # 7. Continuous SUI Transaction Submission Failures
+      - alert: SuiBridgeNode_SUITransactionSubmissionFailures
+        expr: increase(bridge_err_sui_transaction_submission_too_many_failures{service="sui_bridge"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: critical
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: sui_transaction_submission_failures
+        annotations:
+          summary: "Continuous SUI Transaction Submission Failures (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            Continuous failures detected during SUI transaction submissions on instance {{ $labels.instance }} 
+            in environment {{ $labels.environment }} in the last 5 minutes.
+
+      # 8. Build SUI Transaction Errors
+      - alert: SuiBridgeNode_BuildSUITransactionErrors
+        expr: increase(bridge_err_build_sui_transaction{service="sui_bridge"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: build_sui_transaction_errors
+        annotations:
+          summary: "Build SUI Transaction Errors (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            Errors occurred while building SUI transactions on instance {{ $labels.instance }} 
+            in environment {{ $labels.environment }} in the last 5 minutes.
+
+      # 9. Validator Signature Aggregation Failures
+      - alert: SuiBridgeNode_ValidatorSignatureAggregationFailures
+        expr: increase(bridge_err_signature_aggregation_too_many_failures{service="sui_bridge"}[5m]) > 0
+        for: 5m
+        labels:
+          severity: critical
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: signature_aggregation_failures
+        annotations:
+          summary: "Validator Signature Aggregation Failures (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            Continuous failures occurred during validator signature aggregation 
+            on instance {{ $labels.instance }} in environment {{ $labels.environment }}.
+
+      # 10. SUI Transaction Submission Too Many Failures
+      - alert: SuiBridgeNode_SUITransactionSubmissionTooManyFailures
+        expr: increase(bridge_err_sui_transaction_submission_too_many_failures[5m]) > 0
+        for: 5m
+        labels:
+          severity: critical
+          service: sui_bridge
+          instance: "{{ $labels.instance }}"
+          environment: "{{ $labels.environment }}"
+          alert_type: sui_transaction_submission_too_many_failures
+        annotations:
+          summary: "Too Many SUI Transaction Submission Failures (Instance: {{ $labels.instance }}, Environment: {{ $labels.environment }})"
+          description: |
+            Continuous failures detected during SUI transaction submissions
+            on the SUI Bridge Node instance {{ $labels.instance }} in environment {{ $labels.environment }} in the last 5 minutes.
