@@ -20,49 +20,6 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Configuration validation
-validate_config() {
-    log_info "Validating Prometheus configuration..."
-    
-    if [ -z "${PROMETHEUS_TARGET:-}" ]; then
-        log_error "PROMETHEUS_TARGET is not set"
-        exit 1
-    fi
-    
-    if [ -z "${ALERTMANAGER_TARGET:-}" ]; then
-        log_error "ALERTMANAGER_TARGET is not set"
-        exit 1
-    fi
-    
-    log_info "Configuration validation passed"
-}
-
-# Function to substitute environment variables in template files
-substitute_template() {
-    local template_file="$1"
-    local output_file="$2"
-    
-    if [ ! -f "$template_file" ]; then
-        log_error "Template file $template_file not found"
-        return 1
-    fi
-    
-    log_info "Substituting variables in $template_file -> $output_file"
-    
-    # Create output directory if it doesn't exist
-    mkdir -p "$(dirname "$output_file")"
-    
-    # Substitute environment variables
-    envsubst < "$template_file" > "$output_file"
-    
-    if [ $? -eq 0 ]; then
-        log_info "Successfully generated $output_file"
-    else
-        log_error "Failed to generate $output_file"
-        return 1
-    fi
-}
-
 # Function to sanitize target URLs
 sanitize_target() {
     local target="$1"
@@ -80,50 +37,104 @@ sanitize_target() {
 
 # Main execution
 main() {
-    log_info "Starting Prometheus entrypoint script..."
+    log_info "Starting Prometheus configuration generation..."
     
-    # Validate configuration
-    validate_config
-    
-    # Set up environment variables for template substitution
+    # Set defaults
     export PROMETHEUS_TARGET="${PROMETHEUS_TARGET:-localhost:9090}"
     export ALERTMANAGER_TARGET="${ALERTMANAGER_TARGET:-localhost:9093}"
     
-    # Handle SUI Bridge targets
+    # Generate prometheus.yml configuration
+    cat <<EOF > /etc/prometheus/prometheus.yml
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'sui-monitoring'
+    replica: 'prometheus-1'
+
+rule_files:
+  - "/etc/prometheus/rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['${ALERTMANAGER_TARGET}']
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['${PROMETHEUS_TARGET}']
+    scrape_interval: 5s
+    metrics_path: /metrics
+EOF
+
+    # Add SUI Bridge Mainnet Scrape Config if configured
     if [ -n "${SUI_BRIDGE_MAINNET_TARGET:-}" ]; then
-        log_info "Configuring SUI Bridge Mainnet target: $SUI_BRIDGE_MAINNET_TARGET"
-        MAINNET_SCHEME=$(sanitize_target "$SUI_BRIDGE_MAINNET_TARGET" | head -n 1)
-        MAINNET_TARGET=$(sanitize_target "$SUI_BRIDGE_MAINNET_TARGET" | tail -n 1)
-        export SUI_BRIDGE_MAINNET_TARGET="$MAINNET_TARGET"
-        export SUI_BRIDGE_MAINNET_SCHEME="$MAINNET_SCHEME"
+        log_info "Adding scrape config for SUI Bridge Mainnet: ${SUI_BRIDGE_MAINNET_TARGET}"
+        
+        MAINNET_SCHEME=$(sanitize_target "${SUI_BRIDGE_MAINNET_TARGET}" | head -n 1)
+        MAINNET_TARGET=$(sanitize_target "${SUI_BRIDGE_MAINNET_TARGET}" | tail -n 1)
+        
+        cat <<EOF >> /etc/prometheus/prometheus.yml
+
+  - job_name: 'sui_bridge_mainnet'
+    static_configs:
+      - targets: ['${MAINNET_TARGET}']
+        labels:
+          service: 'sui_bridge'
+          environment: 'mainnet'
+    scrape_interval: 15s
+    metrics_path: /metrics
+    scrape_timeout: 10s
+    scheme: '${MAINNET_SCHEME}'
+    honor_labels: true
+    relabel_configs:
+      - target_label: instance
+        replacement: '${MAINNET_TARGET}'
+EOF
     else
         log_warn "SUI_BRIDGE_MAINNET_TARGET not set, skipping mainnet configuration"
     fi
     
+    # Add SUI Bridge Testnet Scrape Config if configured
     if [ -n "${SUI_BRIDGE_TESTNET_TARGET:-}" ]; then
-        log_info "Configuring SUI Bridge Testnet target: $SUI_BRIDGE_TESTNET_TARGET"
-        TESTNET_SCHEME=$(sanitize_target "$SUI_BRIDGE_TESTNET_TARGET" | head -n 1)
-        TESTNET_TARGET=$(sanitize_target "$SUI_BRIDGE_TESTNET_TARGET" | tail -n 1)
-        export SUI_BRIDGE_TESTNET_TARGET="$TESTNET_TARGET"
-        export SUI_BRIDGE_TESTNET_SCHEME="$TESTNET_SCHEME"
+        log_info "Adding scrape config for SUI Bridge Testnet: ${SUI_BRIDGE_TESTNET_TARGET}"
+        
+        TESTNET_SCHEME=$(sanitize_target "${SUI_BRIDGE_TESTNET_TARGET}" | head -n 1)
+        TESTNET_TARGET=$(sanitize_target "${SUI_BRIDGE_TESTNET_TARGET}" | tail -n 1)
+        
+        cat <<EOF >> /etc/prometheus/prometheus.yml
+
+  - job_name: 'sui_bridge_testnet'
+    static_configs:
+      - targets: ['${TESTNET_TARGET}']
+        labels:
+          service: 'sui_bridge'
+          environment: 'testnet'
+    scrape_interval: 15s
+    metrics_path: /metrics
+    scrape_timeout: 10s
+    scheme: '${TESTNET_SCHEME}'
+    honor_labels: true
+    relabel_configs:
+      - target_label: instance
+        replacement: '${TESTNET_TARGET}'
+EOF
     else
         log_warn "SUI_BRIDGE_TESTNET_TARGET not set, skipping testnet configuration"
     fi
     
-    # Substitute SUI_VALIDATOR in alert rules if set
-    if [ -n "${SUI_VALIDATOR:-}" ]; then
-        log_info "Substituting SUI_VALIDATOR: $SUI_VALIDATOR in alert rules"
-        find /etc/prometheus/rules -name "*.yml" -exec sed -i "s/\${SUI_VALIDATOR}/$SUI_VALIDATOR/g" {} \;
-    else
-        log_warn "SUI_VALIDATOR is not set, skipping substitution in rules"
-    fi
-    
-    # Generate prometheus.yml from template
-    if [ -f "/etc/prometheus/prometheus.yml.template" ]; then
-        substitute_template "/etc/prometheus/prometheus.yml.template" "/etc/prometheus/prometheus.yml"
-    else
-        log_error "Prometheus template file not found at /etc/prometheus/prometheus.yml.template"
-        exit 1
+    # Copy rules to writable location and substitute SUI_VALIDATOR
+    mkdir -p /etc/prometheus/rules
+    if ls /config/rules/*.yml 1> /dev/null 2>&1; then
+        cp /config/rules/*.yml /etc/prometheus/rules/
+        
+        if [ -n "${SUI_VALIDATOR:-}" ]; then
+            log_info "Substituting SUI_VALIDATOR: $SUI_VALIDATOR in alert rules"
+            find /etc/prometheus/rules -name "*.yml" -type f -exec sed -i "s/\${SUI_VALIDATOR}/$SUI_VALIDATOR/g" {} \;
+        else
+            log_warn "SUI_VALIDATOR is not set, skipping substitution in rules"
+        fi
     fi
     
     # Validate generated configuration
@@ -132,20 +143,30 @@ main() {
         log_info "Prometheus configuration is valid"
     else
         log_error "Prometheus configuration validation failed"
+        cat /etc/prometheus/prometheus.yml
         exit 1
     fi
     
-    # Validate alert rules
-    log_info "Validating alert rules..."
-    if promtool check rules /etc/prometheus/rules/*.yml; then
-        log_info "Alert rules are valid"
-    else
-        log_error "Alert rules validation failed"
-        exit 1
+    # Validate alert rules if they exist
+    if ls /etc/prometheus/rules/*.yml 1> /dev/null 2>&1; then
+        log_info "Validating alert rules..."
+        if promtool check rules /etc/prometheus/rules/*.yml; then
+            log_info "Alert rules are valid"
+        else
+            log_error "Alert rules validation failed"
+            exit 1
+        fi
     fi
     
     log_info "Starting Prometheus server..."
-    exec prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --web.console.libraries=/etc/prometheus/console_libraries --web.console.templates=/etc/prometheus/consoles --web.enable-lifecycle --web.enable-admin-api "$@"
+    exec prometheus \
+        --config.file=/etc/prometheus/prometheus.yml \
+        --storage.tsdb.path=/prometheus \
+        --web.console.libraries=/etc/prometheus/console_libraries \
+        --web.console.templates=/etc/prometheus/consoles \
+        --web.enable-lifecycle \
+        --web.enable-admin-api \
+        "$@"
 }
 
 # Run main function

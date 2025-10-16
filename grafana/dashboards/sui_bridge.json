@@ -3219,20 +3219,49 @@
     "tags": [],
     "templating": {
         "list": [{
-            "definition": "label_values(uptime{process=\"bridge\"},instance)",
-            "description": "This variable dynamically fetches and displays all available SUI Node Bridge targets based on the instance label from your Prometheus metrics.",
-            "label": "Bridge Node Target",
-            "name": "instance",
-            "options": [],
-            "query": {
-                "qryType": 1,
-                "query": "label_values(uptime{process=\"bridge\"},instance)",
-                "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                "current": {
+                    "selected": false,
+                    "text": "$SUI_VALIDATOR",
+                    "value": "$SUI_VALIDATOR"
+                },
+                "description": "SUI Validator name from environment variable",
+                "hide": 2,
+                "label": "Validator",
+                "name": "SUI_VALIDATOR",
+                "query": "$SUI_VALIDATOR",
+                "skipUrlSync": false,
+                "type": "constant"
             },
-            "refresh": 1,
-            "regex": "",
-            "type": "query"
-        }]
+            {
+                "current": {
+                    "selected": false,
+                    "text": "",
+                    "value": ""
+                },
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "definition": "label_values(up{job=~\"sui_bridge.*\"},instance)",
+                "description": "This variable dynamically fetches and displays all available SUI Node Bridge targets based on configured jobs.",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Bridge Node Target",
+                "multi": false,
+                "name": "instance",
+                "options": [],
+                "query": {
+                    "qryType": 1,
+                    "query": "label_values(up{job=~\"sui_bridge.*\"},instance)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                },
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 1,
+                "type": "query"
+            }
+        ]
     },
     "time": {
         "from": "now-6h",
