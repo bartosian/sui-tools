@@ -688,7 +688,7 @@
             },
             "gridPos": {
                 "h": 5,
-                "w": 5,
+                "w": 9,
                 "x": 15,
                 "y": 5
             },
@@ -765,8 +765,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -801,7 +800,7 @@
                 "textMode": "auto",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "editorMode": "code",
                 "expr": "avg(bridge_eth_vault_balance{instance=\"$instance\"}) / 100000000",
@@ -829,8 +828,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -865,7 +863,7 @@
                 "textMode": "auto",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "editorMode": "code",
                 "expr": "avg(bridge_usdt_vault_balance{instance=\"$instance\"}) / 1000000",
@@ -893,8 +891,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -929,7 +926,7 @@
                 "textMode": "auto",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "editorMode": "code",
                 "expr": "avg(bridge_gas_coin_balance{instance=\"$instance\"}) / 1000000000",
@@ -939,70 +936,6 @@
                 "refId": "A"
             }],
             "title": "SUI Gas Coin Balance",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the current balance of the WBTC vault for the SUI Bridge node. The balance is shown in WBTC units, with regular updates reflecting the latest state.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "decimals": 2,
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "red",
-                                "value": null
-                            },
-                            {
-                                "color": "green",
-                                "value": 0
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 6,
-                "x": 18,
-                "y": 11
-            },
-            "id": 279,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "editorMode": "code",
-                "expr": "avg(bridge_wbtc_vault_balance{instance=\"$instance\"}) / 100000000",
-                "hide": false,
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "WBTC Vault Balance",
             "type": "stat"
         },
         {
@@ -1021,8 +954,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -1036,8 +968,8 @@
             "gridPos": {
                 "h": 4,
                 "w": 6,
-                "x": 0,
-                "y": 15
+                "x": 18,
+                "y": 11
             },
             "id": 280,
             "options": {
@@ -1057,7 +989,7 @@
                 "textMode": "auto",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "editorMode": "code",
                 "expr": "avg(bridge_lbtc_vault_balance{instance=\"$instance\"}) / 100000000",
@@ -1067,65 +999,6 @@
                 "refId": "A"
             }],
             "title": "LBTC Vault Balance",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the latest finalized ETH block number observed by the bridge.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "decimals": 0,
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green",
-                            "value": null
-                        }]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 6,
-                "x": 6,
-                "y": 15
-            },
-            "id": 281,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "editorMode": "code",
-                "expr": "bridge_last_finalized_eth_block{instance=\"$instance\"}",
-                "hide": false,
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Last Finalized ETH Block",
             "type": "stat"
         },
         {
@@ -1146,7 +1019,6 @@
                         "axisLabel": "ETH",
                         "axisPlacement": "left",
                         "barAlignment": 0,
-                        "barWidthFactor": 0.6,
                         "drawStyle": "bars",
                         "fillOpacity": 100,
                         "gradientMode": "hue",
@@ -1177,8 +1049,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1191,7 +1062,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
+                "h": 5,
                 "w": 6,
                 "x": 0,
                 "y": 15
@@ -1246,7 +1117,6 @@
                         "axisLabel": "USDT",
                         "axisPlacement": "left",
                         "barAlignment": 0,
-                        "barWidthFactor": 0.6,
                         "drawStyle": "bars",
                         "fillOpacity": 100,
                         "gradientMode": "hue",
@@ -1277,8 +1147,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1291,7 +1160,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
+                "h": 5,
                 "w": 6,
                 "x": 6,
                 "y": 15
@@ -1346,7 +1215,6 @@
                         "axisLabel": "SUI",
                         "axisPlacement": "left",
                         "barAlignment": 0,
-                        "barWidthFactor": 0.6,
                         "drawStyle": "bars",
                         "fillOpacity": 100,
                         "gradientMode": "hue",
@@ -1377,8 +1245,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1391,7 +1258,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
+                "h": 5,
                 "w": 6,
                 "x": 12,
                 "y": 15
@@ -1429,12 +1296,279 @@
             "type": "timeseries"
         },
         {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the timeline of the LBTC Balance for the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "LBTC",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 18,
+                "y": 15
+            },
+            "id": 300,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "avg(bridge_lbtc_vault_balance{instance=\"$instance\"}) / 100000000",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Balance",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "LBTC Vault Balance Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the current balance of the WBTC vault for the SUI Bridge node. The balance is shown in WBTC units, with regular updates reflecting the latest state.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red"
+                            },
+                            {
+                                "color": "green",
+                                "value": 0
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 20
+            },
+            "id": 279,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "editorMode": "code",
+                "expr": "avg(bridge_wbtc_vault_balance{instance=\"$instance\"}) / 100000000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "WBTC Vault Balance",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the timeline of the WBTC Balance for the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "WBTC",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 0,
+                "y": 24
+            },
+            "id": 298,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "avg(bridge_wbtc_vault_balance{instance=\"$instance\"}) / 100000000",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Balance",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "WBTC Vault Balance Over Time",
+            "type": "timeseries"
+        },
+        {
             "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 23
+                "y": 31
             },
             "id": 290,
             "panels": [],
@@ -1468,7 +1602,7 @@
                 "h": 4,
                 "w": 24,
                 "x": 0,
-                "y": 24
+                "y": 32
             },
             "id": 295,
             "options": {
@@ -1611,7 +1745,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 28
+                "y": 36
             },
             "id": 217,
             "options": {
@@ -1716,7 +1850,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 28
+                "y": 36
             },
             "id": 296,
             "options": {
@@ -1768,7 +1902,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 36
+                "y": 44
             },
             "id": 291,
             "panels": [],
@@ -1802,7 +1936,7 @@
                 "h": 4,
                 "w": 24,
                 "x": 0,
-                "y": 37
+                "y": 45
             },
             "id": 231,
             "options": {
@@ -1925,7 +2059,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 41
+                "y": 49
             },
             "id": 216,
             "options": {
@@ -2016,7 +2150,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 41
+                "y": 49
             },
             "id": 293,
             "options": {
@@ -2107,7 +2241,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 41
+                "y": 49
             },
             "id": 294,
             "options": {
@@ -2144,7 +2278,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 49
+                "y": 57
             },
             "id": 286,
             "panels": [],
@@ -2178,7 +2312,7 @@
                 "h": 4,
                 "w": 24,
                 "x": 0,
-                "y": 50
+                "y": 58
             },
             "id": 297,
             "options": {
@@ -2328,7 +2462,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 54
+                "y": 62
             },
             "id": 292,
             "options": {
@@ -2456,7 +2590,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 54
+                "y": 62
             },
             "id": 232,
             "options": {
@@ -2568,7 +2702,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 54
+                "y": 62
             },
             "id": 230,
             "options": {
@@ -2728,7 +2862,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 62
+                "y": 70
             },
             "id": 226,
             "options": {
@@ -2839,7 +2973,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 62
+                "y": 70
             },
             "id": 219,
             "options": {
@@ -3014,7 +3148,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 62
+                "y": 70
             },
             "id": 229,
             "options": {
@@ -3068,7 +3202,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 70
+                "y": 78
             },
             "id": 287,
             "panels": [],
@@ -3135,7 +3269,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 71
+                "y": 79
             },
             "id": 289,
             "options": {
@@ -3228,7 +3362,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 71
+                "y": 79
             },
             "id": 227,
             "options": {
@@ -3267,7 +3401,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 79
+                "y": 87
             },
             "id": 281,
             "panels": [],
@@ -3334,7 +3468,7 @@
                 "h": 9,
                 "w": 12,
                 "x": 0,
-                "y": 80
+                "y": 88
             },
             "id": 60,
             "options": {
@@ -3440,7 +3574,7 @@
                 "h": 9,
                 "w": 12,
                 "x": 12,
-                "y": 80
+                "y": 88
             },
             "id": 282,
             "options": {
@@ -3467,19 +3601,6 @@
             }],
             "title": "Tracing Span Average Latency",
             "type": "timeseries"
-        },
-        {
-            "collapsed": false,
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 89
-            },
-            "id": 210,
-            "panels": [],
-            "title": "Bridge Node",
-            "type": "row"
         }
     ],
     "preload": false,
