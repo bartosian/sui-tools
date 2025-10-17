@@ -15,15 +15,12 @@ services:
       GF_SERVER_HTTP_PORT: ${GF_PORT:-3000}
       GF_SERVER_DOMAIN: ${GF_SERVER_DOMAIN:-localhost}
       GF_SERVER_ROOT_URL: ${GF_SERVER_ROOT_URL:-http://localhost:3000}
-      GF_SECURITY_SECRET_KEY: ${GF_SECURITY_SECRET_KEY:-}
-      GF_DATABASE_TYPE: ${GF_DATABASE_TYPE:-sqlite3}
-      GF_DATABASE_PATH: ${GF_DATABASE_PATH:-grafana.db}
-      GF_LOG_LEVEL: ${GF_LOG_LEVEL:-info}
-      GF_LOG_MODE: ${GF_LOG_MODE:-console}
       PROMETHEUS_URL: "http://${PROMETHEUS_TARGET:-localhost:9090}"
       ALERTMANAGER_URL: "http://${ALERTMANAGER_TARGET:-localhost:9093}"
       SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
       SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
+      SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}
+      SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}
       SUI_VALIDATOR: ${SUI_VALIDATOR:-}
       GF_GITHUB_PLUGINS: ${GF_GITHUB_PLUGINS:-}
       PROMETHEUS_AUTH_TOKEN: ${PROMETHEUS_AUTH_TOKEN:-}
@@ -57,6 +54,8 @@ services:
     environment:
       SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
       SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
+      SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}
+      SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}
       PROMETHEUS_TARGET: ${PROMETHEUS_TARGET:-localhost:9090}
       ALERTMANAGER_TARGET: ${ALERTMANAGER_TARGET:-localhost:9093}
       SUI_VALIDATOR: ${SUI_VALIDATOR:-}
@@ -100,6 +99,29 @@ services:
       DISCORD_WEBHOOK_URL: "${DISCORD_WEBHOOK_URL:-}"
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:${ALERTMANAGER_PORT:-9093}/-/healthy || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox-exporter
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config/blackbox:/etc/blackbox:ro
+    environment:
+      SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}
+      SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}
+    entrypoint: ["/bin/sh", "/etc/blackbox/entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9115/metrics || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -43,6 +43,15 @@ main() {
     export PROMETHEUS_TARGET="${PROMETHEUS_TARGET:-localhost:9090}"
     export ALERTMANAGER_TARGET="${ALERTMANAGER_TARGET:-localhost:9093}"
     
+    # Determine blackbox-exporter address based on environment
+    if [ -n "${PROMETHEUS_TARGET}" ] && [[ "${PROMETHEUS_TARGET}" == *"prometheus:9090"* ]]; then
+        # macOS environment - use service name
+        BLACKBOX_EXPORTER_ADDRESS="blackbox-exporter:9115"
+    else
+        # Linux environment - use localhost
+        BLACKBOX_EXPORTER_ADDRESS="localhost:9115"
+    fi
+    
     # Generate prometheus.yml configuration
     cat <<EOF > /etc/prometheus/prometheus.yml
 global:
@@ -124,6 +133,70 @@ EOF
 EOF
     else
         log_warn "SUI_BRIDGE_TESTNET_TARGET not set, skipping testnet configuration"
+    fi
+    
+    # Add SUI Bridge Mainnet Health Check if configured
+    if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
+        log_info "Adding health check probe for SUI Bridge Mainnet: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}"
+        
+        cat <<EOF >> /etc/prometheus/prometheus.yml
+
+  - job_name: 'sui_bridge_mainnet_health_check'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - '${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}/metrics_pub_key'
+        labels:
+          service: 'sui_bridge_health_check'
+          environment: 'mainnet'
+          configured: 'true'
+    scrape_interval: 2m
+    scrape_timeout: 10s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+        replacement: '${MAINNET_TARGET}'
+      - target_label: __address__
+        replacement: '${BLACKBOX_EXPORTER_ADDRESS}'
+EOF
+    else
+        log_warn "SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS not set, skipping mainnet health check"
+    fi
+    
+    # Add SUI Bridge Testnet Health Check if configured
+    if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
+        log_info "Adding health check probe for SUI Bridge Testnet: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}"
+        
+        cat <<EOF >> /etc/prometheus/prometheus.yml
+
+  - job_name: 'sui_bridge_testnet_health_check'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - '${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}/metrics_pub_key'
+        labels:
+          service: 'sui_bridge_health_check'
+          environment: 'testnet'
+          configured: 'true'
+    scrape_interval: 2m
+    scrape_timeout: 10s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+        replacement: '${TESTNET_TARGET}'
+      - target_label: __address__
+        replacement: '${BLACKBOX_EXPORTER_ADDRESS}'
+EOF
+    else
+        log_warn "SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS not set, skipping testnet health check"
     fi
     
     # Copy rules to writable location and substitute SUI_VALIDATOR

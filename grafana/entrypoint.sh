@@ -56,6 +56,17 @@ if [ -n "${SUI_VALIDATOR:-}" ]; then
             # Also substitute the constant variable value
             sed -i "s/\"\$SUI_VALIDATOR\"/\"$SUI_VALIDATOR\"/g" "/tmp/processed_dashboards/$filename"
             
+            # Substitute public address variables if they are set
+            if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
+                sed -i "s/\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS/g" "/tmp/processed_dashboards/$filename"
+                log_info "Substituted SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: $SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS"
+            fi
+            
+            if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
+                sed -i "s/\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS/g" "/tmp/processed_dashboards/$filename"
+                log_info "Substituted SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: $SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS"
+            fi
+            
             log_info "Dashboard processed: $filename"
         fi
     done
@@ -97,6 +108,21 @@ else
         
         # Copy all dashboards (including bridge dashboard)
         cp /etc/dashboards/*.json /tmp/processed_dashboards/
+        
+        # Process public address variables if they are set
+        for dashboard in /tmp/processed_dashboards/*.json; do
+            if [ -f "$dashboard" ]; then
+                if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
+                    sed -i "s/\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS/g" "$dashboard"
+                    log_info "Substituted SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: $SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS"
+                fi
+                
+                if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
+                    sed -i "s/\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS/g" "$dashboard"
+                    log_info "Substituted SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: $SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS"
+                fi
+            fi
+        done
         
         # Create a new provisioning file that points to processed dashboards
         mkdir -p /tmp/grafana_provisioning/dashboards
