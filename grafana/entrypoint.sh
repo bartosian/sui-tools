@@ -50,20 +50,21 @@ if [ -n "${SUI_VALIDATOR:-}" ]; then
             
             log_info "Processing dashboard: $filename"
             
-            # Substitute SUI_VALIDATOR placeholder with actual value
-            sed "s/\${SUI_VALIDATOR}/$SUI_VALIDATOR/g" "$dashboard" > "/tmp/processed_dashboards/$filename"
+            # Use a safer substitution method with different delimiter
+            # Substitute SUI_VALIDATOR placeholder with actual value using | as delimiter
+            sed "s|\${SUI_VALIDATOR}|$SUI_VALIDATOR|g" "$dashboard" > "/tmp/processed_dashboards/$filename"
             
-            # Also substitute the constant variable value
-            sed -i "s/\"\$SUI_VALIDATOR\"/\"$SUI_VALIDATOR\"/g" "/tmp/processed_dashboards/$filename"
+            # Also substitute the constant variable value using | as delimiter
+            sed -i "s|\"\$SUI_VALIDATOR\"|\"$SUI_VALIDATOR\"|g" "/tmp/processed_dashboards/$filename"
             
             # Substitute public address variables if they are set
             if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
-                sed -i "s/\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS/g" "/tmp/processed_dashboards/$filename"
+                sed -i "s|\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS|g" "/tmp/processed_dashboards/$filename"
                 log_info "Substituted SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: $SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS"
             fi
             
             if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
-                sed -i "s/\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS/g" "/tmp/processed_dashboards/$filename"
+                sed -i "s|\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS|g" "/tmp/processed_dashboards/$filename"
                 log_info "Substituted SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: $SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS"
             fi
             
@@ -113,12 +114,12 @@ else
         for dashboard in /tmp/processed_dashboards/*.json; do
             if [ -f "$dashboard" ]; then
                 if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
-                    sed -i "s/\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS/g" "$dashboard"
+                    sed -i "s|\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS|g" "$dashboard"
                     log_info "Substituted SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: $SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS"
                 fi
                 
                 if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
-                    sed -i "s/\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}/$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS/g" "$dashboard"
+                    sed -i "s|\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS|g" "$dashboard"
                     log_info "Substituted SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: $SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS"
                 fi
             fi
