@@ -24,6 +24,7 @@
     "graphTooltip": 0,
     "id": 1,
     "links": [],
+    "liveNow": false,
     "panels": [{
             "collapsed": false,
             "gridPos": {
@@ -36,203 +37,6 @@
             "panels": [],
             "title": "Bridge Overview",
             "type": "row"
-        },
-        {
-            "collapsed": false,
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 5
-            },
-            "id": 300,
-            "panels": [],
-            "title": "Health Check Endpoints",
-            "type": "row"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Shows the current health status of the SUI Bridge public endpoints.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [{
-                        "options": {
-                            "0": {
-                                "color": "red",
-                                "index": 0,
-                                "text": "DOWN"
-                            },
-                            "1": {
-                                "color": "green",
-                                "index": 1,
-                                "text": "UP"
-                            }
-                        },
-                        "type": "value"
-                    }],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "red",
-                                "value": null
-                            },
-                            {
-                                "color": "green",
-                                "value": 1
-                            }
-                        ]
-                    },
-                    "unit": "short"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 6,
-                "x": 0,
-                "y": 6
-            },
-            "id": 301,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "text": {
-                    "titleSize": 1
-                },
-                "textMode": "value",
-                "wideLayout": true
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "probe_success{job=~\"sui_bridge_.*_health_check\", instance=~\"$instance\"}",
-                "fullMetaSearch": false,
-                "includeNullMetadata": true,
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }],
-            "title": "Health Check Status",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Shows the health check timeline for SUI Bridge public endpoints over time.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "vis": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "stepAfter",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "never",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    },
-                    "unit": "short"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 18,
-                "x": 6,
-                "y": 6
-            },
-            "id": 302,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "probe_success{job=~\"sui_bridge_.*_health_check\", instance=~\"$instance\"}",
-                "fullMetaSearch": false,
-                "includeNullMetadata": true,
-                "legendFormat": "Health Check",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }],
-            "title": "Health Check Timeline",
-            "type": "timeseries"
         },
         {
             "datasource": {
@@ -288,7 +92,7 @@
                 "textMode": "name",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
@@ -370,7 +174,7 @@
                 "textMode": "name",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
@@ -449,7 +253,7 @@
                 "textMode": "name",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
@@ -528,14 +332,14 @@
                 "textMode": "value",
                 "wideLayout": false
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "max(current_bridge_voting_rights{authority=\"${SUI_VALIDATOR}\", instance=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{instance=\"$instance\"}) \n* 100",
+                "expr": "max(current_bridge_voting_rights{authority=\"BartestneT\", instance=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{instance=\"$instance\"}) \n* 100",
                 "legendFormat": "Voting Power %",
                 "range": true,
                 "refId": "A"
@@ -606,7 +410,7 @@
                 "textMode": "name",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
@@ -634,18 +438,44 @@
             "type": "stat"
         },
         {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 5
+            },
+            "id": 300,
+            "panels": [],
+            "title": "Health Check Endpoints",
+            "type": "row"
+        },
+        {
             "datasource": {
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays the total uptime of the SUI Bridge Node, indicating its operational status.",
+            "description": "Shows the current operational status of the SUI Bridge Node (UP/DOWN).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
                         "mode": "thresholds"
                     },
-                    "decimals": 2,
-                    "mappings": [],
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "red",
+                                "index": 0,
+                                "text": "DOWN"
+                            },
+                            "1": {
+                                "color": "green",
+                                "index": 1,
+                                "text": "UP"
+                            }
+                        },
+                        "type": "value"
+                    }],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
@@ -654,11 +484,11 @@
                             },
                             {
                                 "color": "green",
-                                "value": 0.1
+                                "value": 1
                             }
                         ]
                     },
-                    "unit": "s"
+                    "unit": "short"
                 },
                 "overrides": []
             },
@@ -666,7 +496,7 @@
                 "h": 5,
                 "w": 5,
                 "x": 0,
-                "y": 5
+                "y": 6
             },
             "id": 2,
             "options": {
@@ -687,14 +517,14 @@
                 "textMode": "value",
                 "wideLayout": false
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "uptime{process=\"bridge\", instance=\"$instance\"}",
+                "expr": "up{job=~\"sui_bridge_(mainnet|testnet)\", instance=\"$instance\"}",
                 "legendFormat": "",
                 "range": true,
                 "refId": "A"
@@ -720,7 +550,6 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
-                        "barWidthFactor": 1,
                         "drawStyle": "bars",
                         "fillOpacity": 100,
                         "gradientMode": "hue",
@@ -784,7 +613,7 @@
                 "h": 5,
                 "w": 10,
                 "x": 5,
-                "y": 5
+                "y": 6
             },
             "id": 275,
             "options": {
@@ -887,7 +716,7 @@
                 "h": 5,
                 "w": 9,
                 "x": 15,
-                "y": 5
+                "y": 6
             },
             "id": 267,
             "options": {
@@ -907,7 +736,7 @@
                 "textMode": "value_and_name",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                     "editorMode": "code",
                     "expr": "max(bridge_eth_bridge_paused{instance=\"$instance\"})",
@@ -934,12 +763,218 @@
             "type": "stat"
         },
         {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the current health status of the SUI Bridge public metrics endpoint (/metrics_pub_key).",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "red",
+                                "index": 0,
+                                "text": "DOWN"
+                            },
+                            "1": {
+                                "color": "green",
+                                "index": 1,
+                                "text": "UP"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "short"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 11
+            },
+            "id": 301,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "value",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "probe_success{job=~\"sui_bridge_.*_health_check\", instance=~\"$instance\"}",
+                "fullMetaSearch": false,
+                "includeNullMetadata": true,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Public Metrics Key Status",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the health check timeline for SUI Bridge public metrics endpoint (/metrics_pub_key) over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "vis": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "stepAfter",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "log": 2,
+                            "type": "symlog"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "red",
+                                "index": 1,
+                                "text": "DOWN"
+                            },
+                            "1": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "UP"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "max": 1,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 18,
+                "x": 6,
+                "y": 11
+            },
+            "id": 302,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "probe_success{job=~\"sui_bridge_.*_health_check\", instance=~\"$instance\"}",
+                "fullMetaSearch": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Public Metrics Key",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Public Metrics Key Timeline",
+            "type": "timeseries"
+        },
+        {
             "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 10
+                "y": 15
             },
             "id": 276,
             "panels": [],
@@ -962,7 +997,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -977,7 +1013,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 11
+                "y": 16
             },
             "id": 266,
             "options": {
@@ -1025,7 +1061,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1040,7 +1077,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 11
+                "y": 16
             },
             "id": 277,
             "options": {
@@ -1088,7 +1125,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1103,7 +1141,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 11
+                "y": 16
             },
             "id": 278,
             "options": {
@@ -1151,7 +1189,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1166,7 +1205,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 18,
-                "y": 11
+                "y": 16
             },
             "id": 280,
             "options": {
@@ -1246,7 +1285,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1262,7 +1302,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 0,
-                "y": 15
+                "y": 20
             },
             "id": 283,
             "options": {
@@ -1344,7 +1384,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1360,7 +1401,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 6,
-                "y": 15
+                "y": 20
             },
             "id": 284,
             "options": {
@@ -1442,7 +1483,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1458,7 +1500,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 12,
-                "y": 15
+                "y": 20
             },
             "id": 225,
             "options": {
@@ -1540,7 +1582,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1556,9 +1599,9 @@
                 "h": 5,
                 "w": 6,
                 "x": 18,
-                "y": 15
+                "y": 20
             },
-            "id": 300,
+            "id": 312,
             "options": {
                 "legend": {
                     "calcs": [],
@@ -1610,7 +1653,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1625,7 +1669,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 20
+                "y": 25
             },
             "id": 279,
             "options": {
@@ -1705,7 +1749,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1721,7 +1766,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 0,
-                "y": 24
+                "y": 29
             },
             "id": 298,
             "options": {
@@ -1765,7 +1810,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 31
+                "y": 34
             },
             "id": 290,
             "panels": [],
@@ -1799,7 +1844,7 @@
                 "h": 4,
                 "w": 24,
                 "x": 0,
-                "y": 32
+                "y": 35
             },
             "id": 295,
             "options": {
@@ -1819,7 +1864,7 @@
                 "textMode": "auto",
                 "wideLayout": true
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                     "datasource": {
                         "type": "prometheus",
@@ -1900,7 +1945,6 @@
                         "axisLabel": "Rate (events/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
-                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 100,
                         "gradientMode": "none",
@@ -1942,7 +1986,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 36
+                "y": 39
             },
             "id": 217,
             "options": {
@@ -2005,7 +2049,6 @@
                         "axisLabel": "Rate (events/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
-                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 100,
                         "gradientMode": "none",
@@ -2047,7 +2090,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 36
+                "y": 39
             },
             "id": 296,
             "options": {
@@ -2099,7 +2142,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 44
+                "y": 47
             },
             "id": 291,
             "panels": [],
@@ -2122,8 +2165,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2133,7 +2175,7 @@
                 "h": 4,
                 "w": 24,
                 "x": 0,
-                "y": 45
+                "y": 48
             },
             "id": 231,
             "options": {
@@ -2244,8 +2286,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -2256,7 +2297,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 49
+                "y": 52
             },
             "id": 216,
             "options": {
@@ -2335,8 +2376,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -2347,7 +2387,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 49
+                "y": 52
             },
             "id": 293,
             "options": {
@@ -2426,8 +2466,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -2438,7 +2477,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 49
+                "y": 52
             },
             "id": 294,
             "options": {
@@ -2475,7 +2514,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 57
+                "y": 60
             },
             "id": 286,
             "panels": [],
@@ -2498,8 +2537,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2509,7 +2547,7 @@
                 "h": 4,
                 "w": 24,
                 "x": 0,
-                "y": 58
+                "y": 61
             },
             "id": 297,
             "options": {
@@ -2647,8 +2685,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -2659,7 +2696,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 62
+                "y": 65
             },
             "id": 292,
             "options": {
@@ -2775,8 +2812,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -2787,7 +2823,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 62
+                "y": 65
             },
             "id": 232,
             "options": {
@@ -2887,8 +2923,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "red",
-                            "value": null
+                            "color": "red"
                         }]
                     },
                     "unit": "none"
@@ -2899,7 +2934,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 62
+                "y": 65
             },
             "id": 230,
             "options": {
@@ -3047,8 +3082,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -3059,7 +3093,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 70
+                "y": 73
             },
             "id": 226,
             "options": {
@@ -3154,8 +3188,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3170,7 +3203,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 70
+                "y": 73
             },
             "id": 219,
             "options": {
@@ -3329,8 +3362,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3345,7 +3377,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 70
+                "y": 73
             },
             "id": 229,
             "options": {
@@ -3399,7 +3431,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 78
+                "y": 81
             },
             "id": 287,
             "panels": [],
@@ -3454,8 +3486,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -3466,7 +3497,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 79
+                "y": 82
             },
             "id": 289,
             "options": {
@@ -3547,8 +3578,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -3559,7 +3589,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 79
+                "y": 82
             },
             "id": 227,
             "options": {
@@ -3598,7 +3628,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 87
+                "y": 90
             },
             "id": 281,
             "panels": [],
@@ -3653,8 +3683,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "ns"
@@ -3665,7 +3694,7 @@
                 "h": 9,
                 "w": 12,
                 "x": 0,
-                "y": 88
+                "y": 91
             },
             "id": 60,
             "options": {
@@ -3759,8 +3788,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "ns"
@@ -3771,7 +3799,7 @@
                 "h": 9,
                 "w": 12,
                 "x": 12,
-                "y": 88
+                "y": 91
             },
             "id": 282,
             "options": {
@@ -3805,9 +3833,9 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 97
+                "y": 100
             },
-            "id": 301,
+            "id": 313,
             "panels": [],
             "title": "Advanced Metrics & Monitoring",
             "type": "row"
@@ -3826,8 +3854,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "short"
@@ -3838,9 +3865,9 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 98
+                "y": 101
             },
-            "id": 302,
+            "id": 314,
             "options": {
                 "colorMode": "value",
                 "graphMode": "none",
@@ -3916,8 +3943,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "reqps"
@@ -3928,7 +3954,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 98
+                "y": 101
             },
             "id": 303,
             "options": {
@@ -4004,8 +4030,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "reqps"
@@ -4016,7 +4041,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 98
+                "y": 101
             },
             "id": 304,
             "options": {
@@ -4092,8 +4117,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "reqps"
@@ -4104,7 +4128,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 18,
-                "y": 98
+                "y": 101
             },
             "id": 305,
             "options": {
@@ -4180,8 +4204,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -4192,7 +4215,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 102
+                "y": 105
             },
             "id": 306,
             "options": {
@@ -4209,39 +4232,42 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.50, sum(rate(thread_stall_duration_sec_bucket{instance=\"$instance\"}[$__rate_interval])) by (le))",
+                    "hide": false,
+                    "legendFormat": "50th percentile",
+                    "range": true,
+                    "refId": "A"
                 },
-                "editorMode": "code",
-                "expr": "histogram_quantile(0.50, sum(rate(thread_stall_duration_sec_bucket{instance=\"$instance\"}[$__rate_interval])) by (le))",
-                "hide": false,
-                "legendFormat": "50th percentile",
-                "range": true,
-                "refId": "A"
-            }, {
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.95, sum(rate(thread_stall_duration_sec_bucket{instance=\"$instance\"}[$__rate_interval])) by (le))",
+                    "hide": false,
+                    "legendFormat": "95th percentile",
+                    "range": true,
+                    "refId": "B"
                 },
-                "editorMode": "code",
-                "expr": "histogram_quantile(0.95, sum(rate(thread_stall_duration_sec_bucket{instance=\"$instance\"}[$__rate_interval])) by (le))",
-                "hide": false,
-                "legendFormat": "95th percentile",
-                "range": true,
-                "refId": "B"
-            }, {
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "histogram_quantile(0.99, sum(rate(thread_stall_duration_sec_bucket{instance=\"$instance\"}[$__rate_interval])) by (le))",
-                "hide": false,
-                "legendFormat": "99th percentile",
-                "range": true,
-                "refId": "C"
-            }],
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.99, sum(rate(thread_stall_duration_sec_bucket{instance=\"$instance\"}[$__rate_interval])) by (le))",
+                    "hide": false,
+                    "legendFormat": "99th percentile",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
             "title": "Thread Stall Duration - Percentiles",
             "type": "timeseries"
         },
@@ -4290,8 +4316,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -4302,7 +4327,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 102
+                "y": 105
             },
             "id": 307,
             "options": {
@@ -4378,8 +4403,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -4390,7 +4414,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 110
+                "y": 113
             },
             "id": 308,
             "options": {
@@ -4466,8 +4490,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -4478,7 +4501,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 110
+                "y": 113
             },
             "id": 309,
             "options": {
@@ -4525,15 +4548,17 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "red",
-                            "value": null
-                        }, {
-                            "color": "yellow",
-                            "value": 0.5
-                        }, {
-                            "color": "green",
-                            "value": 0.8
-                        }]
+                                "color": "red"
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 0.5
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.8
+                            }
+                        ]
                     },
                     "unit": "percentunit"
                 },
@@ -4543,7 +4568,7 @@
                 "h": 6,
                 "w": 12,
                 "x": 0,
-                "y": 118
+                "y": 121
             },
             "id": 310,
             "options": {
@@ -4588,8 +4613,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "short"
@@ -4600,7 +4624,7 @@
                 "h": 6,
                 "w": 12,
                 "x": 12,
-                "y": 118
+                "y": 121
             },
             "id": 311,
             "options": {
@@ -4634,29 +4658,24 @@
             "type": "stat"
         }
     ],
-    "preload": false,
-    "schemaVersion": 40,
+    "refresh": "",
+    "schemaVersion": 38,
     "tags": [],
     "templating": {
         "list": [{
-                "current": {
-                    "selected": false,
-                    "text": "$SUI_VALIDATOR",
-                    "value": "$SUI_VALIDATOR"
-                },
                 "description": "SUI Validator name from environment variable",
                 "hide": 2,
                 "label": "Validator",
                 "name": "SUI_VALIDATOR",
-                "query": "$SUI_VALIDATOR",
+                "query": "BartestneT",
                 "skipUrlSync": false,
                 "type": "constant"
             },
             {
                 "current": {
-                    "selected": false,
-                    "text": "",
-                    "value": ""
+                    "selected": true,
+                    "text": "103.50.32.66:9185",
+                    "value": "103.50.32.66:9185"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -4684,7 +4703,7 @@
         ]
     },
     "time": {
-        "from": "now-6h",
+        "from": "now-5m",
         "to": "now"
     },
     "timepicker": {

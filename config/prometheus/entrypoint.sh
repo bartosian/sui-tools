@@ -152,7 +152,7 @@ EOF
           service: 'sui_bridge_health_check'
           environment: 'mainnet'
           configured: 'true'
-    scrape_interval: 2m
+    scrape_interval: 1m
     scrape_timeout: 10s
     relabel_configs:
       - source_labels: [__address__]
@@ -184,7 +184,7 @@ EOF
           service: 'sui_bridge_health_check'
           environment: 'testnet'
           configured: 'true'
-    scrape_interval: 2m
+    scrape_interval: 1m
     scrape_timeout: 10s
     relabel_configs:
       - source_labels: [__address__]
