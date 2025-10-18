@@ -2,7 +2,14 @@
 
 <img src="./assets/sui_header.png" alt="Sui Tools Header"/>
 
-This repository provides a comprehensive monitoring solution for **Sui Nodes** using **Grafana**, **Prometheus**, and **Alertmanager**. It includes pre-configured dashboards, alert rules, and notification integrations specifically designed for monitoring Sui Bridge services.
+This repository provides a comprehensive **end-to-end monitoring solution** for **Sui services** using **Grafana**, **Prometheus**, and **Alertmanager**. It includes pre-configured dashboards, alert rules, and notification integrations designed for monitoring various Sui ecosystem services.
+
+### **Supported Sui Services**
+
+Currently supported services:
+- **Sui Bridge** - Cross-chain bridge monitoring (Mainnet & Testnet)
+
+*Additional Sui services will be added in future releases*
 
 ---
 
@@ -16,6 +23,8 @@ cd sui-tools
 cp .env.template .env
 ```
 
+> 📋 **For detailed setup instructions, see [SETUP.md](SETUP.md)**
+
 ### **2. Configure Environment**
 
 Edit the `.env` file with your specific configuration:
@@ -24,8 +33,12 @@ Edit the `.env` file with your specific configuration:
 # Required: Basic Configuration
 GF_SECURITY_ADMIN_USER=admin
 GF_SECURITY_ADMIN_PASSWORD=your_secure_password
+
+# Sui Service Monitoring (Optional - only configure services you want to monitor)
 SUI_BRIDGE_MAINNET_TARGET=your-mainnet-target:9186
 SUI_BRIDGE_TESTNET_TARGET=your-testnet-target:9185
+SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS=your-mainnet-public-address
+SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS=your-testnet-public-address
 SUI_VALIDATOR=your_validator_name
 
 # Optional: Notification Services
@@ -33,9 +46,23 @@ PAGERDUTY_INTEGRATION_KEY=your_pagerduty_key
 TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 TELEGRAM_CHAT_ID=your_chat_id
 DISCORD_WEBHOOK_URL=your_discord_webhook_url
+
+# Optional: Advanced Configuration
+GF_GITHUB_PLUGINS=your_grafana_plugins
+PROMETHEUS_AUTH_TOKEN=your_prometheus_token
+ALERTMANAGER_AUTH_TOKEN=your_alertmanager_token
 ```
 
+> **💡 Conditional Deployment**: Only services with configured environment variables will be monitored. If you don't set `SUI_BRIDGE_MAINNET_TARGET` or `SUI_BRIDGE_TESTNET_TARGET`, the Sui Bridge monitoring will be automatically skipped.
+
 ### **3. Deploy Services**
+
+**Using the management script (recommended):**
+```bash
+./monitor.sh start
+```
+
+**Manual deployment:**
 
 **For Linux (recommended):**
 ```bash
@@ -103,6 +130,15 @@ sui-tools/
 
 ## 📊 **Monitoring Features**
 
+### **Conditional Service Deployment**
+
+The monitoring stack automatically adapts based on your configuration:
+
+- **Sui Bridge Monitoring**: Only deployed if `SUI_BRIDGE_MAINNET_TARGET` or `SUI_BRIDGE_TESTNET_TARGET` are configured
+- **Dashboard Provisioning**: Service-specific dashboards are only loaded when corresponding targets are configured
+- **Alert Rules**: Only active for configured services
+- **Resource Optimization**: Unused monitoring components are automatically skipped
+
 ### **Pre-configured Dashboards**
 
 - **Sui Bridge Dashboard**: Comprehensive monitoring of Sui Bridge Node performance
@@ -111,10 +147,13 @@ sui-tools/
   - Transaction processing metrics
   - Validator voting rights
   - Error rate monitoring
+  - *Only deployed when bridge targets are configured*
 
 ### **Alert Rules**
 
-The system includes 10 comprehensive alert rules:
+The system includes comprehensive alert rules for configured services:
+
+**Sui Bridge Alerts** (10 rules - only active when bridge targets are configured):
 
 1. **Node Restarted Alert** - Detects unexpected restarts
 2. **ETH Watcher Unrecognized Events** - Monitors ETH watcher issues
@@ -126,6 +165,8 @@ The system includes 10 comprehensive alert rules:
 8. **Build Transaction Errors** - Transaction building issues
 9. **Signature Aggregation Failures** - Validator signature problems
 10. **Too Many Failures Alert** - Escalated failure scenarios
+
+*Additional alert rules will be added as more Sui services are supported*
 
 ### **Notification Channels**
 
@@ -144,13 +185,20 @@ The system includes 10 comprehensive alert rules:
 |----------|-------------|---------|----------|
 | `GF_SECURITY_ADMIN_USER` | Grafana admin username | - | ✅ |
 | `GF_SECURITY_ADMIN_PASSWORD` | Grafana admin password | - | ✅ |
-| `SUI_BRIDGE_MAINNET_TARGET` | Mainnet bridge target | - | ✅ |
-| `SUI_BRIDGE_TESTNET_TARGET` | Testnet bridge target | - | ✅ |
-| `SUI_VALIDATOR` | Validator name for alerts | - | ✅ |
+| `SUI_BRIDGE_MAINNET_TARGET` | Mainnet bridge target | - | ❌* |
+| `SUI_BRIDGE_TESTNET_TARGET` | Testnet bridge target | - | ❌* |
+| `SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS` | Mainnet bridge public address | - | ❌ |
+| `SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS` | Testnet bridge public address | - | ❌ |
+| `SUI_VALIDATOR` | Validator name for alerts | - | ❌ |
 | `PAGERDUTY_INTEGRATION_KEY` | PagerDuty integration key | - | ❌ |
 | `TELEGRAM_BOT_TOKEN` | Telegram bot token | - | ❌ |
 | `TELEGRAM_CHAT_ID` | Telegram chat ID | - | ❌ |
 | `DISCORD_WEBHOOK_URL` | Discord webhook URL | - | ❌ |
+| `GF_GITHUB_PLUGINS` | Grafana plugins to install | - | ❌ |
+| `PROMETHEUS_AUTH_TOKEN` | Prometheus authentication token | - | ❌ |
+| `ALERTMANAGER_AUTH_TOKEN` | Alertmanager authentication token | - | ❌ |
+
+*Required only if you want to monitor Sui Bridge services. If not set, bridge monitoring will be skipped.
 
 ### **Service Configuration**
 
@@ -195,8 +243,17 @@ GF_GITHUB_PLUGINS="https://github.com/grafana/grafana-clock-panel/releases/downl
 
 ### **Data Backup**
 
-All persistent data is stored in the `data/` directory. Backup these directories for data persistence:
+Create backups using the management script:
 
+```bash
+# Create backup
+./monitor.sh backup
+
+# Restore from backup
+./monitor.sh restore backup-file.tar.gz
+```
+
+Or manually:
 ```bash
 tar -czf sui-monitoring-backup.tar.gz data/
 ```
@@ -204,6 +261,8 @@ tar -czf sui-monitoring-backup.tar.gz data/
 ---
 
 ## 🚨 **Troubleshooting**
+
+> 📋 **For detailed troubleshooting steps, see [SETUP.md](SETUP.md)**
 
 ### **Service Health Checks**
 

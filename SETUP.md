@@ -10,21 +10,21 @@
 
 ```bash
 # Start all services (auto-detects platform)
-./manage.sh start
+./monitor.sh start
 
 # Check service status
-./manage.sh status
+./monitor.sh status
 
 # View logs
-./manage.sh logs prometheus
-./manage.sh logs alertmanager
-./manage.sh logs grafana
+./monitor.sh logs prometheus
+./monitor.sh logs alertmanager
+./monitor.sh logs grafana
 
 # Stop services
-./manage.sh stop
+./monitor.sh stop
 
 # Restart services
-./manage.sh restart
+./monitor.sh restart
 ```
 
 ### Manual Deployment
@@ -128,14 +128,14 @@ docker compose restart
 
 ### Backup
 ```bash
-./manage.sh backup
+./monitor.sh backup
 # or
 tar -czf backup-$(date +%Y%m%d).tar.gz data/
 ```
 
 ### Restore
 ```bash
-./manage.sh restore backup-YYYYMMDD.tar.gz
+./monitor.sh restore backup-YYYYMMDD.tar.gz
 # or
 tar -xzf backup-YYYYMMDD.tar.gz
 ```
@@ -143,7 +143,7 @@ tar -xzf backup-YYYYMMDD.tar.gz
 ### Clean Up
 ```bash
 # Remove all containers and data
-./manage.sh cleanup
+./monitor.sh cleanup
 
 # Or manually
 docker compose down -v
@@ -205,7 +205,7 @@ docker compose ps
 ## Next Steps
 
 1. Configure your `.env` file with actual values
-2. Start the services: `./manage.sh start`
+2. Start the services: `./monitor.sh start`
 3. Access Grafana and log in
 4. Verify Prometheus targets are being scraped
 5. Test alert rules by triggering conditions

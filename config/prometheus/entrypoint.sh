@@ -199,6 +199,70 @@ EOF
         log_warn "SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS not set, skipping testnet health check"
     fi
     
+    # Add SUI Bridge Mainnet Ingress Check if configured
+    if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
+        log_info "Adding ingress check probe for SUI Bridge Mainnet: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}"
+        
+        cat <<EOF >> /etc/prometheus/prometheus.yml
+
+  - job_name: 'sui_bridge_mainnet_ingress_check'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - '${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}'
+        labels:
+          service: 'sui_bridge_ingress_check'
+          environment: 'mainnet'
+          configured: 'true'
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+        replacement: '${MAINNET_TARGET}'
+      - target_label: __address__
+        replacement: '${BLACKBOX_EXPORTER_ADDRESS}'
+EOF
+    else
+        log_warn "SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS not set, skipping mainnet ingress check"
+    fi
+    
+    # Add SUI Bridge Testnet Ingress Check if configured
+    if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
+        log_info "Adding ingress check probe for SUI Bridge Testnet: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}"
+        
+        cat <<EOF >> /etc/prometheus/prometheus.yml
+
+  - job_name: 'sui_bridge_testnet_ingress_check'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - '${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}'
+        labels:
+          service: 'sui_bridge_ingress_check'
+          environment: 'testnet'
+          configured: 'true'
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+        replacement: '${TESTNET_TARGET}'
+      - target_label: __address__
+        replacement: '${BLACKBOX_EXPORTER_ADDRESS}'
+EOF
+    else
+        log_warn "SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS not set, skipping testnet ingress check"
+    fi
+    
     # Copy rules to writable location and substitute SUI_VALIDATOR
     mkdir -p /etc/prometheus/rules
     if ls /config/rules/*.yml 1> /dev/null 2>&1; then
