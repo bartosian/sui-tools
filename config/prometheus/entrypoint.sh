@@ -141,7 +141,7 @@ EOF
         
         cat <<EOF >> /etc/prometheus/prometheus.yml
 
-  - job_name: 'sui_bridge_mainnet_health_check'
+  - job_name: 'sui_bridge_mainnet_metrics_public_key_check'
     metrics_path: /probe
     params:
       module: [http_2xx]
@@ -173,7 +173,7 @@ EOF
         
         cat <<EOF >> /etc/prometheus/prometheus.yml
 
-  - job_name: 'sui_bridge_testnet_health_check'
+  - job_name: 'sui_bridge_testnet_metrics_public_key_check'
     metrics_path: /probe
     params:
       module: [http_2xx]
