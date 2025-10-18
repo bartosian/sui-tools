@@ -27,9 +27,9 @@ services:
       ALERTMANAGER_AUTH_TOKEN: ${ALERTMANAGER_AUTH_TOKEN:-}
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/dashboards:/etc/dashboards:ro
+      - ./config/grafana/dashboards:/etc/dashboards:ro
       - ./config/grafana:/etc/grafana/provisioning:ro
-      - ./grafana/entrypoint.sh:/entrypoint.sh:ro
+      - ./config/grafana/entrypoint.sh:/entrypoint.sh:ro
     entrypoint: ["/bin/bash", "/entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:${GF_PORT:-3000}/api/health || exit 1"]
