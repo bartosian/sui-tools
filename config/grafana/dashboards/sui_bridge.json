@@ -1189,30 +1189,32 @@
                     }
                 },
                 "overrides": [{
-                    "matcher": {
-                        "id": "byName",
-                        "options": "Error - handle_eth_tx_hash"
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Error - handle_eth_tx_hash"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                            }
+                        }]
                     },
-                    "properties": [{
-                        "id": "color",
-                        "value": {
-                            "mode": "fixed",
-                            "fixedColor": "red"
-                        }
-                    }]
-                }, {
-                    "matcher": {
-                        "id": "byName",
-                        "options": "Error - handle_sui_tx_digest"
-                    },
-                    "properties": [{
-                        "id": "color",
-                        "value": {
-                            "mode": "fixed",
-                            "fixedColor": "red"
-                        }
-                    }]
-                }]
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Error - handle_sui_tx_digest"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                            }
+                        }]
+                    }
+                ]
             },
             "gridPos": {
                 "h": 4,
@@ -1445,28 +1447,30 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "rate(bridge_requests_received{instance=\"$instance\"}[$__rate_interval])",
-                "fullMetaSearch": false,
-                "hide": false,
-                "includeNullMetadata": true,
-                "legendFormat": "received - {{type}}",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }, {
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "rate(bridge_requests_ok{instance=\"$instance\"}[$__rate_interval])",
-                "fullMetaSearch": false,
-                "hide": false,
-                "includeNullMetadata": true,
-                "legendFormat": "processed - {{type}}",
-                "range": true,
-                "refId": "B",
-                "useBackend": false
-            }],
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_requests_received{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "received - {{type}}",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                },
+                {
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "rate(bridge_requests_ok{instance=\"$instance\"}[$__rate_interval])",
+                    "fullMetaSearch": false,
+                    "hide": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "processed - {{type}}",
+                    "range": true,
+                    "refId": "B",
+                    "useBackend": false
+                }
+            ],
             "title": "Request Throughput Over Time",
             "type": "timeseries"
         },
@@ -1523,30 +1527,32 @@
                     "unit": "none"
                 },
                 "overrides": [{
-                    "matcher": {
-                        "id": "byName",
-                        "options": "handle_eth_tx_hash"
+                        "matcher": {
+                            "id": "byName",
+                            "options": "handle_eth_tx_hash"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                            }
+                        }]
                     },
-                    "properties": [{
-                        "id": "color",
-                        "value": {
-                            "mode": "fixed",
-                            "fixedColor": "red"
-                        }
-                    }]
-                }, {
-                    "matcher": {
-                        "id": "byName",
-                        "options": "handle_sui_tx_digest"
-                    },
-                    "properties": [{
-                        "id": "color",
-                        "value": {
-                            "mode": "fixed",
-                            "fixedColor": "red"
-                        }
-                    }]
-                }]
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "handle_sui_tx_digest"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                            }
+                        }]
+                    }
+                ]
             },
             "gridPos": {
                 "h": 8,
@@ -1584,12 +1590,234 @@
             "type": "timeseries"
         },
         {
-            "collapsed": true,
+            "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
                 "y": 31
+            },
+            "id": 287,
+            "panels": [],
+            "title": "ETH RPC Queries",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of Ethereum RPC queries processed over time, providing insights into query frequency and system workload trends.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (req/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 32
+            },
+            "id": 289,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "sum(rate(bridge_eth_rpc_queries{instance=\"$instance\"}[$__rate_interval])) by (type)",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "ETH RPC Query Rate Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Comprehensive view of Ethereum RPC query latency metrics including percentiles and average latency.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Latency(s)",
+                        "axisPlacement": "left",
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 5,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "fieldMinMax": false,
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 32
+            },
+            "id": 227,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.50, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, type))",
+                    "hide": false,
+                    "legendFormat": "50th percentile - {{type}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.95, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, type))",
+                    "hide": false,
+                    "legendFormat": "95th percentile - {{type}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.99, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, type))",
+                    "hide": false,
+                    "legendFormat": "99th percentile - {{type}}",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "ETH RPC Query Latency Overview",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": true,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 41
             },
             "id": 276,
             "panels": [{
@@ -1623,7 +1851,7 @@
                         "h": 4,
                         "w": 6,
                         "x": 0,
-                        "y": 19
+                        "y": 32
                     },
                     "id": 266,
                     "options": {
@@ -1686,7 +1914,7 @@
                         "h": 4,
                         "w": 6,
                         "x": 6,
-                        "y": 19
+                        "y": 32
                     },
                     "id": 315,
                     "options": {
@@ -1749,7 +1977,7 @@
                         "h": 4,
                         "w": 6,
                         "x": 12,
-                        "y": 19
+                        "y": 32
                     },
                     "id": 316,
                     "options": {
@@ -1812,7 +2040,7 @@
                         "h": 4,
                         "w": 6,
                         "x": 18,
-                        "y": 19
+                        "y": 32
                     },
                     "id": 280,
                     "options": {
@@ -1908,7 +2136,7 @@
                         "h": 5,
                         "w": 6,
                         "x": 0,
-                        "y": 23
+                        "y": 36
                     },
                     "id": 283,
                     "options": {
@@ -2006,7 +2234,7 @@
                         "h": 5,
                         "w": 6,
                         "x": 6,
-                        "y": 23
+                        "y": 36
                     },
                     "id": 284,
                     "options": {
@@ -2104,7 +2332,7 @@
                         "h": 5,
                         "w": 6,
                         "x": 12,
-                        "y": 23
+                        "y": 36
                     },
                     "id": 225,
                     "options": {
@@ -2202,7 +2430,7 @@
                         "h": 5,
                         "w": 6,
                         "x": 18,
-                        "y": 23
+                        "y": 36
                     },
                     "id": 312,
                     "options": {
@@ -2271,7 +2499,7 @@
                         "h": 4,
                         "w": 6,
                         "x": 0,
-                        "y": 28
+                        "y": 41
                     },
                     "id": 279,
                     "options": {
@@ -2367,7 +2595,7 @@
                         "h": 5,
                         "w": 6,
                         "x": 0,
-                        "y": 32
+                        "y": 45
                     },
                     "id": 298,
                     "options": {
@@ -2415,7 +2643,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 32
+                "y": 42
             },
             "id": 290,
             "panels": [{
@@ -2739,1321 +2967,1126 @@
             "type": "row"
         },
         {
-            "collapsed": false,
+            "collapsed": true,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 33
+                "y": 43
             },
             "id": 286,
-            "panels": [],
+            "panels": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "This panel provides an aggregated overview of bridge actions, including the total number of received, successfully processed (OK), and error requests. The data is categorized by request type, offering valuable insights into the system's throughput and reliability. It helps monitor the performance of different bridge action components, such as SUI -> ETH and ETH -> SUI data flows, allowing you to track received, processed, and skipped actions efficiently.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "thresholds"
+                            },
+                            "decimals": 0,
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "green"
+                                }]
+                            }
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 4,
+                        "w": 24,
+                        "x": 0,
+                        "y": 52
+                    },
+                    "id": 297,
+                    "options": {
+                        "colorMode": "value",
+                        "graphMode": "none",
+                        "justifyMode": "auto",
+                        "orientation": "auto",
+                        "percentChangeColorMode": "standard",
+                        "reduceOptions": {
+                            "calcs": [
+                                "lastNotNull"
+                            ],
+                            "fields": "",
+                            "values": false
+                        },
+                        "showPercentChange": false,
+                        "textMode": "auto",
+                        "wideLayout": true
+                    },
+                    "pluginVersion": "10.2.0",
+                    "targets": [{
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "hide": false,
+                            "instant": false,
+                            "legendFormat": "Received",
+                            "range": true,
+                            "refId": "A"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_already_processed_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "hide": false,
+                            "instant": false,
+                            "legendFormat": "Processed",
+                            "range": true,
+                            "refId": "B"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "hide": false,
+                            "instant": false,
+                            "legendFormat": "Skipped",
+                            "range": true,
+                            "refId": "C"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "bridge_sui_watcher_received_actions{instance=\"$instance\"}",
+                            "hide": false,
+                            "legendFormat": "SUI -> ETH",
+                            "range": true,
+                            "refId": "D"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "bridge_eth_watcher_received_actions{instance=\"$instance\"}",
+                            "hide": false,
+                            "legendFormat": "ETH -> SUI",
+                            "range": true,
+                            "refId": "E"
+                        }
+                    ],
+                    "title": "Actions Overview",
+                    "type": "stat"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "Shows key metrics for the Bridge Action Executor queue, including totals for received, skipped, and already processed actions, helping monitor queue performance and efficiency.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "Actions/sec",
+                                "axisPlacement": "left",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 10,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "linear",
+                                "lineWidth": 2,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "green"
+                                }]
+                            },
+                            "unit": "none"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 0,
+                        "y": 56
+                    },
+                    "id": 292,
+                    "options": {
+                        "legend": {
+                            "calcs": [],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "received {{host}} ",
+                            "range": true,
+                            "refId": "B",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_already_processed_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "already processed {{host}} ",
+                            "range": true,
+                            "refId": "A",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "skipped {{host}} ",
+                            "range": true,
+                            "refId": "C",
+                            "useBackend": false
+                        }
+                    ],
+                    "title": "Action Executor Signing Queue Action Rates",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "Displays metrics for the execution queue in the Bridge Action Executor, including totals for received actions and actions skipped due to pausing, providing insights into queue activity and processing behavior.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "Actions/sec",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 10,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 2,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "green"
+                                }]
+                            },
+                            "unit": "none"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 8,
+                        "y": 56
+                    },
+                    "id": 232,
+                    "options": {
+                        "legend": {
+                            "calcs": [],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_execution_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "received {{host}} ",
+                            "range": true,
+                            "refId": "B",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_action_executor_execution_queue_skipped_actions_due_to_pausing{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "skipped processed {{host}} ",
+                            "range": true,
+                            "refId": "A",
+                            "useBackend": false
+                        }
+                    ],
+                    "title": "Action Executor Execution Queue Action Rates",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "Displays error metrics for the Bridge Action Executor, including failures during Sui transaction execution, submission errors, and continuous submission failures, helping identify and address recurring issues.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "Errors",
+                                "axisPlacement": "left",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 10,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 2,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "red"
+                                }]
+                            },
+                            "unit": "none"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 16,
+                        "y": 56
+                    },
+                    "id": 230,
+                    "options": {
+                        "legend": {
+                            "calcs": [],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_err_build_sui_transaction{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "build sui tx {{host}} ",
+                            "range": true,
+                            "refId": "B",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_err_signature_aggregation{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "sig aggregation {{host}} ",
+                            "range": true,
+                            "refId": "A",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_err_sui_transaction_submission{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "submit sui tx {{host}} ",
+                            "range": true,
+                            "refId": "C",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_err_sui_transaction_submission_too_many_failures{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "submit sui tx too many failure {{host}} ",
+                            "range": true,
+                            "refId": "D",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_err_sui_transaction_execution{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "execute sui tx {{host}} ",
+                            "range": true,
+                            "refId": "E",
+                            "useBackend": false
+                        }
+                    ],
+                    "title": "Action Executor Error Rates",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "Displays the number of inflight items across monitored channels and the count of running tasks per callsite, providing visibility into system activity and task processing states.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "Rate (req/sec)",
+                                "axisPlacement": "left",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "green"
+                                }]
+                            },
+                            "unit": "none"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 0,
+                        "y": 64
+                    },
+                    "id": 226,
+                    "options": {
+                        "legend": {
+                            "calcs": [],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "max(monitored_channel_inflight{instance=\"$instance\"}) by (name)",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "{{name}}",
+                            "range": true,
+                            "refId": "A",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "max(monitored_tasks{instance=\"$instance\"}) by (callsite)",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "{{callsite}}",
+                            "range": true,
+                            "refId": "B",
+                            "useBackend": false
+                        }
+                    ],
+                    "title": "Channel Inflight Items & Monitored Tasks",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "left",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                        "color": "green"
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 8,
+                        "y": 64
+                    },
+                    "id": 219,
+                    "options": {
+                        "legend": {
+                            "calcs": [],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_sui_watcher_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "sui -> eth {{host}}",
+                            "range": true,
+                            "refId": "A",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_eth_watcher_received_actions{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "eth -> sui {{host}}",
+                            "range": true,
+                            "refId": "B",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_eth_sui_token_transfer_approved{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "ETH->SUI approved {{host}}",
+                            "range": true,
+                            "refId": "C",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_eth_sui_token_transfer_claimed{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "ETH->SUI claimed {{host}}",
+                            "range": true,
+                            "refId": "D",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_sui_eth_token_transfer_approved{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "SUI->ETH approved {{host}}",
+                            "range": true,
+                            "refId": "E",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "rate(bridge_sui_eth_token_transfer_claimed{instance=\"$instance\"}[$__rate_interval])",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "SUI->ETH claimed {{host}}",
+                            "range": true,
+                            "refId": "F",
+                            "useBackend": false
+                        }
+                    ],
+                    "title": "Transfer Requests Rate",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                        "color": "green"
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 16,
+                        "y": 64
+                    },
+                    "id": 229,
+                    "options": {
+                        "legend": {
+                            "calcs": [],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "bridge_signer_with_cache_miss{instance=\"$instance\"} / (bridge_signer_with_cache_hit{instance=\"$instance\"} + bridge_signer_with_cache_miss{instance=\"$instance\"})",
+                            "fullMetaSearch": false,
+                            "hide": false,
+                            "includeNullMetadata": true,
+                            "legendFormat": "{{host}}  {{type}}",
+                            "range": true,
+                            "refId": "A",
+                            "useBackend": false
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "ctles38bbprkmttbdkv0"
+                            },
+                            "disableTextWrap": false,
+                            "editorMode": "code",
+                            "expr": "signer_with_cache_miss{instance=\"$instance\"}",
+                            "fullMetaSearch": false,
+                            "hide": true,
+                            "includeNullMetadata": true,
+                            "legendFormat": "miss {{host}} ",
+                            "range": true,
+                            "refId": "B",
+                            "useBackend": false
+                        }
+                    ],
+                    "title": "Request Signer Cache Miss Rate",
+                    "type": "timeseries"
+                }
+            ],
             "title": "Actions",
             "type": "row"
         },
         {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "This panel provides an aggregated overview of bridge actions, including the total number of received, successfully processed (OK), and error requests. The data is categorized by request type, offering valuable insights into the system's throughput and reliability. It helps monitor the performance of different bridge action components, such as SUI -> ETH and ETH -> SUI data flows, allowing you to track received, processed, and skipped actions efficiently.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "decimals": 0,
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 24,
-                "x": 0,
-                "y": 34
-            },
-            "id": 297,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Received",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_already_processed_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Processed",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Skipped",
-                    "range": true,
-                    "refId": "C"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "bridge_sui_watcher_received_actions{instance=\"$instance\"}",
-                    "hide": false,
-                    "legendFormat": "SUI -> ETH",
-                    "range": true,
-                    "refId": "D"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "bridge_eth_watcher_received_actions{instance=\"$instance\"}",
-                    "hide": false,
-                    "legendFormat": "ETH -> SUI",
-                    "range": true,
-                    "refId": "E"
-                }
-            ],
-            "title": "Actions Overview",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Shows key metrics for the Bridge Action Executor queue, including totals for received, skipped, and already processed actions, helping monitor queue performance and efficiency.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Actions/sec",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
-                "y": 38
-            },
-            "id": 292,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_signing_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "received {{host}} ",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_already_processed_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "already processed {{host}} ",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_signing_queue_skipped_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "skipped {{host}} ",
-                    "range": true,
-                    "refId": "C",
-                    "useBackend": false
-                }
-            ],
-            "title": "Action Executor Signing Queue Action Rates",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays metrics for the execution queue in the Bridge Action Executor, including totals for received actions and actions skipped due to pausing, providing insights into queue activity and processing behavior.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Actions/sec",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 8,
-                "y": 38
-            },
-            "id": 232,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_execution_queue_received_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "received {{host}} ",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_action_executor_execution_queue_skipped_actions_due_to_pausing{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "skipped processed {{host}} ",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                }
-            ],
-            "title": "Action Executor Execution Queue Action Rates",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays error metrics for the Bridge Action Executor, including failures during Sui transaction execution, submission errors, and continuous submission failures, helping identify and address recurring issues.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Errors",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "red"
-                        }]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 38
-            },
-            "id": 230,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_build_sui_transaction{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "build sui tx {{host}} ",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_signature_aggregation{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "sig aggregation {{host}} ",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_sui_transaction_submission{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "submit sui tx {{host}} ",
-                    "range": true,
-                    "refId": "C",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_sui_transaction_submission_too_many_failures{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "submit sui tx too many failure {{host}} ",
-                    "range": true,
-                    "refId": "D",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_sui_transaction_execution{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "execute sui tx {{host}} ",
-                    "range": true,
-                    "refId": "E",
-                    "useBackend": false
-                }
-            ],
-            "title": "Action Executor Error Rates",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the number of inflight items across monitored channels and the count of running tasks per callsite, providing visibility into system activity and task processing states.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Rate (req/sec)",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
-                "y": 46
-            },
-            "id": 226,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "max(monitored_channel_inflight{instance=\"$instance\"}) by (name)",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "{{name}}",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "max(monitored_tasks{instance=\"$instance\"}) by (callsite)",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "{{callsite}}",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
-                }
-            ],
-            "title": "Channel Inflight Items & Monitored Tasks",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 8,
-                "y": 46
-            },
-            "id": 219,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_sui_watcher_received_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "sui -> eth {{host}}",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_eth_watcher_received_actions{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "eth -> sui {{host}}",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_eth_sui_token_transfer_approved{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "ETH->SUI approved {{host}}",
-                    "range": true,
-                    "refId": "C",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_eth_sui_token_transfer_claimed{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "ETH->SUI claimed {{host}}",
-                    "range": true,
-                    "refId": "D",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_sui_eth_token_transfer_approved{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "SUI->ETH approved {{host}}",
-                    "range": true,
-                    "refId": "E",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_sui_eth_token_transfer_claimed{instance=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "SUI->ETH claimed {{host}}",
-                    "range": true,
-                    "refId": "F",
-                    "useBackend": false
-                }
-            ],
-            "title": "Transfer Requests Rate",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 46
-            },
-            "id": 229,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "bridge_signer_with_cache_miss{instance=\"$instance\"} / (bridge_signer_with_cache_hit{instance=\"$instance\"} + bridge_signer_with_cache_miss{instance=\"$instance\"})",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "{{host}}  {{type}}",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "signer_with_cache_miss{instance=\"$instance\"}",
-                    "fullMetaSearch": false,
-                    "hide": true,
-                    "includeNullMetadata": true,
-                    "legendFormat": "miss {{host}} ",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
-                }
-            ],
-            "title": "Request Signer Cache Miss Rate",
-            "type": "timeseries"
-        },
-        {
-            "collapsed": false,
+            "collapsed": true,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 54
-            },
-            "id": 287,
-            "panels": [],
-            "title": "ETH RPC Queries",
-            "type": "row"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the rate of Ethereum RPC queries processed over time, providing insights into query frequency and system workload trends.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Rate (req/sec)",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 0,
-                "y": 55
-            },
-            "id": 289,
-            "options": {
-                "legend": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "sum(rate(bridge_eth_rpc_queries{instance=\"$instance\"}[$__rate_interval])) by (type)",
-                "fullMetaSearch": false,
-                "hide": false,
-                "includeNullMetadata": true,
-                "legendFormat": "{{type}}",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }],
-            "title": "ETH RPC Query Rate Over Time",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the latency distribution for Ethereum RPC queries, categorized by method name.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Latency(s)",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 5,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 12,
-                "y": 55
-            },
-            "id": 227,
-            "options": {
-                "legend": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "histogram_quantile(0.95, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, host, type))",
-                "fullMetaSearch": false,
-                "hide": false,
-                "includeNullMetadata": true,
-                "legendFormat": "{{host}} {{type}}",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }],
-            "title": "ETH RPC Query Latency Distribution",
-            "type": "timeseries"
-        },
-        {
-            "collapsed": false,
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 63
+                "y": 44
             },
             "id": 281,
-            "panels": [],
+            "panels": [{
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "Displays the latency distribution for spans in the bridge node service, categorized by span names. Latency is measured in milliseconds and displayed across the 50th, 95th, and 99th percentiles.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "Latency (ms)",
+                                "axisPlacement": "left",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 10,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 2,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "green"
+                                }]
+                            },
+                            "unit": "ns"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 9,
+                        "w": 12,
+                        "x": 0,
+                        "y": 36
+                    },
+                    "id": 60,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                                "lastNotNull"
+                            ],
+                            "displayMode": "table",
+                            "placement": "right",
+                            "showLegend": true
+                        },
+                        "timezone": [
+                            "browser"
+                        ],
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                            "editorMode": "code",
+                            "expr": "histogram_quantile(0.95, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
+                            "legendFormat": "95th percentile - {{span_name}}",
+                            "range": true,
+                            "refId": "A"
+                        },
+                        {
+                            "editorMode": "code",
+                            "expr": "histogram_quantile(0.50, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
+                            "legendFormat": "50th percentile - {{span_name}}",
+                            "range": true,
+                            "refId": "B"
+                        },
+                        {
+                            "editorMode": "code",
+                            "expr": "histogram_quantile(0.99, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
+                            "legendFormat": "99th percentile - {{span_name}}",
+                            "range": true,
+                            "refId": "C"
+                        }
+                    ],
+                    "title": "Tracing Span Latency Distribution",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "description": "Displays the average latency for spans in the bridge node service.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisBorderShow": true,
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "Latency (ms)",
+                                "axisPlacement": "left",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 10,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "insertNulls": false,
+                                "lineInterpolation": "smooth",
+                                "lineWidth": 2,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [{
+                                    "color": "green"
+                                }]
+                            },
+                            "unit": "ns"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 9,
+                        "w": 12,
+                        "x": 12,
+                        "y": 36
+                    },
+                    "id": 282,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                                "lastNotNull"
+                            ],
+                            "displayMode": "table",
+                            "placement": "right",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "pluginVersion": "11.4.0",
+                    "targets": [{
+                        "editorMode": "code",
+                        "expr": "tracing_span_latencies_sum{instance=\"$instance\"} / tracing_span_latencies_count{instance=\"$instance\"}",
+                        "legendFormat": "{{span_name}}",
+                        "range": true,
+                        "refId": "A"
+                    }],
+                    "title": "Tracing Span Average Latency",
+                    "type": "timeseries"
+                }
+            ],
             "title": "Span Latency",
             "type": "row"
         },
         {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the latency distribution for spans in the bridge node service, categorized by span names. Latency is measured in milliseconds and displayed across the 50th, 95th, and 99th percentiles.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Latency (ms)",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "ns"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 12,
-                "x": 0,
-                "y": 64
-            },
-            "id": 60,
-            "options": {
-                "legend": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true
-                },
-                "timezone": [
-                    "browser"
-                ],
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
-                    "legendFormat": "95th percentile - {{span_name}}",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
-                    "legendFormat": "50th percentile - {{span_name}}",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.99, sum(rate(tracing_span_latencies_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, span_name))",
-                    "legendFormat": "99th percentile - {{span_name}}",
-                    "range": true,
-                    "refId": "C"
-                }
-            ],
-            "title": "Tracing Span Latency Distribution",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the average latency for spans in the bridge node service.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Latency (ms)",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "ns"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 12,
-                "x": 12,
-                "y": 64
-            },
-            "id": 282,
-            "options": {
-                "legend": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "editorMode": "code",
-                "expr": "tracing_span_latencies_sum{instance=\"$instance\"} / tracing_span_latencies_count{instance=\"$instance\"}",
-                "legendFormat": "{{span_name}}",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Tracing Span Average Latency",
-            "type": "timeseries"
-        },
-        {
             "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 73
+                "y": 45
             },
             "id": 313,
             "panels": [],
@@ -4085,7 +4118,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 74
+                "y": 46
             },
             "id": 314,
             "options": {
@@ -4176,7 +4209,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 74
+                "y": 46
             },
             "id": 303,
             "options": {
@@ -4265,7 +4298,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 74
+                "y": 46
             },
             "id": 304,
             "options": {
@@ -4354,7 +4387,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 18,
-                "y": 74
+                "y": 46
             },
             "id": 305,
             "options": {
@@ -4443,7 +4476,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 78
+                "y": 50
             },
             "id": 306,
             "options": {
@@ -4507,40 +4540,7 @@
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "vis": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
+                        "mode": "thresholds"
                     },
                     "mappings": [],
                     "thresholds": {
@@ -4549,222 +4549,46 @@
                             "color": "green"
                         }]
                     },
-                    "unit": "s"
+                    "unit": "short"
                 },
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
+                "h": 6,
                 "w": 12,
                 "x": 12,
-                "y": 78
+                "y": 50
             },
-            "id": 307,
+            "id": 311,
             "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
                 },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
+                "textMode": "auto"
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "histogram_quantile(0.50, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, type))",
+                "expr": "thread_stall_duration_sec_count{instance=\"$instance\"}",
                 "hide": false,
-                "legendFormat": "50th percentile - {{type}}",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
             }],
-            "title": "ETH RPC Query Latency - 50th Percentile",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "vis": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 0,
-                "y": 86
-            },
-            "id": 308,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "histogram_quantile(0.99, sum(rate(bridge_eth_rpc_queries_latency_bucket{instance=\"$instance\"}[$__rate_interval])) by (le, type))",
-                "hide": false,
-                "legendFormat": "99th percentile - {{type}}",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "ETH RPC Query Latency - 99th Percentile",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "vis": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 12,
-                "y": 86
-            },
-            "id": 309,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "bridge_eth_rpc_queries_latency_sum{instance=\"$instance\"} / bridge_eth_rpc_queries_latency_count{instance=\"$instance\"}",
-                "hide": false,
-                "legendFormat": "Average - {{type}}",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "ETH RPC Query Latency - Average",
-            "type": "timeseries"
+            "title": "Thread Stall Count",
+            "type": "stat"
         },
         {
             "datasource": {
@@ -4802,7 +4626,7 @@
                 "h": 6,
                 "w": 12,
                 "x": 0,
-                "y": 94
+                "y": 58
             },
             "id": 310,
             "options": {
@@ -4834,64 +4658,6 @@
             }],
             "title": "Signer Cache Performance Ratio",
             "type": "gauge"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "short"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 6,
-                "w": 12,
-                "x": 12,
-                "y": 94
-            },
-            "id": 311,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "textMode": "auto"
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "thread_stall_duration_sec_count{instance=\"$instance\"}",
-                "hide": false,
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Thread Stall Count",
-            "type": "stat"
         }
     ],
     "refresh": "",
@@ -4910,8 +4676,8 @@
             {
                 "current": {
                     "selected": false,
-                    "text": "103.50.32.66:9185",
-                    "value": "103.50.32.66:9185"
+                    "text": "103.50.32.66:9186",
+                    "value": "103.50.32.66:9186"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -4939,7 +4705,7 @@
         ]
     },
     "time": {
-        "from": "now-5m",
+        "from": "now-30m",
         "to": "now"
     },
     "timepicker": {
@@ -4957,6 +4723,6 @@
     "timezone": "",
     "title": "Sui Bridge Node",
     "uid": "ctles38bbprkmttbdkv0hijk",
-    "version": 3,
+    "version": 12,
     "weekStart": ""
 }
