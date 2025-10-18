@@ -88,43 +88,37 @@ docker compose -f docker-compose.macos.yml up -d
 
 ```
 sui-tools/
-├── config/                          # Configuration templates
+├── README.md                       # Project documentation
+├── SETUP.md                        # Quick setup guide
+├── assets/                         # Project assets
+│   ├── sui_bridge.png
+│   └── sui_header.png
+├── config/                         # Configuration files
+│   ├── alertmanager/
+│   │   ├── alertmanager.yml
+│   │   └── entrypoint.sh
+│   ├── blackbox/
+│   │   ├── blackbox.yml
+│   │   └── entrypoint.sh
 │   ├── grafana/
-│   │   ├── datasources.yml.template
-│   │   └── dashboards.yml.template
-│   ├── prometheus/
-│   │   └── prometheus.yml.template
-│   └── alertmanager/
-│       └── alertmanager.yml.template
-├── grafana/
-│   ├── dashboards/                  # Dashboard definitions
-│   │   └── sui_bridge.json
-│   ├── provisioning/                # Grafana provisioning
-│   └── entrypoint.sh               # Enhanced startup script
-├── prometheus/
-│   ├── rules/                       # Alert rules
-│   │   └── sui_bridge_alerts.yml
-│   └── entrypoint.sh               # Enhanced startup script
-├── alertmanager/
-│   └── entrypoint.sh               # Enhanced startup script
+│   │   ├── dashboards/
+│   │   │   ├── dashboards.yml
+│   │   │   └── sui_bridge.json
+│   │   ├── datasources/
+│   │   │   └── datasources.yml
+│   │   └── entrypoint.sh
+│   └── prometheus/
+│       ├── entrypoint.sh
+│       └── rules/
+│           └── sui_bridge_alerts.yml
 ├── data/                           # Persistent data storage
+│   ├── alertmanager/
 │   ├── grafana/
-│   ├── prometheus/
-│   └── alertmanager/
-├── docker-compose.yml              # Linux configuration
+│   └── prometheus/
 ├── docker-compose.macos.yml        # macOS configuration
-└── .env.template                   # Environment template
+├── docker-compose.yml              # Linux configuration
+└── monitor.sh                      # Management script
 ```
-
-### **Key Improvements**
-
-✅ **Configuration Management**: Centralized configuration templates with environment variable substitution  
-✅ **Health Checks**: All services include comprehensive health monitoring  
-✅ **Error Handling**: Enhanced entrypoint scripts with validation and logging  
-✅ **Data Persistence**: Proper volume management with bind mounts  
-✅ **Security**: Non-root containers, proper permissions, and secret management  
-✅ **Monitoring**: Structured logging and service dependencies  
-✅ **Flexibility**: Support for both Linux and macOS deployments  
 
 ---
 
@@ -142,12 +136,6 @@ The monitoring stack automatically adapts based on your configuration:
 ### **Pre-configured Dashboards**
 
 - **Sui Bridge Dashboard**: Comprehensive monitoring of Sui Bridge Node performance
-  - Uptime and availability metrics
-  - ETH and SUI watcher status
-  - Transaction processing metrics
-  - Validator voting rights
-  - Error rate monitoring
-  - *Only deployed when bridge targets are configured*
 
 ### **Alert Rules**
 
