@@ -1375,7 +1375,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays the rate of received requests over time, categorized by request type, providing visibility into ongoing operations and potential bottlenecks in request handling.",
+            "description": "Displays the rate of received and processed requests over time, categorized by request type, providing visibility into system throughput and processing capacity.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1455,8 +1455,19 @@
                 "range": true,
                 "refId": "A",
                 "useBackend": false
+            }, {
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_requests_ok{instance=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "processed - {{type}}",
+                "range": true,
+                "refId": "B",
+                "useBackend": false
             }],
-            "title": "Received Requests Rate Over Time",
+            "title": "Request Throughput Over Time",
             "type": "timeseries"
         },
         {
