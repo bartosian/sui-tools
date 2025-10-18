@@ -53,7 +53,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -134,7 +135,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -212,7 +214,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -291,7 +294,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -358,7 +362,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -465,7 +470,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -583,7 +589,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -666,7 +673,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "orange",
@@ -776,7 +784,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -899,7 +908,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -979,7 +989,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1101,7 +1112,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1184,7 +1196,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1330,7 +1343,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "none"
@@ -1419,7 +1433,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "none"
@@ -1521,7 +1536,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "red"
+                            "color": "red",
+                            "value": null
                         }]
                     },
                     "unit": "none"
@@ -1599,7 +1615,7 @@
             },
             "id": 287,
             "panels": [],
-            "title": "ETH RPC Queries",
+            "title": "ETH RPC",
             "type": "row"
         },
         {
@@ -1649,7 +1665,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "none"
@@ -1690,7 +1707,7 @@
                 "refId": "A",
                 "useBackend": false
             }],
-            "title": "ETH RPC Query Rate Over Time",
+            "title": "RPC Query Rate Over Time",
             "type": "timeseries"
         },
         {
@@ -1742,7 +1759,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "s"
@@ -1808,7 +1826,339 @@
                     "refId": "C"
                 }
             ],
-            "title": "ETH RPC Query Latency Overview",
+            "title": "RPC Query Latency Overview",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 41
+            },
+            "id": 317,
+            "panels": [],
+            "title": "Signer Cache",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the overall performance ratio of the signer cache, indicating the percentage of cache hits vs total cache operations. Higher values indicate better cache efficiency.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "max": 1,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 0.5
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.8
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 42
+            },
+            "id": 310,
+            "options": {
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "bridge_signer_with_cache_hit{instance=\"$instance\"} / (bridge_signer_with_cache_hit{instance=\"$instance\"} + bridge_signer_with_cache_miss{instance=\"$instance\"})",
+                "hide": false,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Cache Performance Ratio",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the rate of cache hits per second for different cache types. This metric helps identify which cache types are performing well.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "vis": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "reqps"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 42
+            },
+            "id": 304,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "rate(bridge_signer_with_cache_hit{instance=\"$instance\"}[$__rate_interval])",
+                "hide": false,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Cache Hit Rate by Type Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the rate of cache misses per second for different cache types. Higher values indicate cache inefficiency and may require attention.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "red",
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "vis": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "red",
+                            "value": null
+                        }]
+                    },
+                    "unit": "reqps"
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byName",
+                            "options": "request"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "orange",
+                                "mode": "fixed"
+                            }
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "response"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                            }
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "signature"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "purple",
+                                "mode": "fixed"
+                            }
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "auth"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "dark-red",
+                                "mode": "fixed"
+                            }
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "token"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "dark-purple",
+                                "mode": "fixed"
+                            }
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 42
+            },
+            "id": 305,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "rate(bridge_signer_with_cache_miss{instance=\"$instance\"}[$__rate_interval])",
+                "hide": false,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Cache Miss Rate by Type Over Time",
             "type": "timeseries"
         },
         {
@@ -1817,7 +2167,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 41
+                "y": 50
             },
             "id": 276,
             "panels": [{
@@ -2432,7 +2782,7 @@
                         "x": 18,
                         "y": 36
                     },
-                    "id": 312,
+                    "id": 318,
                     "options": {
                         "legend": {
                             "calcs": [],
@@ -2643,7 +2993,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 42
+                "y": 51
             },
             "id": 290,
             "panels": [{
@@ -2972,7 +3322,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 43
+                "y": 52
             },
             "id": 286,
             "panels": [{
@@ -3883,7 +4233,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 44
+                "y": 53
             },
             "id": 281,
             "panels": [{
@@ -4086,9 +4436,9 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 45
+                "y": 54
             },
-            "id": 313,
+            "id": 319,
             "panels": [],
             "title": "Advanced Metrics & Monitoring",
             "type": "row"
@@ -4107,7 +4457,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "short"
@@ -4118,7 +4469,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 46
+                "y": 55
             },
             "id": 314,
             "options": {
@@ -4198,7 +4549,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "reqps"
@@ -4209,7 +4561,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 46
+                "y": 55
             },
             "id": 303,
             "options": {
@@ -4248,86 +4600,56 @@
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "vis": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
+                        "mode": "thresholds"
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
-                    "unit": "reqps"
+                    "unit": "short"
                 },
                 "overrides": []
             },
             "gridPos": {
-                "h": 4,
-                "w": 6,
+                "h": 6,
+                "w": 12,
                 "x": 12,
-                "y": 46
+                "y": 55
             },
-            "id": 304,
+            "id": 320,
             "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
                 },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
+                "textMode": "auto"
             },
-            "pluginVersion": "11.4.0",
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "rate(bridge_signer_with_cache_hit{instance=\"$instance\"}[$__rate_interval])",
+                "expr": "thread_stall_duration_sec_count{instance=\"$instance\"}",
                 "hide": false,
-                "legendFormat": "{{type}}",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
             }],
-            "title": "Signer Cache Hit Rate by Type",
-            "type": "timeseries"
+            "title": "Thread Stall Count",
+            "type": "stat"
         },
         {
             "datasource": {
@@ -4376,96 +4698,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "reqps"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 6,
-                "x": 18,
-                "y": 46
-            },
-            "id": 305,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "rate(bridge_signer_with_cache_miss{instance=\"$instance\"}[$__rate_interval])",
-                "hide": false,
-                "legendFormat": "{{type}}",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Signer Cache Miss Rate by Type",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "vis": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "s"
@@ -4476,7 +4710,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 50
+                "y": 59
             },
             "id": 306,
             "options": {
@@ -4531,133 +4765,6 @@
             ],
             "title": "Thread Stall Duration - Percentiles",
             "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "short"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 6,
-                "w": 12,
-                "x": 12,
-                "y": 50
-            },
-            "id": 311,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "textMode": "auto"
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "thread_stall_duration_sec_count{instance=\"$instance\"}",
-                "hide": false,
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Thread Stall Count",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "max": 1,
-                    "min": 0,
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "red"
-                            },
-                            {
-                                "color": "yellow",
-                                "value": 0.5
-                            },
-                            {
-                                "color": "green",
-                                "value": 0.8
-                            }
-                        ]
-                    },
-                    "unit": "percentunit"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 6,
-                "w": 12,
-                "x": 0,
-                "y": 58
-            },
-            "id": 310,
-            "options": {
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "bridge_signer_with_cache_hit{instance=\"$instance\"} / (bridge_signer_with_cache_hit{instance=\"$instance\"} + bridge_signer_with_cache_miss{instance=\"$instance\"})",
-                "hide": false,
-                "legendFormat": "{{type}}",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Signer Cache Performance Ratio",
-            "type": "gauge"
         }
     ],
     "refresh": "",
@@ -4705,7 +4812,7 @@
         ]
     },
     "time": {
-        "from": "now-30m",
+        "from": "now-5m",
         "to": "now"
     },
     "timepicker": {
@@ -4723,6 +4830,6 @@
     "timezone": "",
     "title": "Sui Bridge Node",
     "uid": "ctles38bbprkmttbdkv0hijk",
-    "version": 12,
+    "version": 10,
     "weekStart": ""
 }
