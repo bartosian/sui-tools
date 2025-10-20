@@ -98,31 +98,32 @@ parse_yaml_config() {
         local child="$2"
         local file="$3"
         awk -v parent="$parent" -v child="$child" '
-        BEGIN { FS=":"; in_section=0; found=0 }
+        BEGIN { in_section=0; found=0 }
         {
             # Remove leading/trailing whitespace
             gsub(/^[ \t]+|[ \t]+$/, "", $0)
-            gsub(/^[ \t]+|[ \t]+$/, "", $1)
-            gsub(/^[ \t]+|[ \t]+$/, "", $2)
-            
-            # Remove quotes if present
-            gsub(/^["\047]|["\047]$/, "", $2)
             
             # Check if we are in the right section
-            if ($1 == parent && $2 == "") {
+            if ($0 == parent ":") {
                 in_section=1
                 next
             }
             
             # If we are in the section and find the child key
-            if (in_section && $1 == child && $2 != "") {
-                print $2
-                found=1
-                exit
+            if (in_section && match($0, "^[ \t]*" child "[ \t]*:")) {
+                # Extract everything after the colon
+                value = substr($0, RSTART + RLENGTH)
+                gsub(/^[ \t]+|[ \t]+$/, "", value)
+                gsub(/^["\047]|["\047]$/, "", value)
+                if (value != "") {
+                    print value
+                    found=1
+                    exit
+                }
             }
             
             # If we hit another top-level key, we are out of the section
-            if (in_section && $2 == "" && $1 != "" && substr($1, 1, 1) != " ") {
+            if (in_section && $0 ~ /^[a-zA-Z]/ && $0 !~ /^[ \t]/ && !match($0, ":")) {
                 in_section=0
             }
         }

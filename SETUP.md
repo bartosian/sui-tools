@@ -77,7 +77,7 @@ Edit `config/alertmanager/alertmanager.yml`:
 ## Accessing Services
 
 - **Grafana**: http://localhost:3000
-  - Default credentials: See `.env` file
+  - Default credentials: See `config.yml` file
 - **Prometheus**: http://localhost:9090
 - **Alertmanager**: http://localhost:9093
 

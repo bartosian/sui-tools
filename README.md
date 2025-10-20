@@ -324,7 +324,7 @@ docker compose up -d
 
 ### **Configuration Changes**
 
-After modifying `.env` or configuration templates:
+After modifying `config.yml` or configuration templates:
 
 ```bash
 docker compose restart prometheus alertmanager grafana
