@@ -3,6 +3,9 @@
 .env.local
 .env.*.local
 
+# Configuration files
+config.yml
+
 # Data directories
 data/
 !data/.gitkeep

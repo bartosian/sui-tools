@@ -20,40 +20,59 @@ Currently supported services:
 ```bash
 git clone https://github.com/sui-network/sui-tools.git
 cd sui-tools
-cp .env.template .env
+cp config.yml.template config.yml
 ```
 
 > 📋 **For detailed setup instructions, see [SETUP.md](SETUP.md)**
 
-### **2. Configure Environment**
+### **2. Configure Services**
 
-Edit the `.env` file with your specific configuration:
+Edit the `config.yml` file with your specific configuration:
 
-```bash
-# Required: Basic Configuration
-GF_SECURITY_ADMIN_USER=admin
-GF_SECURITY_ADMIN_PASSWORD=your_secure_password
+```yaml
+# Grafana Configuration
+grafana:
+  admin_user: admin
+  admin_password: your_secure_password
+  port: 3000
 
-# Sui Service Monitoring (Optional - only configure services you want to monitor)
-SUI_BRIDGE_MAINNET_TARGET=your-mainnet-target:9186
-SUI_BRIDGE_TESTNET_TARGET=your-testnet-target:9185
-SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS=your-mainnet-public-address
-SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS=your-testnet-public-address
-SUI_VALIDATOR=your_validator_name
+# Prometheus Configuration
+prometheus:
+  port: 9090
+  target: localhost:9090
 
-# Optional: Notification Services
-PAGERDUTY_INTEGRATION_KEY=your_pagerduty_key
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-TELEGRAM_CHAT_ID=your_chat_id
-DISCORD_WEBHOOK_URL=your_discord_webhook_url
+# Alertmanager Configuration
+alertmanager:
+  port: 9093
+  target: localhost:9093
+  default_webhook_port: 3001
 
-# Optional: Advanced Configuration
-GF_GITHUB_PLUGINS=your_grafana_plugins
-PROMETHEUS_AUTH_TOKEN=your_prometheus_token
-ALERTMANAGER_AUTH_TOKEN=your_alertmanager_token
+# Sui Bridge Configuration (Optional - only configure services you want to monitor)
+bridges:
+  mainnet:
+    target: your-mainnet-target:9186
+    public_address: your-mainnet-public-address
+  testnet:
+    target: your-testnet-target:9185
+    public_address: your-testnet-public-address
+
+# Sui Validator Configuration
+sui:
+  validator: your_validator_name
+
+# Notification Services (Optional)
+pagerduty:
+  integration_key: your_pagerduty_key
+
+telegram:
+  bot_token: your_telegram_bot_token
+  chat_id: your_chat_id
+
+discord:
+  webhook_url: your_discord_webhook_url
 ```
 
-> **💡 Conditional Deployment**: Only services with configured environment variables will be monitored. If you don't set `SUI_BRIDGE_MAINNET_TARGET` or `SUI_BRIDGE_TESTNET_TARGET`, the Sui Bridge monitoring will be automatically skipped.
+> **💡 Conditional Deployment**: Only services with configured targets will be monitored. If you don't set bridge targets, the Sui Bridge monitoring will be automatically skipped.
 
 ### **3. Deploy Services**
 
@@ -167,24 +186,29 @@ The system includes comprehensive alert rules for configured services:
 
 ## ⚙️ **Configuration Details**
 
-### **Environment Variables**
+### **Configuration Options**
 
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `GF_SECURITY_ADMIN_USER` | Grafana admin username | - | ✅ |
-| `GF_SECURITY_ADMIN_PASSWORD` | Grafana admin password | - | ✅ |
-| `SUI_BRIDGE_MAINNET_TARGET` | Mainnet bridge target | - | ❌* |
-| `SUI_BRIDGE_TESTNET_TARGET` | Testnet bridge target | - | ❌* |
-| `SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS` | Mainnet bridge public address | - | ❌ |
-| `SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS` | Testnet bridge public address | - | ❌ |
-| `SUI_VALIDATOR` | Validator name for alerts | - | ❌ |
-| `PAGERDUTY_INTEGRATION_KEY` | PagerDuty integration key | - | ❌ |
-| `TELEGRAM_BOT_TOKEN` | Telegram bot token | - | ❌ |
-| `TELEGRAM_CHAT_ID` | Telegram chat ID | - | ❌ |
-| `DISCORD_WEBHOOK_URL` | Discord webhook URL | - | ❌ |
-| `GF_GITHUB_PLUGINS` | Grafana plugins to install | - | ❌ |
-| `PROMETHEUS_AUTH_TOKEN` | Prometheus authentication token | - | ❌ |
-| `ALERTMANAGER_AUTH_TOKEN` | Alertmanager authentication token | - | ❌ |
+The `config.yml` file supports the following configuration sections:
+
+| Section | Option | Description | Required |
+|---------|--------|-------------|----------|
+| **grafana** | `admin_user` | Grafana admin username | ✅ |
+| | `admin_password` | Grafana admin password | ✅ |
+| | `port` | Grafana web interface port | ❌ (default: 3000) |
+| **prometheus** | `port` | Prometheus port | ❌ (default: 9090) |
+| | `target` | Prometheus target | ❌ (default: localhost:9090) |
+| **alertmanager** | `port` | Alertmanager port | ❌ (default: 9093) |
+| | `target` | Alertmanager target | ❌ (default: localhost:9093) |
+| | `default_webhook_port` | Default webhook port | ❌ (default: 3001) |
+| **bridges** | `mainnet.target` | Mainnet bridge target | ❌* |
+| | `mainnet.public_address` | Mainnet bridge public address | ❌ |
+| | `testnet.target` | Testnet bridge target | ❌* |
+| | `testnet.public_address` | Testnet bridge public address | ❌ |
+| **sui** | `validator` | Validator name for alerts | ❌ |
+| **pagerduty** | `integration_key` | PagerDuty integration key | ❌ |
+| **telegram** | `bot_token` | Telegram bot token | ❌ |
+| | `chat_id` | Telegram chat ID | ❌ |
+| **discord** | `webhook_url` | Discord webhook URL | ❌ |
 
 *Required only if you want to monitor Sui Bridge services. If not set, bridge monitoring will be skipped.
 

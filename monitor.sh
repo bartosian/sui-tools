@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 # Configuration
 COMPOSE_FILE_LINUX="docker-compose.yml"
 COMPOSE_FILE_MACOS="docker-compose.macos.yml"
-ENV_FILE=".env"
+CONFIG_FILE="config.yml"
 
 # Logging functions
 log_info() {
@@ -53,15 +53,148 @@ get_compose_file() {
     fi
 }
 
-# Check if .env file exists
-check_env_file() {
-    if [ ! -f "$ENV_FILE" ]; then
-        log_error ".env file not found!"
-        log_info "Please copy .env.template to .env and configure it:"
-        log_info "  cp .env.template .env"
-        log_info "  # Edit .env with your configuration"
+# Parse YAML configuration and export environment variables
+parse_yaml_config() {
+    if [ ! -f "$CONFIG_FILE" ]; then
+        log_error "Configuration file not found!"
+        log_info "Please copy config.yml.template to config.yml and configure it:"
+        log_info "  cp config.yml.template config.yml"
+        log_info "  # Edit config.yml with your configuration"
         exit 1
     fi
+    
+    log_info "Parsing configuration from $CONFIG_FILE..."
+    
+    # Function to get value from YAML
+    get_yaml_value() {
+        local key="$1"
+        local file="$2"
+        # Use a simple sed/awk approach to extract values from YAML
+        # This handles the specific structure we need without external dependencies
+        awk -v key="$key" '
+        BEGIN { FS=":"; found=0 }
+        {
+            # Remove leading/trailing whitespace
+            gsub(/^[ \t]+|[ \t]+$/, "", $0)
+            gsub(/^[ \t]+|[ \t]+$/, "", $1)
+            gsub(/^[ \t]+|[ \t]+$/, "", $2)
+            
+            # Remove quotes if present
+            gsub(/^["\047]|["\047]$/, "", $2)
+            
+            if ($1 == key && $2 != "") {
+                print $2
+                found=1
+                exit
+            }
+        }
+        END { if (!found) print "" }
+        ' "$file"
+    }
+    
+    # Function to get nested value from YAML
+    get_yaml_nested_value() {
+        local parent="$1"
+        local child="$2"
+        local file="$3"
+        awk -v parent="$parent" -v child="$child" '
+        BEGIN { FS=":"; in_section=0; found=0 }
+        {
+            # Remove leading/trailing whitespace
+            gsub(/^[ \t]+|[ \t]+$/, "", $0)
+            gsub(/^[ \t]+|[ \t]+$/, "", $1)
+            gsub(/^[ \t]+|[ \t]+$/, "", $2)
+            
+            # Remove quotes if present
+            gsub(/^["\047]|["\047]$/, "", $2)
+            
+            # Check if we are in the right section
+            if ($1 == parent && $2 == "") {
+                in_section=1
+                next
+            }
+            
+            # If we are in the section and find the child key
+            if (in_section && $1 == child && $2 != "") {
+                print $2
+                found=1
+                exit
+            }
+            
+            # If we hit another top-level key, we are out of the section
+            if (in_section && $2 == "" && $1 != "" && substr($1, 1, 1) != " ") {
+                in_section=0
+            }
+        }
+        END { if (!found) print "" }
+        ' "$file"
+    }
+    
+    # Export Grafana variables
+    export GF_SECURITY_ADMIN_USER=$(get_yaml_nested_value "grafana" "admin_user" "$CONFIG_FILE")
+    export GF_SECURITY_ADMIN_PASSWORD=$(get_yaml_nested_value "grafana" "admin_password" "$CONFIG_FILE")
+    export GF_PORT=$(get_yaml_nested_value "grafana" "port" "$CONFIG_FILE")
+    
+    # Export Prometheus variables
+    export PROMETHEUS_PORT=$(get_yaml_nested_value "prometheus" "port" "$CONFIG_FILE")
+    export PROMETHEUS_TARGET=$(get_yaml_nested_value "prometheus" "target" "$CONFIG_FILE")
+    
+    # Export Alertmanager variables
+    export ALERTMANAGER_PORT=$(get_yaml_nested_value "alertmanager" "port" "$CONFIG_FILE")
+    export ALERTMANAGER_TARGET=$(get_yaml_nested_value "alertmanager" "target" "$CONFIG_FILE")
+    export ALERTMANAGER_DEFAULT_WEBHOOK_PORT=$(get_yaml_nested_value "alertmanager" "default_webhook_port" "$CONFIG_FILE")
+    
+    # Export Bridge variables - need special handling for nested structure
+    export SUI_BRIDGE_MAINNET_TARGET=$(awk '
+        BEGIN { in_bridges=0; in_mainnet=0 }
+        /^bridges:/ { in_bridges=1; next }
+        /^  mainnet:/ { if (in_bridges) in_mainnet=1; next }
+        /^    target:/ { if (in_mainnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
+        /^[a-zA-Z]/ { if (in_mainnet) in_mainnet=0; if (in_bridges && !/^  /) in_bridges=0 }
+        ' "$CONFIG_FILE")
+    
+    export SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS=$(awk '
+        BEGIN { in_bridges=0; in_mainnet=0 }
+        /^bridges:/ { in_bridges=1; next }
+        /^  mainnet:/ { if (in_bridges) in_mainnet=1; next }
+        /^    public_address:/ { if (in_mainnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
+        /^[a-zA-Z]/ { if (in_mainnet) in_mainnet=0; if (in_bridges && !/^  /) in_bridges=0 }
+        ' "$CONFIG_FILE")
+    
+    export SUI_BRIDGE_TESTNET_TARGET=$(awk '
+        BEGIN { in_bridges=0; in_testnet=0 }
+        /^bridges:/ { in_bridges=1; next }
+        /^  testnet:/ { if (in_bridges) in_testnet=1; next }
+        /^    target:/ { if (in_testnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
+        /^[a-zA-Z]/ { if (in_testnet) in_testnet=0; if (in_bridges && !/^  /) in_bridges=0 }
+        ' "$CONFIG_FILE")
+    
+    export SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS=$(awk '
+        BEGIN { in_bridges=0; in_testnet=0 }
+        /^bridges:/ { in_bridges=1; next }
+        /^  testnet:/ { if (in_bridges) in_testnet=1; next }
+        /^    public_address:/ { if (in_testnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
+        /^[a-zA-Z]/ { if (in_testnet) in_testnet=0; if (in_bridges && !/^  /) in_bridges=0 }
+        ' "$CONFIG_FILE")
+    
+    # Export Sui variables
+    export SUI_VALIDATOR=$(get_yaml_nested_value "sui" "validator" "$CONFIG_FILE")
+    
+    # Export notification variables
+    export PAGERDUTY_INTEGRATION_KEY=$(get_yaml_nested_value "pagerduty" "integration_key" "$CONFIG_FILE")
+    export TELEGRAM_BOT_TOKEN=$(get_yaml_nested_value "telegram" "bot_token" "$CONFIG_FILE")
+    export TELEGRAM_CHAT_ID=$(get_yaml_nested_value "telegram" "chat_id" "$CONFIG_FILE")
+    export DISCORD_WEBHOOK_URL=$(get_yaml_nested_value "discord" "webhook_url" "$CONFIG_FILE")
+    
+    # Set defaults for empty values
+    export GF_PORT="${GF_PORT:-3000}"
+    export PROMETHEUS_PORT="${PROMETHEUS_PORT:-9090}"
+    export ALERTMANAGER_PORT="${ALERTMANAGER_PORT:-9093}"
+    export ALERTMANAGER_DEFAULT_WEBHOOK_PORT="${ALERTMANAGER_DEFAULT_WEBHOOK_PORT:-3001}"
+    export PROMETHEUS_TARGET="${PROMETHEUS_TARGET:-localhost:9090}"
+    export ALERTMANAGER_TARGET="${ALERTMANAGER_TARGET:-localhost:9093}"
+    
+    log_success "Configuration loaded successfully"
 }
 
 # Check if required tools are installed
@@ -95,7 +228,7 @@ start_services() {
     local compose_file=$(get_compose_file)
     log_info "Starting services using $compose_file..."
     
-    check_env_file
+    parse_yaml_config
     check_dependencies
     create_data_directories
     

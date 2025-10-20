@@ -1,0 +1,45 @@
+# Sui Tools Monitoring Configuration
+# Copy this file to config.yml and customize with your settings
+
+# Grafana
+grafana:
+  admin_user: admin
+  admin_password: your_secure_password
+  port: 3000
+
+# Prometheus
+prometheus:
+  port: 9090
+  target: localhost:9090
+
+# Alertmanager
+alertmanager:
+  port: 9093
+  target: localhost:9093
+  default_webhook_port: 3001
+
+# Sui Bridge Configuration
+bridges:
+  mainnet:
+    target: localhost:9186
+    public_address: localhost:9187
+  testnet:
+    target: localhost:9185
+    public_address: localhost:9188
+
+# Sui Validator
+sui:
+  validator: your_validator_name
+
+# PagerDuty Integration Key
+pagerduty:
+  integration_key: ""
+
+# Telegram Bot Token
+telegram:
+  bot_token: ""
+  chat_id: ""
+
+# Discord Webhook URL
+discord:
+  webhook_url: ""

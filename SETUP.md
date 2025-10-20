@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - Docker and Docker Compose installed
-- `.env` file configured (copy from `.env.template` if needed)
+- `config.yml` file configured (copy from `config.yml.template` if needed)
 
 ## Quick Start
 
@@ -162,32 +162,50 @@ rm -rf data/
 - Services communicate via Docker network
 - Access host services via `host.docker.internal`
 
-## Environment Variables
+## Configuration
 
-Key variables in `.env`:
+Key configuration in `config.yml`:
 
-```bash
+```yaml
 # Grafana
-GF_SECURITY_ADMIN_USER=admin
-GF_SECURITY_ADMIN_PASSWORD=secure_password
-GF_PORT=3000
+grafana:
+  admin_user: admin
+  admin_password: secure_password
+  port: 3000
 
 # Prometheus
-PROMETHEUS_PORT=9090
+prometheus:
+  port: 9090
+  target: localhost:9090
 
 # Alertmanager
-ALERTMANAGER_PORT=9093
+alertmanager:
+  port: 9093
+  target: localhost:9093
+  default_webhook_port: 3001
 
 # Sui Targets
-SUI_BRIDGE_MAINNET_TARGET=host.docker.internal:9186
-SUI_BRIDGE_TESTNET_TARGET=host.docker.internal:9185
-SUI_VALIDATOR=your_validator_name
+bridges:
+  mainnet:
+    target: host.docker.internal:9186
+    public_address: host.docker.internal:9187
+  testnet:
+    target: host.docker.internal:9185
+    public_address: host.docker.internal:9188
+
+sui:
+  validator: your_validator_name
 
 # Notifications (optional)
-PAGERDUTY_INTEGRATION_KEY=
-TELEGRAM_BOT_TOKEN=
-TELEGRAM_CHAT_ID=
-DISCORD_WEBHOOK_URL=
+pagerduty:
+  integration_key: ""
+
+telegram:
+  bot_token: ""
+  chat_id: ""
+
+discord:
+  webhook_url: ""
 ```
 
 ## Health Checks
@@ -204,7 +222,7 @@ docker compose ps
 
 ## Next Steps
 
-1. Configure your `.env` file with actual values
+1. Configure your `config.yml` file with actual values
 2. Start the services: `./monitor.sh start`
 3. Access Grafana and log in
 4. Verify Prometheus targets are being scraped
