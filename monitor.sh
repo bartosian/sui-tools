@@ -265,6 +265,8 @@ restart_services() {
     local compose_file=$(get_compose_file)
     log_info "Restarting services..."
     
+    parse_yaml_config
+    
     if command -v docker-compose &> /dev/null; then
         docker-compose -f "$compose_file" restart
     else
@@ -364,6 +366,8 @@ cleanup() {
     
     if [[ "$response" =~ ^[Yy]$ ]]; then
         log_info "Cleaning up..."
+        
+        parse_yaml_config
         
         if command -v docker-compose &> /dev/null; then
             docker-compose -f "$compose_file" down -v --remove-orphans
