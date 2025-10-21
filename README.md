@@ -49,12 +49,15 @@ alertmanager:
 
 # Sui Bridge Configuration (Optional - only configure services you want to monitor)
 bridges:
-  mainnet:
+  - alias: "Production Mainnet"
     target: your-mainnet-target:9186
     public_address: your-mainnet-public-address
-  testnet:
+  - alias: "Test Network"
     target: your-testnet-target:9185
     public_address: your-testnet-public-address
+  - alias: "Development Network"
+    target: localhost:9189
+    public_address: http://localhost:9190
 
 # Sui Validator Configuration
 sui:
@@ -72,7 +75,7 @@ discord:
   webhook_url: your_discord_webhook_url
 ```
 
-> **💡 Conditional Deployment**: Only services with configured targets will be monitored. If you don't set bridge targets, the Sui Bridge monitoring will be automatically skipped.
+> **💡 Dynamic Configuration**: The system automatically detects configured bridges and creates monitoring for each one. You can add any number of bridges with custom aliases. If no bridges are configured, bridge monitoring will be automatically skipped.
 
 ### **3. Deploy Services**
 
@@ -130,6 +133,11 @@ sui-tools/
 │       ├── entrypoint.sh
 │       └── rules/
 │           └── sui_bridge_alerts.yml
+├── scripts/                         # Configuration parsing scripts
+│   └── parse_config.py              # Python-based config parser
+├── generated_configs/               # Auto-generated configs (created at runtime)
+│   ├── prometheus.yml               # Generated Prometheus config
+│   └── bridges.json                 # Bridge configuration JSON
 ├── data/                           # Persistent data storage
 │   ├── alertmanager/
 │   ├── grafana/
@@ -147,10 +155,12 @@ sui-tools/
 
 The monitoring stack automatically adapts based on your configuration:
 
-- **Sui Bridge Monitoring**: Only deployed if `SUI_BRIDGE_MAINNET_TARGET` or `SUI_BRIDGE_TESTNET_TARGET` are configured
-- **Dashboard Provisioning**: Service-specific dashboards are only loaded when corresponding targets are configured
+- **Dynamic Bridge Detection**: Automatically detects and monitors any number of configured bridges
+- **Custom Bridge Aliases**: Use human-readable names instead of hardcoded "mainnet"/"testnet"
+- **Dashboard Provisioning**: Service-specific dashboards are only loaded when bridges are configured
 - **Alert Rules**: Only active for configured services
 - **Resource Optimization**: Unused monitoring components are automatically skipped
+- **Python-based Configuration**: Dynamic Prometheus config generation with proper validation
 
 ### **Pre-configured Dashboards**
 
@@ -182,9 +192,21 @@ The system includes comprehensive alert rules for configured services:
 - **Discord**: Team notifications with webhook integration
 - **Webhook**: Custom endpoint integration
 
----
+### **Configuration Processing**
 
-## ⚙️ **Configuration Details**
+The system uses a **Python-based configuration parser** (`scripts/parse_config.py`) that:
+
+- **Validates YAML configuration** with proper error handling
+- **Generates dynamic Prometheus configurations** for any number of bridges
+- **Exports environment variables** for Docker Compose integration
+- **Creates bridge configuration JSON** for Grafana dashboard provisioning
+- **Supports custom bridge aliases** instead of hardcoded network names
+
+**Requirements:**
+- Python 3.6+ with PyYAML (`pip3 install PyYAML`)
+- The parser runs on the host machine, not in containers
+
+---
 
 ### **Configuration Options**
 
@@ -200,17 +222,16 @@ The `config.yml` file supports the following configuration sections:
 | **alertmanager** | `port` | Alertmanager port | ❌ (default: 9093) |
 | | `target` | Alertmanager target | ❌ (default: localhost:9093) |
 | | `default_webhook_port` | Default webhook port | ❌ (default: 3001) |
-| **bridges** | `mainnet.target` | Mainnet bridge target | ❌* |
-| | `mainnet.public_address` | Mainnet bridge public address | ❌ |
-| | `testnet.target` | Testnet bridge target | ❌* |
-| | `testnet.public_address` | Testnet bridge public address | ❌ |
+| **bridges** | `alias` | Human-readable bridge name | ❌* |
+| | `target` | Bridge target endpoint (IP:port) | ❌* |
+| | `public_address` | Bridge public HTTP address | ❌ |
 | **sui** | `validator` | Validator name for alerts | ❌ |
 | **pagerduty** | `integration_key` | PagerDuty integration key | ❌ |
 | **telegram** | `bot_token` | Telegram bot token | ❌ |
 | | `chat_id` | Telegram chat ID | ❌ |
 | **discord** | `webhook_url` | Discord webhook URL | ❌ |
 
-*Required only if you want to monitor Sui Bridge services. If not set, bridge monitoring will be skipped.
+*Required only if you want to monitor Sui Bridge services. You can configure any number of bridges with custom aliases. If no bridges are configured, bridge monitoring will be skipped.
 
 ### **Service Configuration**
 
@@ -308,10 +329,50 @@ docker compose exec alertmanager amtool check-config /etc/alertmanager/alertmana
 2. **Port Conflicts**: Check if ports 3000, 9090, 9093 are available
 3. **Configuration Errors**: Validate environment variables and template files
 4. **Network Issues**: Verify target endpoints are accessible
+5. **Python Parser Issues**: 
+   - Ensure Python 3.6+ is installed: `python3 --version`
+   - Install PyYAML: `pip3 install PyYAML` (or `pip3 install PyYAML --break-system-packages` on macOS)
+   - Check parser output: `python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml`
+6. **Bridge Configuration**: Verify bridge aliases are unique and targets are accessible
+
+### **Management Script**
+
+The `monitor.sh` script provides comprehensive management capabilities:
+
+```bash
+# Start all services
+./monitor.sh start
+
+# Stop all services  
+./monitor.sh stop
+
+# Restart all services
+./monitor.sh restart
+
+# Check service status
+./monitor.sh status
+
+# View service logs
+./monitor.sh logs [service_name]
+
+# Create backup
+./monitor.sh backup
+
+# Restore from backup
+./monitor.sh restore backup-file.tar.gz
+
+# Clean up old data
+./monitor.sh clean
+```
+
+**Features:**
+- **Automatic configuration parsing** using Python parser
+- **Dynamic bridge detection** and monitoring setup
+- **Service health monitoring** and status reporting
+- **Backup and restore** functionality
+- **Log aggregation** across all services
 
 ---
-
-## 🔄 **Maintenance**
 
 ### **Updating Services**
 
