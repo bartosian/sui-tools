@@ -24,9 +24,14 @@
 # Stop services
 ./monitor.sh stop
 
-# Restart services
+# Restart services (regenerates configs automatically)
 ./monitor.sh restart
 ```
+
+**Note**: The `restart` command automatically:
+1. Regenerates all configurations from `config.yml`
+2. Stops all containers
+3. Starts containers with fresh configurations
 
 ### Manual Deployment
 
@@ -46,62 +51,105 @@ docker compose -f docker-compose.macos.yml up -d
 ```
 config/
 ├── prometheus/
-│   ├── entrypoint.sh              # Prometheus startup script
+│   ├── entrypoint.sh                     # Prometheus startup script
+│   ├── generated_prometheus.yml          # Auto-generated (used by container)
 │   └── rules/
-│       └── sui_bridge_alerts.yml   # Alert rules
+│       └── sui_bridge_*_alerts.yml       # Auto-generated per bridge
 ├── alertmanager/
-│   ├── alertmanager.yml           # Main Alertmanager config
-│   └── entrypoint.sh              # Alertmanager startup script
+│   ├── alertmanager.yml                  # Static template (reference only)
+│   └── generated_alertmanager.yml        # Auto-generated (used by container)
 ├── grafana/
-│   ├── datasources.yml            # Grafana datasources
-│   ├── dashboards.yml             # Dashboard provisioning
+│   ├── datasources.yml                   # Grafana datasources
+│   ├── dashboards.yml                    # Dashboard provisioning
 │   ├── dashboards/
-│   │   └── sui_bridge.json        # Bridge monitoring dashboard
-│   └── entrypoint.sh              # Grafana startup script
+│   │   └── sui_bridge.json               # Bridge monitoring dashboard
+│   └── entrypoint.sh                     # Grafana startup script
 └── blackbox/
-    ├── blackbox.yml               # Blackbox exporter config
-    └── entrypoint.sh              # Blackbox startup script
+    ├── blackbox.yml                      # Blackbox exporter config
+    └── entrypoint.sh                     # Blackbox startup script
 
 scripts/
-└── parse_config.py                # Python configuration parser
+└── parse_config.py                       # Python configuration parser
 
-generated_configs/                 # Auto-generated at runtime
-├── prometheus.yml                 # Generated Prometheus config
-└── bridges.json                   # Bridge configuration JSON
+generated_configs/                        # Auto-generated at runtime
+├── prometheus.yml                        # Generated Prometheus config
+├── alertmanager.yml                      # Generated Alertmanager config
+├── bridges.json                          # Bridge configuration JSON
+└── alert_rules/                          # Per-bridge alert rules
+    ├── sui_bridge_0_*_alerts.yml
+    └── sui_bridge_1_*_alerts.yml
 ```
 
 ### Customization
 
 #### Update Bridge Configuration
-Edit `config.yml` to add/modify bridges:
+Edit `config.yml` to add/modify bridges with per-bridge alert configuration:
 ```yaml
 bridges:
   - alias: "Production Mainnet"
     target: your-mainnet-target:9186
     public_address: your-mainnet-public-address
+    alerts:
+      # Common alerts (recommended for all bridges)
+      uptime: true
+      metrics_public_key_availability: true
+      ingress_access: true
+      voting_power: true
+      
+      # Client-disabled alerts
+      bridge_requests_errors: true
+      bridge_high_latency: true
+      bridge_high_cache_misses: true
+      bridge_rpc_errors: true
+      
+      # Client-enabled alerts  
+      stale_sui_sync: true
+      stale_eth_sync: true
+      stale_eth_finalization: true
+      low_gas_balance: true
   - alias: "Test Network"
     target: your-testnet-target:9185
     public_address: your-testnet-public-address
-  - alias: "Development"
-    target: localhost:9189
-    public_address: http://localhost:9190
+    alerts:
+      uptime: true
+      # ... configure alerts per bridge
 ```
 
-**Note**: The system automatically generates Prometheus configurations based on your bridge settings.
+**Important**: 
+- Alerts are **opt-in** - only explicitly enabled alerts will be generated
+- Each bridge can have different alert configurations
+- Missing alerts default to `false` (disabled)
 
 #### Update Prometheus Targets
-Prometheus targets are now automatically generated from your `config.yml` bridge configuration. No manual editing required!
+Prometheus targets are automatically generated from `config.yml`. No manual editing required!
 
 #### Update Alert Rules
-Edit files in `config/prometheus/rules/`:
-- Rules are automatically loaded on startup
-- Restart services after changes: `./monitor.sh restart`
+Alert rules are automatically generated based on enabled alerts in `config.yml`:
+- Each bridge gets its own alert rules file
+- Only enabled alerts are generated
+- Restart services to apply: `./monitor.sh restart`
 
-#### Update Alertmanager Receivers
-Edit `config/alertmanager/alertmanager.yml`:
-- Configure PagerDuty, Telegram, Discord integrations
-- Set up routing rules based on severity
-- Restart Alertmanager after changes: `docker compose restart alertmanager`
+#### Update Notification Integrations
+Configure notification services in `config.yml`:
+```yaml
+# PagerDuty (critical alerts only)
+pagerduty:
+  integration_key: "your_pagerduty_integration_key"
+
+# Telegram (all alerts)
+telegram:
+  bot_token: "your_telegram_bot_token"
+  chat_id: "your_chat_id"
+
+# Discord (all alerts)
+discord:
+  webhook_url: "your_discord_webhook_url"
+```
+
+**Automatic Configuration**:
+- Alertmanager config is auto-generated based on configured services
+- Only services with credentials are included
+- Restart to apply changes: `./monitor.sh restart`
 
 ## Accessing Services
 
@@ -153,13 +201,18 @@ chmod -R 755 data/
 ### Configuration Changes Not Applied
 
 ```bash
-# Restart all services (recommended)
+# Restart all services (REQUIRED - regenerates configs)
 ./monitor.sh restart
-
-# Or restart specific services
-./monitor.sh restart prometheus
-docker compose restart <service_name>
 ```
+
+**Important**: Always use `./monitor.sh restart` after editing `config.yml`. This command:
+1. Parses `config.yml` and validates configuration
+2. Generates Prometheus config with your bridge targets
+3. Generates Alertmanager config with your notification settings
+4. Generates alert rules based on enabled alerts
+5. Stops and restarts all containers with new configs
+
+Manual restart (`docker compose restart`) will NOT pick up config changes!
 
 ## Data Management
 
@@ -262,9 +315,25 @@ docker compose ps
 
 ## Next Steps
 
-1. Configure your `config.yml` file with actual values
-2. Start the services: `./monitor.sh start`
-3. Access Grafana and log in
-4. Verify Prometheus targets are being scraped
-5. Test alert rules by triggering conditions
-6. Configure notification channels in Alertmanager
+1. **Configure `config.yml`**:
+   - Set Grafana credentials
+   - Add your bridge targets with custom aliases
+   - Enable desired alerts per bridge
+   - Add notification integrations (PagerDuty, Telegram, Discord)
+
+2. **Start services**: `./monitor.sh start`
+
+3. **Verify setup**:
+   - Access Grafana at http://localhost:3000
+   - Check Prometheus targets at http://localhost:9090/targets
+   - Verify alert rules at http://localhost:9090/alerts
+   - Check Alertmanager config at http://localhost:9093
+
+4. **Test notifications**:
+   - Trigger a test alert
+   - Verify notifications arrive via configured channels
+
+5. **Monitor your bridges**:
+   - View Sui Bridge dashboard in Grafana
+   - Check alert status in Prometheus/Alertmanager
+   - Review metrics and performance

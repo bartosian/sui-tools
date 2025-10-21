@@ -52,12 +52,31 @@ bridges:
   - alias: "Production Mainnet"
     target: your-mainnet-target:9186
     public_address: your-mainnet-public-address
+    alerts:
+      # Common alerts (any bridge)
+      uptime: true
+      metrics_public_key_availability: true
+      ingress_access: true
+      voting_power: true
+      
+      # Client-disabled alerts
+      bridge_requests_errors: true
+      bridge_high_latency: true
+      bridge_high_cache_misses: true
+      bridge_rpc_errors: true
+      
+      # Client-enabled alerts
+      stale_sui_sync: true
+      stale_eth_sync: true
+      stale_eth_finalization: true
+      low_gas_balance: true
   - alias: "Test Network"
     target: your-testnet-target:9185
     public_address: your-testnet-public-address
-  - alias: "Development Network"
-    target: localhost:9189
-    public_address: http://localhost:9190
+    alerts:
+      uptime: true
+      metrics_public_key_availability: true
+      # ... configure alerts per bridge
 
 # Sui Validator Configuration
 sui:
@@ -110,15 +129,17 @@ docker compose -f docker-compose.macos.yml up -d
 
 ```
 sui-tools/
-├── README.md                       # Project documentation
-├── SETUP.md                        # Quick setup guide
-├── assets/                         # Project assets
+├── README.md                        # Project documentation
+├── SETUP.md                         # Quick setup guide
+├── config.yml                       # Main configuration file (user-editable)
+├── config.yml.template              # Configuration template
+├── assets/                          # Project assets
 │   ├── sui_bridge.png
 │   └── sui_header.png
-├── config/                         # Configuration files
+├── config/                          # Static configuration templates
 │   ├── alertmanager/
-│   │   ├── alertmanager.yml
-│   │   └── entrypoint.sh
+│   │   ├── alertmanager.yml         # Static template (for reference)
+│   │   └── generated_alertmanager.yml  # Auto-generated (used by container)
 │   ├── blackbox/
 │   │   ├── blackbox.yml
 │   │   └── entrypoint.sh
@@ -131,20 +152,25 @@ sui-tools/
 │   │   └── entrypoint.sh
 │   └── prometheus/
 │       ├── entrypoint.sh
+│       ├── generated_prometheus.yml    # Auto-generated (used by container)
 │       └── rules/
-│           └── sui_bridge_alerts.yml
-├── scripts/                         # Configuration parsing scripts
-│   └── parse_config.py              # Python-based config parser
-├── generated_configs/               # Auto-generated configs (created at runtime)
-│   ├── prometheus.yml               # Generated Prometheus config
-│   └── bridges.json                 # Bridge configuration JSON
-├── data/                           # Persistent data storage
+│           └── sui_bridge_*_alerts.yml # Auto-generated per bridge
+├── scripts/                          # Configuration processing
+│   └── parse_config.py               # Python parser (generates all configs)
+├── generated_configs/                # Auto-generated configs (runtime)
+│   ├── prometheus.yml                # Generated Prometheus config
+│   ├── alertmanager.yml              # Generated Alertmanager config
+│   ├── bridges.json                  # Bridge metadata JSON
+│   └── alert_rules/                  # Generated alert rules per bridge
+│       ├── sui_bridge_0_*_alerts.yml
+│       └── sui_bridge_1_*_alerts.yml
+├── data/                            # Persistent data storage
 │   ├── alertmanager/
 │   ├── grafana/
 │   └── prometheus/
-├── docker-compose.macos.yml        # macOS configuration
-├── docker-compose.yml              # Linux configuration
-└── monitor.sh                      # Management script
+├── docker-compose.macos.yml         # macOS configuration
+├── docker-compose.yml               # Linux configuration
+└── monitor.sh                       # Management script
 ```
 
 ---
@@ -168,43 +194,72 @@ The monitoring stack automatically adapts based on your configuration:
 
 ### **Alert Rules**
 
-The system includes comprehensive alert rules for configured services:
+The system includes comprehensive alert rules for configured services. Alerts are **opt-in** - you must explicitly enable each alert type in your `config.yml` for each bridge.
 
-**Sui Bridge Alerts** (10 rules - only active when bridge targets are configured):
+**Sui Bridge Alerts** (12 alert types available per bridge):
 
-1. **Node Restarted Alert** - Detects unexpected restarts
-2. **ETH Watcher Unrecognized Events** - Monitors ETH watcher issues
-3. **SUI Watcher Unrecognized Events** - Monitors SUI watcher issues
-4. **Zero Voting Rights Alert** - Critical validator authority issues
-5. **Error Requests Alert** - Transaction digest handling errors
-6. **SUI Transaction Submission Errors** - Submission failures
-7. **Continuous Submission Failures** - Repeated failure patterns
-8. **Build Transaction Errors** - Transaction building issues
-9. **Signature Aggregation Failures** - Validator signature problems
-10. **Too Many Failures Alert** - Escalated failure scenarios
+**Common Alerts** (recommended for all bridges):
+1. **Uptime** - Detects unexpected node restarts or failures
+2. **Metrics Public Key Availability** - Monitors metrics endpoint accessibility  
+3. **Ingress Access** - Monitors public bridge endpoint availability
+4. **Voting Power** - Critical validator voting rights issues
+
+**Client-Disabled Alerts** (for bridge client node issues):
+5. **Bridge Request Errors** - Transaction digest handling failures
+6. **High ETH RPC Latency** - ETH RPC query performance issues
+7. **High Cache Misses** - Inefficient cache utilization
+8. **SUI RPC Errors** - SUI RPC query failures
+
+**Client-Enabled Alerts** (for bridge client synchronization):
+9. **Stale SUI Sync** - SUI checkpoint synchronization stalled
+10. **Stale ETH Sync** - ETH block synchronization stalled
+11. **Stale ETH Finalization** - ETH finalization not progressing
+12. **Low Gas Balance** - Bridge client gas balance below threshold (10 SUI)
+
+**Alert Configuration**: Each bridge can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
 
 *Additional alert rules will be added as more Sui services are supported*
 
 ### **Notification Channels**
 
-- **PagerDuty**: Critical alerts with escalation
-- **Telegram**: Real-time notifications with rich formatting
-- **Discord**: Team notifications with webhook integration
-- **Webhook**: Custom endpoint integration
+All notification channels are **automatically configured** based on credentials provided in `config.yml`:
+
+- **PagerDuty**: Critical alerts only (severity: critical) with automatic escalation
+- **Telegram**: Both critical and warning alerts with HTML formatting
+- **Discord**: Both critical and warning alerts with webhook integration
+- **Webhook**: Fallback for all alerts to custom endpoint
+
+**Configuration is automatic**: Simply add your integration keys/tokens to `config.yml` and the system will generate the appropriate Alertmanager configuration. Alerts are routed based on severity:
+- **Critical alerts** → PagerDuty + Telegram + Discord + Webhook
+- **Warning alerts** → Telegram + Discord + Webhook
 
 ### **Configuration Processing**
 
-The system uses a **Python-based configuration parser** (`scripts/parse_config.py`) that:
+The system uses a **Python-based configuration parser** (`scripts/parse_config.py`) that automatically generates all service configurations from your `config.yml`:
 
-- **Validates YAML configuration** with proper error handling
-- **Generates dynamic Prometheus configurations** for any number of bridges
-- **Exports environment variables** for Docker Compose integration
-- **Creates bridge configuration JSON** for Grafana dashboard provisioning
+**Generated Configurations:**
+- **Prometheus config** (`generated_configs/prometheus.yml`) - Dynamic scrape targets for all bridges
+- **Alert rules** (`generated_configs/alert_rules/*.yml`) - Bridge-specific alert rules based on enabled alerts
+- **Alertmanager config** (`generated_configs/alertmanager.yml`) - Notification receivers based on configured integrations
+- **Bridge metadata** (`generated_configs/bridges.json`) - Bridge configuration for Grafana dashboards
+
+**Features:**
+- **Validates YAML configuration** with comprehensive error handling
 - **Supports custom bridge aliases** instead of hardcoded network names
+- **Opt-in alert configuration** - only enabled alerts are generated
+- **Conditional notification setup** - only configured services are included
+- **Exports environment variables** for Docker Compose integration
 
 **Requirements:**
 - Python 3.6+ with PyYAML (`pip3 install PyYAML`)
-- The parser runs on the host machine, not in containers
+- The parser runs on the host machine during startup/restart
+
+**How it works:**
+1. You edit `config.yml` with your settings
+2. Run `./monitor.sh start` or `./monitor.sh restart`
+3. Parser generates all configs in `generated_configs/`
+4. Configs are copied to respective service directories
+5. Services start/restart with updated configurations
 
 ---
 
@@ -385,11 +440,25 @@ docker compose up -d
 
 ### **Configuration Changes**
 
-After modifying `config.yml` or configuration templates:
+After modifying `config.yml`:
 
 ```bash
-docker compose restart prometheus alertmanager grafana
+# Use the management script (recommended - regenerates all configs)
+./monitor.sh restart
+
+# Or manually
+python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml generated_configs/alert_rules
+# Then copy generated configs
+cp generated_configs/*.yml config/*/
+docker compose down && docker compose up -d
 ```
+
+**Important**: The `restart` command in `monitor.sh` now:
+1. Regenerates all configurations from `config.yml`
+2. Stops all containers
+3. Starts containers with fresh configurations
+
+This ensures all configuration changes (bridges, alerts, notifications) are properly applied.
 
 ### **Data Cleanup**
 

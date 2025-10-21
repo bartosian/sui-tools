@@ -89,15 +89,19 @@ bridges:
 sui:
   validator: your_validator_name
 
-# PagerDuty Integration Key
+# Notification Services (Optional)
+# Alertmanager config is auto-generated based on what you configure here
+# Leave empty to disable a notification service
+
+# PagerDuty Integration (Critical alerts only)
 pagerduty:
-  integration_key: ""
+  integration_key: ""  # PagerDuty Events API v2 integration key
 
-# Telegram Bot Token
+# Telegram Bot (All alerts with HTML formatting)
 telegram:
-  bot_token: ""
-  chat_id: ""
+  bot_token: ""  # Telegram bot token from @BotFather
+  chat_id: ""    # Your Telegram chat ID
 
-# Discord Webhook URL
+# Discord Webhook (All alerts)
 discord:
-  webhook_url: ""
+  webhook_url: ""  # Discord webhook URL from channel settings
