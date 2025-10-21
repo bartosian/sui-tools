@@ -12,10 +12,10 @@
       "bridge_high_latency": true,
       "bridge_high_cache_misses": true,
       "bridge_rpc_errors": true,
-      "stale_sui_sync": true,
-      "stale_eth_sync": true,
-      "stale_eth_finalization": true,
-      "low_gas_balance": true
+      "stale_sui_sync": false,
+      "stale_eth_sync": false,
+      "stale_eth_finalization": false,
+      "low_gas_balance": false
     }
   },
   {
@@ -31,9 +31,9 @@
       "bridge_high_latency": true,
       "bridge_high_cache_misses": true,
       "bridge_rpc_errors": true,
-      "stale_sui_sync": true,
-      "stale_eth_sync": true,
-      "stale_eth_finalization": true,
+      "stale_sui_sync": false,
+      "stale_eth_sync": false,
+      "stale_eth_finalization": false,
       "low_gas_balance": true
     }
   }

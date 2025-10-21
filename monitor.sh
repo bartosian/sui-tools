@@ -97,6 +97,7 @@ parse_yaml_config() {
     # Copy generated configs to config directory for container access
     cp generated_configs/prometheus.yml config/prometheus/generated_prometheus.yml
     cp generated_configs/bridges.json config/prometheus/generated_bridges.json
+    cp generated_configs/alertmanager.yml config/alertmanager/generated_alertmanager.yml
     
     # Copy all bridge-specific alert rule files
     cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
@@ -275,15 +276,20 @@ restart_services() {
     local compose_file=$(get_compose_file)
     log_info "Restarting services..."
     
+    # Regenerate configs from config.yml
     parse_yaml_config
     
+    # Use down + up to ensure volume changes are picked up
+    log_info "Stopping services to reload configuration..."
     if command -v docker-compose &> /dev/null; then
-        docker-compose -f "$compose_file" restart
+        docker-compose -f "$compose_file" down
+        docker-compose -f "$compose_file" up -d
     else
-        docker compose -f "$compose_file" restart
+        docker compose -f "$compose_file" down
+        docker compose -f "$compose_file" up -d
     fi
     
-    log_success "Services restarted"
+    log_success "Services restarted with updated configuration"
 }
 
 # Show service status

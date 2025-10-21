@@ -69,23 +69,16 @@ services:
     image: prom/alertmanager:v0.26.0
     container_name: alertmanager
     restart: unless-stopped
+    network_mode: host
     command:
       - '--web.listen-address=:${ALERTMANAGER_PORT:-9093}'
       - '--cluster.listen-address='
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--config.file=/etc/alertmanager/generated_alertmanager.yml'
       - '--storage.path=/alertmanager'
       - '--web.external-url=http://localhost:${ALERTMANAGER_PORT:-9093}'
-    network_mode: host
     volumes:
       - alertmanager_data:/alertmanager
       - ./config/alertmanager:/etc/alertmanager:ro
-      - ./alertmanager/entrypoint.sh:/entrypoint.sh:ro
-    environment:
-      ALERTMANAGER_DEFAULT_WEBHOOK_PORT: "${ALERTMANAGER_DEFAULT_WEBHOOK_PORT:-3001}"
-      PAGERDUTY_INTEGRATION_KEY: "${PAGERDUTY_INTEGRATION_KEY:-}"
-      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN:-}"
-      TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID:-}"
-      DISCORD_WEBHOOK_URL: "${DISCORD_WEBHOOK_URL:-}"
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:${ALERTMANAGER_PORT:-9093}/-/healthy || exit 1"]
       interval: 30s

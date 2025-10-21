@@ -142,7 +142,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
         client_enabled_alerts = []
 
         # Generate bridge-specific alert rules based on enabled alerts
-        if alerts.get("uptime", True):
+        if alerts.get("uptime", False):
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_Uptime_{alias.replace(' ', '_')}",
@@ -166,7 +166,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("metrics_public_key_availability", True):
+        if alerts.get("metrics_public_key_availability", False):
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_MetricsPublicKeyAvailability_{alias.replace(' ', '_')}",
@@ -190,7 +190,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("ingress_access", True):
+        if alerts.get("ingress_access", False):
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_IngressAccess_{alias.replace(' ', '_')}",
@@ -214,7 +214,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("voting_power", True):
+        if alerts.get("voting_power", False):
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_VotingPower_{alias.replace(' ', '_')}",
@@ -239,7 +239,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             )
 
         # Client-disabled alerts
-        if alerts.get("bridge_requests_errors", True):
+        if alerts.get("bridge_requests_errors", False):
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_BridgeRequestErrors_{alias.replace(' ', '_')}",
@@ -263,7 +263,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("bridge_high_latency", True):
+        if alerts.get("bridge_high_latency", False):
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_HighETHRPCLatency_{alias.replace(' ', '_')}",
@@ -287,7 +287,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("bridge_high_cache_misses", True):
+        if alerts.get("bridge_high_cache_misses", False):
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_HighCacheMisses_{alias.replace(' ', '_')}",
@@ -311,7 +311,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("bridge_rpc_errors", True):
+        if alerts.get("bridge_rpc_errors", False):
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_SUIRPCErrors_{alias.replace(' ', '_')}",
@@ -336,7 +336,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             )
 
         # Client-enabled alerts
-        if alerts.get("stale_sui_sync", True):
+        if alerts.get("stale_sui_sync", False):
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_StaleSUISync_{alias.replace(' ', '_')}",
@@ -360,7 +360,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("stale_eth_sync", True):
+        if alerts.get("stale_eth_sync", False):
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_StaleETHSync_{alias.replace(' ', '_')}",
@@ -384,7 +384,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("stale_eth_finalization", True):
+        if alerts.get("stale_eth_finalization", False):
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_StaleETHFinalization_{alias.replace(' ', '_')}",
@@ -408,7 +408,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                 }
             )
 
-        if alerts.get("low_gas_balance", True):
+        if alerts.get("low_gas_balance", False):
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_LowGasBalance_{alias.replace(' ', '_')}",
@@ -612,6 +612,168 @@ def generate_prometheus_config(bridges: List[Dict[str, Any]], output_file: str) 
         sys.exit(1)
 
 
+def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> None:
+    """Generate Alertmanager configuration file with dynamic notification receivers."""
+
+    # Get notification configurations
+    pagerduty_key = config.get("pagerduty", {}).get("integration_key", "")
+    telegram_bot_token = config.get("telegram", {}).get("bot_token", "")
+    telegram_chat_id = config.get("telegram", {}).get("chat_id", "")
+    discord_webhook_url = config.get("discord", {}).get("webhook_url", "")
+    webhook_port = config.get("alertmanager", {}).get("default_webhook_port", "3001")
+
+    # Check which notification services are configured
+    has_pagerduty = bool(pagerduty_key)
+    has_telegram = bool(telegram_bot_token and telegram_chat_id)
+    has_discord = bool(discord_webhook_url)
+
+    # Base alertmanager configuration
+    alertmanager_config = {
+        "global": {
+            "resolve_timeout": "5m",
+            "smtp_smarthost": "localhost:587",
+            "smtp_from": "alertmanager@example.com",
+        },
+        "route": {
+            "group_by": ["alertname", "service", "environment"],
+            "group_wait": "10s",
+            "group_interval": "5m",
+            "repeat_interval": "3h",
+            "receiver": "default",
+            "routes": [
+                {
+                    "match": {"severity": "critical"},
+                    "receiver": "critical",
+                    "group_wait": "5s",
+                    "repeat_interval": "1h",
+                },
+                {
+                    "match": {"severity": "warning"},
+                    "receiver": "warning",
+                    "group_wait": "30s",
+                    "repeat_interval": "6h",
+                },
+            ],
+        },
+        "receivers": [
+            {
+                "name": "default",
+                "webhook_configs": [
+                    {"url": f"http://localhost:{webhook_port}", "send_resolved": True}
+                ],
+            }
+        ],
+        "inhibit_rules": [
+            {
+                "source_match": {"severity": "critical"},
+                "target_match": {"severity": "warning"},
+                "equal": ["alertname", "service", "environment"],
+            }
+        ],
+    }
+
+    # Build critical receiver
+    critical_receiver = {
+        "name": "critical",
+        "webhook_configs": [
+            {"url": f"http://localhost:{webhook_port}", "send_resolved": True}
+        ],
+    }
+
+    if has_pagerduty:
+        critical_receiver["pagerduty_configs"] = [
+            {
+                "service_key": pagerduty_key,
+                "send_resolved": True,
+                "description": "{{ .GroupLabels.alertname }} - {{ .CommonAnnotations.summary }}",
+                "severity": "{{ .CommonLabels.severity }}",
+            }
+        ]
+
+    if has_telegram:
+        critical_receiver["telegram_configs"] = [
+            {
+                "api_url": "https://api.telegram.org",
+                "bot_token": telegram_bot_token,
+                "chat_id": int(telegram_chat_id),
+                "send_resolved": True,
+                "parse_mode": "HTML",
+                "message": "<b>🚨 CRITICAL Alert</b>\n<b>Alert:</b> {{ .GroupLabels.alertname }}\n<b>Severity:</b> {{ .CommonLabels.severity }}\n<b>Summary:</b> {{ .CommonAnnotations.summary }}\n<b>Description:</b> {{ .CommonAnnotations.description }}",
+            }
+        ]
+
+    if has_discord:
+        critical_receiver["discord_configs"] = [
+            {
+                "webhook_url": discord_webhook_url,
+                "send_resolved": True,
+                "title": "🚨 {{ .GroupLabels.alertname }}",
+                "message": "**Severity:** {{ .CommonLabels.severity }}\n**Summary:** {{ .CommonAnnotations.summary }}\n**Description:** {{ .CommonAnnotations.description }}",
+            }
+        ]
+
+    # Build warning receiver
+    warning_receiver = {
+        "name": "warning",
+        "webhook_configs": [
+            {"url": f"http://localhost:{webhook_port}", "send_resolved": True}
+        ],
+    }
+
+    if has_telegram:
+        warning_receiver["telegram_configs"] = [
+            {
+                "api_url": "https://api.telegram.org",
+                "bot_token": telegram_bot_token,
+                "chat_id": int(telegram_chat_id),
+                "send_resolved": True,
+                "parse_mode": "HTML",
+                "message": "<b>⚠️ WARNING Alert</b>\n<b>Alert:</b> {{ .GroupLabels.alertname }}\n<b>Severity:</b> {{ .CommonLabels.severity }}\n<b>Summary:</b> {{ .CommonAnnotations.summary }}\n<b>Description:</b> {{ .CommonAnnotations.description }}",
+            }
+        ]
+
+    if has_discord:
+        warning_receiver["discord_configs"] = [
+            {
+                "webhook_url": discord_webhook_url,
+                "send_resolved": True,
+                "title": "⚠️ {{ .GroupLabels.alertname }}",
+                "message": "**Severity:** {{ .CommonLabels.severity }}\n**Summary:** {{ .CommonAnnotations.summary }}\n**Description:** {{ .CommonAnnotations.description }}",
+            }
+        ]
+
+    # Add receivers to config
+    alertmanager_config["receivers"].append(critical_receiver)
+    alertmanager_config["receivers"].append(warning_receiver)
+
+    # Write configuration file
+    try:
+        with open(output_file, "w") as f:
+            yaml.dump(alertmanager_config, f, default_flow_style=False, sort_keys=False)
+
+        # Log which notification services are configured
+        notification_services = []
+        if has_pagerduty:
+            notification_services.append("PagerDuty")
+        if has_telegram:
+            notification_services.append("Telegram")
+        if has_discord:
+            notification_services.append("Discord")
+
+        if notification_services:
+            print(
+                f"Generated Alertmanager configuration with: {', '.join(notification_services)}",
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "Generated Alertmanager configuration (webhook only)", file=sys.stderr
+            )
+    except Exception as e:
+        print(f"ERROR: Failed to write Alertmanager config: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
 def export_bridge_variables(bridges: List[Dict[str, Any]], sui_validator: str) -> None:
     """Export bridge configuration as shell environment variables."""
     print("# Bridge configuration variables")
@@ -648,14 +810,14 @@ def main():
     """Main function."""
     if len(sys.argv) != 4:
         print(
-            "Usage: parse_config.py <config.yml> <prometheus.yml> <alert_rules.yml>",
+            "Usage: parse_config.py <config.yml> <prometheus_output.yml> <alert_rules_dir>",
             file=sys.stderr,
         )
         sys.exit(1)
 
     config_file = sys.argv[1]
     prometheus_file = sys.argv[2]
-    alert_rules_file = sys.argv[3]
+    alert_rules_dir = sys.argv[3]
 
     # Load configuration
     config = load_config(config_file)
@@ -675,7 +837,11 @@ def main():
     generate_prometheus_config(bridges, prometheus_file)
 
     # Generate bridge-specific alert rules
-    generate_alert_rules(bridges, alert_rules_file)
+    generate_alert_rules(bridges, alert_rules_dir)
+
+    # Generate Alertmanager configuration
+    alertmanager_file = "generated_configs/alertmanager.yml"
+    generate_alertmanager_config(config, alertmanager_file)
 
     # Export bridge variables
     export_bridge_variables(bridges, sui_validator)
