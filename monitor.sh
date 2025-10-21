@@ -83,20 +83,23 @@ parse_yaml_config() {
     mkdir -p generated_configs
     chmod 755 generated_configs
     
-    # Use Python parser to generate Prometheus config and export bridge variables
+    # Use Python parser to generate Prometheus config, alert rules, and export bridge variables
     log_info "Using Python parser to generate configuration..."
     local parser_output
-    parser_output=$(python3 scripts/parse_config.py "$CONFIG_FILE" "generated_configs/prometheus.yml" 2>/dev/null)
+    parser_output=$(python3 scripts/parse_config.py "$CONFIG_FILE" "generated_configs/prometheus.yml" "generated_configs/alert_rules" 2>/dev/null)
     
     if [ $? -ne 0 ]; then
         log_error "Configuration parsing failed:"
-        python3 scripts/parse_config.py "$CONFIG_FILE" "generated_configs/prometheus.yml" 2>&1
+        python3 scripts/parse_config.py "$CONFIG_FILE" "generated_configs/prometheus.yml" "generated_configs/alert_rules" 2>&1
         exit 1
     fi
     
     # Copy generated configs to config directory for container access
     cp generated_configs/prometheus.yml config/prometheus/generated_prometheus.yml
     cp generated_configs/bridges.json config/prometheus/generated_bridges.json
+    
+    # Copy all bridge-specific alert rule files
+    cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
     
     # Source the exported variables from Python parser
     # Use a temporary file to avoid shell parsing issues with JSON
@@ -383,6 +386,7 @@ cleanup() {
         fi
         
         rm -rf data/
+        rm -rf generated_configs/
         log_success "Cleanup completed"
     else
         log_info "Cleanup cancelled"

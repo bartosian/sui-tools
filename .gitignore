@@ -6,6 +6,9 @@
 # Configuration files
 config.yml
 
+# Generated configuration files
+generated_configs/
+
 # Data directories
 data/
 !data/.gitkeep

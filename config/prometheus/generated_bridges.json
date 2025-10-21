@@ -2,11 +2,39 @@
   {
     "alias": "Mainnet Bridge",
     "target": "103.50.32.66:9186",
-    "public_address": "https://sui-mainnet-bridge.bartestnet.com"
+    "public_address": "https://sui-mainnet-bridge.bartestnet.com",
+    "alerts": {
+      "uptime": true,
+      "metrics_public_key_availability": true,
+      "ingress_access": true,
+      "voting_power": true,
+      "bridge_requests_errors": true,
+      "bridge_high_latency": true,
+      "bridge_high_cache_misses": true,
+      "bridge_rpc_errors": true,
+      "stale_sui_sync": true,
+      "stale_eth_sync": true,
+      "stale_eth_finalization": true,
+      "low_gas_balance": true
+    }
   },
   {
     "alias": "Testnet Bridge",
     "target": "103.50.32.66:9185",
-    "public_address": "https://sui-testnet-bridge.bartestnet.com"
+    "public_address": "https://sui-testnet-bridge.bartestnet.com",
+    "alerts": {
+      "uptime": true,
+      "metrics_public_key_availability": true,
+      "ingress_access": true,
+      "voting_power": true,
+      "bridge_requests_errors": true,
+      "bridge_high_latency": true,
+      "bridge_high_cache_misses": true,
+      "bridge_rpc_errors": true,
+      "stale_sui_sync": true,
+      "stale_eth_sync": true,
+      "stale_eth_finalization": true,
+      "low_gas_balance": true
+    }
   }
 ]

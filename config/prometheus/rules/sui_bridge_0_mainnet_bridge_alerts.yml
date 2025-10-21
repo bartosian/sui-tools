@@ -1,0 +1,238 @@
+groups:
+- name: sui_bridge_common_alerts_Mainnet_Bridge
+  rules:
+  - alert: SuiBridge_Uptime_Mainnet_Bridge
+    expr: increase(uptime{service="sui_bridge", environment="Mainnet Bridge"}[10m])
+      == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: uptime
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: Critical uptime on { $labels.instance } (Mainnet Bridge)
+      description: The uptime for SUI Bridge Node instance { $labels.instance } (Mainnet
+        Bridge) has not increased in the last 10 minutes, suggesting a restart or
+        failure.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '2'
+  - alert: SuiBridge_MetricsPublicKeyAvailability_Mainnet_Bridge
+    expr: probe_success{service="sui_bridge_health_check", environment="Mainnet Bridge"}
+      == 0
+    for: 2m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: metrics_public_key_availability
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Metrics Public Key Unavailable (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: The metrics public key endpoint for SUI Bridge Node instance {
+        $labels.instance } (Mainnet Bridge) is not accessible.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '2'
+  - alert: SuiBridge_IngressAccess_Mainnet_Bridge
+    expr: probe_success{service="sui_bridge_ingress_check", environment="Mainnet Bridge"}
+      == 0
+    for: 2m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: ingress_access
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Bridge Ingress Unavailable (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: The public ingress endpoint for SUI Bridge Node instance { $labels.instance
+        } (Mainnet Bridge) is not accessible.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '2'
+  - alert: SuiBridge_VotingPower_Mainnet_Bridge
+    expr: current_bridge_voting_rights{service="sui_bridge", authority="${SUI_VALIDATOR}",
+      environment="Mainnet Bridge"} == 0
+    for: 5m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: voting_power
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Zero Bridge Voting Rights (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: The SUI Bridge Node instance { $labels.instance } (Mainnet Bridge)
+        has zero voting rights, indicating a potential issue with the validator's
+        authority.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '288'
+- name: sui_bridge_client_disabled_alerts_Mainnet_Bridge
+  rules:
+  - alert: SuiBridge_BridgeRequestErrors_Mainnet_Bridge
+    expr: increase(bridge_err_requests{service="sui_bridge", type="handle_sui_tx_digest",
+      environment="Mainnet Bridge"}[5m]) > 0
+    for: 5m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: bridge_requests_errors
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Bridge Request Errors Detected (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: The SUI Bridge Node instance { $labels.instance } (Mainnet Bridge)
+        detected errors while handling SUI transaction digests in the last 5 minutes.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '294'
+  - alert: SuiBridge_HighETHRPCLatency_Mainnet_Bridge
+    expr: bridge_eth_rpc_queries_latency{service="sui_bridge", environment="Mainnet
+      Bridge"} > 5000
+    for: 5m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: bridge_high_latency
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'High ETH RPC Latency (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: The ETH RPC queries latency for SUI Bridge Node instance { $labels.instance
+        } (Mainnet Bridge) is above 5 seconds.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '294'
+  - alert: SuiBridge_HighCacheMisses_Mainnet_Bridge
+    expr: (rate(bridge_signer_with_cache_miss{service="sui_bridge", environment="Mainnet
+      Bridge"}[5m]) / (rate(bridge_signer_with_cache_hit{service="sui_bridge", environment="Mainnet
+      Bridge"}[5m]) + rate(bridge_signer_with_cache_miss{service="sui_bridge", environment="Mainnet
+      Bridge"}[5m]))) > 0.5
+    for: 5m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: bridge_high_cache_misses
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'High Cache Miss Rate (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: The cache miss rate for SUI Bridge Node instance { $labels.instance
+        } (Mainnet Bridge) is above 50%.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '305'
+  - alert: SuiBridge_SUIRPCErrors_Mainnet_Bridge
+    expr: increase(bridge_sui_rpc_errors{service="sui_bridge", environment="Mainnet
+      Bridge"}[5m]) > 0
+    for: 5m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: bridge_rpc_errors
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'SUI RPC Errors Detected (Instance: { $labels.instance }, Environment:
+        Mainnet Bridge)'
+      description: SUI RPC errors detected for SUI Bridge Node instance { $labels.instance
+        } (Mainnet Bridge) in the last 5 minutes.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '322'
+- name: sui_bridge_client_enabled_alerts_Mainnet_Bridge
+  rules:
+  - alert: SuiBridge_StaleSUISync_Mainnet_Bridge
+    expr: increase(bridge_last_synced_sui_checkpoints{service="sui_bridge", module_name="bridge",
+      environment="Mainnet Bridge"}[30m]) == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: stale_sui_sync
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Bridge Last Synced Checkpoints Not Increasing (Instance: { $labels.instance
+        }, Environment: Mainnet Bridge)'
+      description: Bridge Last Synced Checkpoints on { $labels.instance } (Mainnet
+        Bridge) are not increasing for the last 30 minutes.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '331'
+  - alert: SuiBridge_StaleETHSync_Mainnet_Bridge
+    expr: increase(bridge_last_synced_eth_blocks{service="sui_bridge", environment="Mainnet
+      Bridge"}[30m]) == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: stale_eth_sync
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Bridge Last Synced ETH Blocks Not Increasing (Instance: { $labels.instance
+        }, Environment: Mainnet Bridge)'
+      description: Bridge Last Synced ETH Blocks on { $labels.instance } (Mainnet
+        Bridge) are not increasing for the last 30 minutes.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '324'
+  - alert: SuiBridge_StaleETHFinalization_Mainnet_Bridge
+    expr: increase(bridge_last_finalized_eth_block{service="sui_bridge", environment="Mainnet
+      Bridge"}[10m]) == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: stale_eth_finalization
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Bridge Finalized ETH Block Not Increasing (Instance: { $labels.instance
+        }, Environment: Mainnet Bridge)'
+      description: Bridge Finalized ETH Block on { $labels.instance } (Mainnet Bridge)
+        is not increasing for the last 10 minutes.
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '324'
+  - alert: SuiBridge_LowGasBalance_Mainnet_Bridge
+    expr: bridge_gas_coin_balance{service="sui_bridge", environment="Mainnet Bridge"}
+      < 10000000000
+    for: 1m
+    labels:
+      severity: critical
+      service: sui_bridge
+      instance: '{{ $labels.instance }}'
+      environment: '"Mainnet Bridge"'
+      alert_type: low_gas_balance
+      bridge_index: '0'
+      bridge_alias: Mainnet Bridge
+    annotations:
+      summary: 'Bridge Client Balance Running Low (Instance: { $labels.instance },
+        Environment: Mainnet Bridge)'
+      description: Bridge Client Balance on { $labels.instance } (Mainnet Bridge)
+        is running out of tokens (below 10 SUI).
+      __dashboardUid__: ctles38bbprkmttbdkv0hijk
+      __panelId__: '316'

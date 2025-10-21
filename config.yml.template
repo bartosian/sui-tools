@@ -24,12 +24,66 @@ bridges:
   - alias: "Production Mainnet"
     target: localhost:9186
     public_address: localhost:9187
+    alerts:
+      # Common alerts (any bridge)
+      uptime: true
+      metrics_public_key_availability: true
+      ingress_access: true
+      voting_power: true
+      
+      # Client-disabled alerts
+      bridge_requests_errors: true
+      bridge_high_latency: true
+      bridge_high_cache_misses: true
+      bridge_rpc_errors: true
+      
+      # Client-enabled alerts
+      stale_sui_sync: true
+      stale_eth_sync: true
+      stale_eth_finalization: true
+      low_gas_balance: true
   - alias: "Test Network"
     target: localhost:9185
     public_address: localhost:9188
+    alerts:
+      # Common alerts (any bridge)
+      uptime: true
+      metrics_public_key_availability: true
+      ingress_access: true
+      voting_power: true
+      
+      # Client-disabled alerts
+      bridge_requests_errors: true
+      bridge_high_latency: true
+      bridge_high_cache_misses: true
+      bridge_rpc_errors: true
+      
+      # Client-enabled alerts
+      stale_sui_sync: true
+      stale_eth_sync: true
+      stale_eth_finalization: true
+      low_gas_balance: true
   - alias: "Development Network"
     target: localhost:9189
     public_address: localhost:9190
+    alerts:
+      # Common alerts (any bridge)
+      uptime: true
+      metrics_public_key_availability: true
+      ingress_access: true
+      voting_power: true
+      
+      # Client-disabled alerts
+      bridge_requests_errors: true
+      bridge_high_latency: true
+      bridge_high_cache_misses: true
+      bridge_rpc_errors: true
+      
+      # Client-enabled alerts
+      stale_sui_sync: true
+      stale_eth_sync: true
+      stale_eth_finalization: true
+      low_gas_balance: true
 
 # Sui Validator
 sui:
