@@ -65,7 +65,47 @@ parse_yaml_config() {
     
     log_info "Parsing configuration from $CONFIG_FILE..."
     
-    # Function to get value from YAML
+    # Check if Python 3 is available
+    if ! command -v python3 &> /dev/null; then
+        log_error "Python 3 is required but not installed!"
+        log_info "Please install Python 3 to use the dynamic configuration parser"
+        exit 1
+    fi
+    
+    # Check if PyYAML is available
+    if ! python3 -c "import yaml" &> /dev/null; then
+        log_error "PyYAML is required but not installed!"
+        log_info "Please install PyYAML: pip3 install PyYAML"
+        exit 1
+    fi
+    
+    # Create generated configs directory
+    mkdir -p generated_configs
+    chmod 755 generated_configs
+    
+    # Use Python parser to generate Prometheus config and export bridge variables
+    log_info "Using Python parser to generate configuration..."
+    local parser_output
+    parser_output=$(python3 scripts/parse_config.py "$CONFIG_FILE" "generated_configs/prometheus.yml" 2>/dev/null)
+    
+    if [ $? -ne 0 ]; then
+        log_error "Configuration parsing failed:"
+        python3 scripts/parse_config.py "$CONFIG_FILE" "generated_configs/prometheus.yml" 2>&1
+        exit 1
+    fi
+    
+    # Copy generated configs to config directory for container access
+    cp generated_configs/prometheus.yml config/prometheus/generated_prometheus.yml
+    cp generated_configs/bridges.json config/prometheus/generated_bridges.json
+    
+    # Source the exported variables from Python parser
+    # Use a temporary file to avoid shell parsing issues with JSON
+    local temp_file=$(mktemp)
+    echo "$parser_output" > "$temp_file"
+    source "$temp_file"
+    rm "$temp_file"
+    
+    # Function to get value from YAML (for non-bridge configs)
     get_yaml_value() {
         local key="$1"
         local file="$2"
@@ -92,7 +132,7 @@ parse_yaml_config() {
         ' "$file"
     }
     
-    # Function to get nested value from YAML
+    # Function to get nested value from YAML (for non-bridge configs)
     get_yaml_nested_value() {
         local parent="$1"
         local child="$2"
@@ -145,41 +185,7 @@ parse_yaml_config() {
     export ALERTMANAGER_TARGET=$(get_yaml_nested_value "alertmanager" "target" "$CONFIG_FILE")
     export ALERTMANAGER_DEFAULT_WEBHOOK_PORT=$(get_yaml_nested_value "alertmanager" "default_webhook_port" "$CONFIG_FILE")
     
-    # Export Bridge variables - need special handling for nested structure
-    export SUI_BRIDGE_MAINNET_TARGET=$(awk '
-        BEGIN { in_bridges=0; in_mainnet=0 }
-        /^bridges:/ { in_bridges=1; next }
-        /^  mainnet:/ { if (in_bridges) in_mainnet=1; next }
-        /^    target:/ { if (in_mainnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
-        /^[a-zA-Z]/ { if (in_mainnet) in_mainnet=0; if (in_bridges && !/^  /) in_bridges=0 }
-        ' "$CONFIG_FILE")
-    
-    export SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS=$(awk '
-        BEGIN { in_bridges=0; in_mainnet=0 }
-        /^bridges:/ { in_bridges=1; next }
-        /^  mainnet:/ { if (in_bridges) in_mainnet=1; next }
-        /^    public_address:/ { if (in_mainnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
-        /^[a-zA-Z]/ { if (in_mainnet) in_mainnet=0; if (in_bridges && !/^  /) in_bridges=0 }
-        ' "$CONFIG_FILE")
-    
-    export SUI_BRIDGE_TESTNET_TARGET=$(awk '
-        BEGIN { in_bridges=0; in_testnet=0 }
-        /^bridges:/ { in_bridges=1; next }
-        /^  testnet:/ { if (in_bridges) in_testnet=1; next }
-        /^    target:/ { if (in_testnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
-        /^[a-zA-Z]/ { if (in_testnet) in_testnet=0; if (in_bridges && !/^  /) in_bridges=0 }
-        ' "$CONFIG_FILE")
-    
-    export SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS=$(awk '
-        BEGIN { in_bridges=0; in_testnet=0 }
-        /^bridges:/ { in_bridges=1; next }
-        /^  testnet:/ { if (in_bridges) in_testnet=1; next }
-        /^    public_address:/ { if (in_testnet) { gsub(/^[ \t]+|[ \t]+$/, "", $2); gsub(/^["\047]|["\047]$/, "", $2); print $2; exit } }
-        /^[a-zA-Z]/ { if (in_testnet) in_testnet=0; if (in_bridges && !/^  /) in_bridges=0 }
-        ' "$CONFIG_FILE")
-    
-    # Export Sui variables
-    export SUI_VALIDATOR=$(get_yaml_nested_value "sui" "validator" "$CONFIG_FILE")
+    # Note: SUI_VALIDATOR is now exported by the Python parser
     
     # Export notification variables
     export PAGERDUTY_INTEGRATION_KEY=$(get_yaml_nested_value "pagerduty" "integration_key" "$CONFIG_FILE")
@@ -196,6 +202,7 @@ parse_yaml_config() {
     export ALERTMANAGER_TARGET="${ALERTMANAGER_TARGET:-localhost:9093}"
     
     log_success "Configuration loaded successfully"
+    log_info "Parsed $SUI_BRIDGES_COUNT bridge(s)"
 }
 
 # Check if required tools are installed

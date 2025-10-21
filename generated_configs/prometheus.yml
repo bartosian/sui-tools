@@ -1,0 +1,148 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: sui-monitoring
+    replica: prometheus-1
+rule_files:
+- /etc/prometheus/rules/*.yml
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - ${ALERTMANAGER_TARGET}
+scrape_configs:
+- job_name: prometheus
+  static_configs:
+  - targets:
+    - ${PROMETHEUS_TARGET}
+  scrape_interval: 5s
+  metrics_path: /metrics
+- job_name: sui_bridge_mainnet_bridge
+  static_configs:
+  - targets:
+    - 103.50.32.66:9186
+    labels:
+      service: sui_bridge
+      environment: Mainnet Bridge
+      configured: 'true'
+  scrape_interval: 15s
+  metrics_path: /metrics
+  scrape_timeout: 10s
+  scheme: http
+  honor_labels: true
+  relabel_configs:
+  - target_label: instance
+    replacement: 103.50.32.66:9186
+- job_name: sui_bridge_mainnet_bridge_metrics_public_key_check
+  metrics_path: /probe
+  params:
+    module:
+    - http_2xx
+  static_configs:
+  - targets:
+    - https://sui-mainnet-bridge.bartestnet.com/metrics_pub_key
+    labels:
+      service: sui_bridge_health_check
+      environment: Mainnet Bridge
+      configured: 'true'
+  scrape_interval: 1m
+  scrape_timeout: 10s
+  relabel_configs:
+  - source_labels:
+    - __address__
+    target_label: __param_target
+  - source_labels:
+    - __param_target
+    target_label: instance
+    replacement: 103.50.32.66:9186
+  - target_label: __address__
+    replacement: ${BLACKBOX_EXPORTER_ADDRESS}
+- job_name: sui_bridge_mainnet_bridge_ingress_check
+  metrics_path: /probe
+  params:
+    module:
+    - http_2xx
+  static_configs:
+  - targets:
+    - https://sui-mainnet-bridge.bartestnet.com
+    labels:
+      service: sui_bridge_ingress_check
+      environment: Mainnet Bridge
+      configured: 'true'
+  scrape_interval: 1m
+  scrape_timeout: 10s
+  relabel_configs:
+  - source_labels:
+    - __address__
+    target_label: __param_target
+  - source_labels:
+    - __param_target
+    target_label: instance
+    replacement: 103.50.32.66:9186
+  - target_label: __address__
+    replacement: ${BLACKBOX_EXPORTER_ADDRESS}
+- job_name: sui_bridge_testnet_bridge
+  static_configs:
+  - targets:
+    - 103.50.32.66:9185
+    labels:
+      service: sui_bridge
+      environment: Testnet Bridge
+      configured: 'true'
+  scrape_interval: 15s
+  metrics_path: /metrics
+  scrape_timeout: 10s
+  scheme: http
+  honor_labels: true
+  relabel_configs:
+  - target_label: instance
+    replacement: 103.50.32.66:9185
+- job_name: sui_bridge_testnet_bridge_metrics_public_key_check
+  metrics_path: /probe
+  params:
+    module:
+    - http_2xx
+  static_configs:
+  - targets:
+    - https://sui-testnet-bridge.bartestnet.com/metrics_pub_key
+    labels:
+      service: sui_bridge_health_check
+      environment: Testnet Bridge
+      configured: 'true'
+  scrape_interval: 1m
+  scrape_timeout: 10s
+  relabel_configs:
+  - source_labels:
+    - __address__
+    target_label: __param_target
+  - source_labels:
+    - __param_target
+    target_label: instance
+    replacement: 103.50.32.66:9185
+  - target_label: __address__
+    replacement: ${BLACKBOX_EXPORTER_ADDRESS}
+- job_name: sui_bridge_testnet_bridge_ingress_check
+  metrics_path: /probe
+  params:
+    module:
+    - http_2xx
+  static_configs:
+  - targets:
+    - https://sui-testnet-bridge.bartestnet.com
+    labels:
+      service: sui_bridge_ingress_check
+      environment: Testnet Bridge
+      configured: 'true'
+  scrape_interval: 1m
+  scrape_timeout: 10s
+  relabel_configs:
+  - source_labels:
+    - __address__
+    target_label: __param_target
+  - source_labels:
+    - __param_target
+    target_label: instance
+    replacement: 103.50.32.66:9185
+  - target_label: __address__
+    replacement: ${BLACKBOX_EXPORTER_ADDRESS}

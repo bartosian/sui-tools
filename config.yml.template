@@ -19,13 +19,17 @@ alertmanager:
   default_webhook_port: 3001
 
 # Sui Bridge Configuration
+# Add as many bridges as needed - each bridge requires alias, target, and public_address
 bridges:
-  mainnet:
+  - alias: "Production Mainnet"
     target: localhost:9186
     public_address: localhost:9187
-  testnet:
+  - alias: "Test Network"
     target: localhost:9185
     public_address: localhost:9188
+  - alias: "Development Network"
+    target: localhost:9189
+    public_address: localhost:9190
 
 # Sui Validator
 sui:

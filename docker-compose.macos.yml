@@ -16,11 +16,6 @@ services:
       GF_SERVER_HTTP_PORT: 3000
       PROMETHEUS_URL: "http://prometheus:9090"
       ALERTMANAGER_URL: "http://alertmanager:9093"
-      SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
-      SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
-      SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}
-      SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}
-      SUI_VALIDATOR: ${SUI_VALIDATOR:-}
       GF_GITHUB_PLUGINS: ${GF_GITHUB_PLUGINS:-}
       PROMETHEUS_AUTH_TOKEN: ${PROMETHEUS_AUTH_TOKEN:-}
       ALERTMANAGER_AUTH_TOKEN: ${ALERTMANAGER_AUTH_TOKEN:-}
@@ -29,6 +24,8 @@ services:
       - ./config/grafana/dashboards:/etc/dashboards:ro
       - ./config/grafana:/etc/grafana/provisioning:ro
       - ./config/grafana/entrypoint.sh:/entrypoint.sh:ro
+      - ./config.yml:/etc/sui-tools/config.yml:ro
+      - ./generated_configs:/etc/sui-tools/generated_configs:ro
     entrypoint: ["/bin/bash", "/entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
@@ -52,13 +49,8 @@ services:
       - prometheus_data:/prometheus
       - ./config/prometheus:/config:ro
     environment:
-      SUI_BRIDGE_MAINNET_TARGET: ${SUI_BRIDGE_MAINNET_TARGET:-}
-      SUI_BRIDGE_TESTNET_TARGET: ${SUI_BRIDGE_TESTNET_TARGET:-}
-      SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}
-      SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}
       PROMETHEUS_TARGET: prometheus:9090
       ALERTMANAGER_TARGET: alertmanager:9093
-      SUI_VALIDATOR: ${SUI_VALIDATOR:-}
     entrypoint: ["/bin/sh", "/config/entrypoint.sh"]
     command:
       - '--web.listen-address=:9090'
@@ -118,9 +110,7 @@ services:
       - "9115:9115"
     volumes:
       - ./config/blackbox:/etc/blackbox:ro
-    environment:
-      SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}
-      SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: ${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}
+    environment: {}
     entrypoint: ["/bin/sh", "/etc/blackbox/entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9115/metrics || exit 1"]

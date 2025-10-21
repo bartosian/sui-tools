@@ -1,0 +1,12 @@
+[
+  {
+    "alias": "Mainnet Bridge",
+    "target": "103.50.32.66:9186",
+    "public_address": "https://sui-mainnet-bridge.bartestnet.com"
+  },
+  {
+    "alias": "Testnet Bridge",
+    "target": "103.50.32.66:9185",
+    "public_address": "https://sui-testnet-bridge.bartestnet.com"
+  }
+]

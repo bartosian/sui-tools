@@ -21,13 +21,20 @@ log_error() {
 
 log_info "Grafana entrypoint script started"
 
-# Check if any bridge targets are configured
+# Check if any bridge targets are configured by checking the generated bridges config file
 BRIDGE_TARGETS_CONFIGURED=false
-if [ -n "${SUI_BRIDGE_MAINNET_TARGET:-}" ] || [ -n "${SUI_BRIDGE_TESTNET_TARGET:-}" ]; then
-    BRIDGE_TARGETS_CONFIGURED=true
-    log_info "Bridge targets detected - will deploy bridge dashboard"
+if [ -f "/etc/sui-tools/generated_configs/bridges.json" ]; then
+    # Check if the file is not empty and contains at least one bridge (simple check for opening bracket)
+    if grep -q '\[' "/etc/sui-tools/generated_configs/bridges.json" 2>/dev/null && \
+       [ "$(cat /etc/sui-tools/generated_configs/bridges.json | grep -o '"alias"' | wc -l)" -gt 0 ]; then
+        BRIDGE_COUNT=$(cat /etc/sui-tools/generated_configs/bridges.json | grep -o '"alias"' | wc -l | tr -d ' ')
+        BRIDGE_TARGETS_CONFIGURED=true
+        log_info "Bridge targets detected ($BRIDGE_COUNT bridges) - will deploy bridge dashboard"
+    else
+        log_info "No bridge targets configured - skipping bridge dashboard deployment"
+    fi
 else
-    log_info "No bridge targets configured - skipping bridge dashboard deployment"
+    log_info "No bridge configuration file found - skipping bridge dashboard deployment"
 fi
 
 # Process dashboard templates - substitute SUI_VALIDATOR
@@ -56,17 +63,6 @@ if [ -n "${SUI_VALIDATOR:-}" ]; then
             
             # Also substitute the constant variable value using | as delimiter
             sed -i "s|\"\$SUI_VALIDATOR\"|\"$SUI_VALIDATOR\"|g" "/tmp/processed_dashboards/$filename"
-            
-            # Substitute public address variables if they are set
-            if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
-                sed -i "s|\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS|g" "/tmp/processed_dashboards/$filename"
-                log_info "Substituted SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: $SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS"
-            fi
-            
-            if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
-                sed -i "s|\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS|g" "/tmp/processed_dashboards/$filename"
-                log_info "Substituted SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: $SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS"
-            fi
             
             log_info "Dashboard processed: $filename"
         fi
@@ -109,21 +105,6 @@ else
         
         # Copy all dashboards (including bridge dashboard)
         cp /etc/dashboards/*.json /tmp/processed_dashboards/
-        
-        # Process public address variables if they are set
-        for dashboard in /tmp/processed_dashboards/*.json; do
-            if [ -f "$dashboard" ]; then
-                if [ -n "${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS:-}" ]; then
-                    sed -i "s|\${SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS|g" "$dashboard"
-                    log_info "Substituted SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS: $SUI_BRIDGE_MAINNET_PUBLIC_ADDRESS"
-                fi
-                
-                if [ -n "${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS:-}" ]; then
-                    sed -i "s|\${SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS}|$SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS|g" "$dashboard"
-                    log_info "Substituted SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS: $SUI_BRIDGE_TESTNET_PUBLIC_ADDRESS"
-                fi
-            fi
-        done
         
         # Create a new provisioning file that points to processed dashboards
         mkdir -p /tmp/grafana_provisioning/dashboards
