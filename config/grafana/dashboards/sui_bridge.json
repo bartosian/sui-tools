@@ -4405,9 +4405,12 @@
             "type": "timeseries"
         }
     ],
-    "refresh": "",
+    "refresh": "1m",
     "schemaVersion": 38,
-    "tags": [],
+    "tags": [
+        "Bridge",
+        "Sui"
+    ],
     "templating": {
         "list": [{
                 "description": "SUI Validator name from environment variable",
@@ -4421,18 +4424,18 @@
             {
                 "current": {
                     "selected": false,
-                    "text": "103.50.32.66:9185",
-                    "value": "103.50.32.66:9185"
+                    "text": "",
+                    "value": ""
                 },
                 "datasource": {
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "definition": "label_values(up{configured=\"true\"},environment)",
-                "description": "This variable dynamically fetches and displays all available SUI Bridge environments based on configured jobs.",
+                "description": "This variable dynamically fetches and displays all available SUI Bridge environments (aliases) from the config.yml file based on the configured bridges.",
                 "hide": 0,
                 "includeAll": false,
-                "label": "Bridge Environment",
+                "label": "Bridge Target",
                 "multi": false,
                 "name": "instance",
                 "options": [],
@@ -4450,7 +4453,7 @@
         ]
     },
     "time": {
-        "from": "now-24h",
+        "from": "now-15m",
         "to": "now"
     },
     "timepicker": {

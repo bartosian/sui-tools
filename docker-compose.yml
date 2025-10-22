@@ -17,6 +17,7 @@ services:
       GF_GITHUB_PLUGINS: ${GF_GITHUB_PLUGINS:-}
       PROMETHEUS_AUTH_TOKEN: ${PROMETHEUS_AUTH_TOKEN:-}
       ALERTMANAGER_AUTH_TOKEN: ${ALERTMANAGER_AUTH_TOKEN:-}
+      SUI_VALIDATOR: ${SUI_VALIDATOR:-}
     volumes:
       - grafana_data:/var/lib/grafana
       - ./config/grafana/dashboards:/etc/dashboards:ro
