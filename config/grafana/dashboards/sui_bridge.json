@@ -1148,7 +1148,7 @@
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "max(current_bridge_voting_rights{authority=\"BartestneT\", environment=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{environment=\"$instance\"}) \n* 100",
+                "expr": "max(current_bridge_voting_rights{authority=\"$SUI_VALIDATOR\", environment=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{environment=\"$instance\"}) \n* 100",
                 "legendFormat": "Voting Power %",
                 "range": true,
                 "refId": "A"
@@ -4414,7 +4414,7 @@
                 "hide": 2,
                 "label": "Validator",
                 "name": "SUI_VALIDATOR",
-                "query": "BartestneT",
+                "query": "${SUI_VALIDATOR}",
                 "skipUrlSync": false,
                 "type": "constant"
             },
@@ -4450,12 +4450,11 @@
         ]
     },
     "time": {
-        "from": "now-12h",
+        "from": "now-24h",
         "to": "now"
     },
     "timepicker": {
         "refresh_intervals": [
-            "30s",
             "1m",
             "5m",
             "15m",
@@ -4467,7 +4466,7 @@
     },
     "timezone": "",
     "title": "Sui Bridge Node",
-    "uid": "ctles38bbprkmttbdkv0hijk",
+    "uid": "d3sdagobbprlcrf8dh3g",
     "version": 66,
-    "weekStart": ""
+    "weekStart": "monday"
 }

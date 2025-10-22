@@ -1,0 +1,4332 @@
+{
+    "annotations": {
+        "list": [{
+            "builtIn": 1,
+            "datasource": {
+                "type": "grafana"
+            },
+            "enable": false,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+                "limit": 100,
+                "matchAny": false,
+                "tags": [],
+                "type": "dashboard"
+            },
+            "type": "dashboard"
+        }]
+    },
+    "description": "Sui validator dashboard by Blockscope.net",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 4,
+    "links": [],
+    "liveNow": false,
+    "panels": [{
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 282,
+            "panels": [],
+            "title": "Node Sync Status",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "If network is running in safe mode or not",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "index": 0,
+                                "text": "No"
+                            },
+                            "1": {
+                                "index": 1,
+                                "text": "Yes"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 1
+            },
+            "id": 256,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "is_safe_mode{instance=\"$node\"}",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Safe Mode",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Current epoch synced for the validator",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 4,
+                "y": 1
+            },
+            "id": 204,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "current_epoch{instance=\"$node\"}",
+                "legendFormat": "{{host}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Validator Epoch",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Node uptime in seconds",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "#00000000",
+                                "value": null
+                            },
+                            {
+                                "color": "#000000",
+                                "value": 0
+                            },
+                            {
+                                "color": "red",
+                                "value": 10
+                            },
+                            {
+                                "color": "orange",
+                                "value": 60
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 600
+                            },
+                            {
+                                "color": "blue",
+                                "value": 3600
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 8,
+                "y": 1
+            },
+            "id": 255,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "uptime{instance=\"$node\"}",
+                    "hide": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(uptime{instance=\"$node\"})",
+                    "hide": false,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Uptime",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Node stake share ",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "max": 20,
+                    "min": 0,
+                    "noValue": "N/A",
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 5
+                            },
+                            {
+                                "color": "red",
+                                "value": 10
+                            }
+                        ]
+                    },
+                    "unit": "percent"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 4,
+                "x": 12,
+                "y": 1
+            },
+            "id": 268,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true,
+                "text": {
+                    "titleSize": 0
+                }
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "current_voting_right{instance=\"$node\"} / 100 ",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Voting Power",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Network transactions per second during latest minute",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "max": 25000,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#6ED0E0",
+                                "value": 1000
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 5000
+                            },
+                            {
+                                "color": "orange",
+                                "value": 10000
+                            },
+                            {
+                                "color": "red",
+                                "value": 20000
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 4,
+                "x": 16,
+                "y": 1
+            },
+            "id": 269,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "irate(total_transaction_effects{instance=\"$node\"}[1m])   ",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Transactions Per Second",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Network certificates per second during latest minute",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "max": 20,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.4
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "#6ED0E0",
+                                "value": 2
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 4,
+                "x": 20,
+                "y": 1
+            },
+            "id": 272,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "rate(num_shared_obj_tx{instance=\"$node\"}[1m])",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Certs Per Second",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Certificates processed by the node",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 5
+            },
+            "id": 277,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "certificates_processed{source=\"own\", instance=\"$node\"}",
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(consensus_last_committed_leader_round)",
+                    "hide": false,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(consensus_committed_messages{instance=\"$node\"})",
+                    "hide": true,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Certificates Processed",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Current consensus round.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 4,
+                "y": 5
+            },
+            "id": 266,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "current_round{instance=\"$node\"}",
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_threshold_clock_round{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Mysticeti",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Current Round",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Node highest executed checkpoint",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 8,
+                "y": 5
+            },
+            "id": 274,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "max(last_executed_checkpoint{instance=\"$node\"})",
+                "legendFormat": "{{host}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Last Executed Checkpoint",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Certificates created by node vs processed by the network",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 1,
+                    "mappings": [],
+                    "max": 100,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 80
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 90
+                            },
+                            {
+                                "color": "green",
+                                "value": 95
+                            }
+                        ]
+                    },
+                    "unit": "%"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 4,
+                "x": 12,
+                "y": 7
+            },
+            "id": 279,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(certificates_created{instance=\"$node\"}) / max(certificates_processed{instance=\"$node\", source=\"own\"}) * 100",
+                    "hide": false,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "(sum(consensus_proposed_blocks{instance=\"$node\"}) / max(consensus_verified_blocks)) * 100",
+                    "hide": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "(sum(consensus_proposed_blocks{instance=\"$node\"}) / max(consensus_last_committed_leader_round)) * 100",
+                    "hide": false,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Certificate Sync",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Round committed by node vs network current round",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 1,
+                    "mappings": [],
+                    "max": 100,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 80
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 90
+                            },
+                            {
+                                "color": "green",
+                                "value": 95
+                            }
+                        ]
+                    },
+                    "unit": "%"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 4,
+                "x": 16,
+                "y": 7
+            },
+            "id": 278,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "last_committed_round{instance=\"$node\"}/current_round{instance=\"$node\"} * 100",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_last_committed_leader_round{instance=\"$node\"}/consensus_threshold_clock_round{instance=\"$node\"} * 100",
+                    "hide": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_threshold_clock_round{instance=\"$node\"}/consensus_highest_accepted_round{instance=\"$node\"} * 100",
+                    "hide": false,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Round Sync",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Last executed checkpoint by node vs network highest synced checkpoint",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 1,
+                    "mappings": [],
+                    "max": 100,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 80
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 90
+                            },
+                            {
+                                "color": "green",
+                                "value": 95
+                            }
+                        ]
+                    },
+                    "unit": "%"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 4,
+                "x": 20,
+                "y": 7
+            },
+            "id": 280,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "last_executed_checkpoint{instance=\"$node\"}/highest_synced_checkpoint{instance=\"$node\"} * 100",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Checkpoint Sync",
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Network certificates",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 9
+            },
+            "id": 276,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "certificates_created{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(consensus_proposed_blocks{instance=\"$node\"})",
+                    "hide": false,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_committed_messages{instance=\"$node\", authority=\"$host\"}",
+                    "hide": true,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Certificates Created",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Node last commited consensus round",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 4,
+                "y": 9
+            },
+            "id": 275,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "last_committed_round{instance=\"$node\"}",
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_last_committed_leader_round{instance=\"$node\"}",
+                    "hide": true,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_highest_accepted_round{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "{{host}}",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Last Round",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Network highest checkpoint",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "blue",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 8,
+                "y": 9
+            },
+            "id": 254,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.4.7",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "max(highest_synced_checkpoint{instance=\"$node\"})",
+                "legendFormat": "{{host}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Highest Synced Checkpoint",
+            "type": "stat"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 13
+            },
+            "id": 287,
+            "panels": [],
+            "title": "Narwhal Performance",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Condensed \"Node Performance\" widget for small screens.\n\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⚙️ NARWHAL",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 1
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "dark-orange",
+                                "value": 70
+                            },
+                            {
+                                "color": "dark-yellow",
+                                "value": 80
+                            },
+                            {
+                                "color": "dark-green",
+                                "value": 90
+                            }
+                        ]
+                    }
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "B"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 10
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 10,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 15
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 15,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "C"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 10
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 10,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 20
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 20,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 100000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "D"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 2
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 2,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "E"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 1
+                                        },
+                                        "to": 0.1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 0.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.5,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 3
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "light-green",
+                                            "index": 4
+                                        },
+                                        "to": 1.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1.5,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 5
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "F"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": -100000,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 100
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 100,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 2
+                                        },
+                                        "to": 150
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 150,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 3
+                                        },
+                                        "to": 200
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 200,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 4
+                                        },
+                                        "to": 200000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "N"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 10
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 10,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 20
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 20,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 100000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "K"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 2
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 2,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "G"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 1
+                                        },
+                                        "to": 0.1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 0.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.5,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 3
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "light-green",
+                                            "index": 4
+                                        },
+                                        "to": 1.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1.5,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 5
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "H"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 1
+                                        },
+                                        "to": 0.1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 0.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.5,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 3
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "light-green",
+                                            "index": 4
+                                        },
+                                        "to": 1.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1.5,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 5
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "I"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": -100000,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 100
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 100,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 2
+                                        },
+                                        "to": 150
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 150,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 3
+                                        },
+                                        "to": 200
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 200,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 4
+                                        },
+                                        "to": 200000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 24,
+                "x": 0,
+                "y": 14
+            },
+            "id": 288,
+            "options": {
+                "colWidth": 0.9,
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "rowHeight": 0.9,
+                "showValue": "never",
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.2.5",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "sum(primary_network_peer_connected{type=\"other_primary\", instance=\"$node\"})",
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": "🟩",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", instance=\"$node\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟨",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "histogram_quantile(0.5, sum by(le) (rate(primary_inbound_request_latency_bucket{route=\"/narwhal.PrimaryToPrimary/SendCertificate\", instance=\"$node\"}[5m]))) * 1000",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟧",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(proposer_batch_latency_sum{instance=\"$node\"}[5m]) / rate(proposer_batch_latency_count{instance=\"$node\"}[5m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟥",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(certificates_created{instance=\"$node\"}[5m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟦",
+                    "range": true,
+                    "refId": "E"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "delta(last_committed_round{instance=\"$node\"}[1m]) - ((last_committed_round{instance=\"$node\"} offset 1m - last_committed_round{instance=\"$node\"} offset 11m) / 10)",
+                    "hide": true,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟪",
+                    "range": true,
+                    "refId": "F"
+                }
+            ],
+            "title": "🟩 Network Connectivity    🟨 Cert Latency p95    🟧 Process Certificate p50    🟥 Proposal Latency    🟦 Proposal Rate      (⚙️ NARWHAL)",
+            "type": "status-history"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 19
+            },
+            "id": 297,
+            "panels": [],
+            "title": "Mysticeti Performance",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Condensed \"Node Performance\" widget for small screens.\n\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⬜️ Leader Round Rate\n\n⚙️ MYSTICETI",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 1
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "dark-orange",
+                                "value": 70
+                            },
+                            {
+                                "color": "dark-yellow",
+                                "value": 80
+                            },
+                            {
+                                "color": "dark-green",
+                                "value": 90
+                            }
+                        ]
+                    }
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "B"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 10
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 10,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 15
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 15,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "J"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 90,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 80,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 2
+                                        },
+                                        "to": 90
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 50,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 3
+                                        },
+                                        "to": 80
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 4
+                                        },
+                                        "to": 50
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "N"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 10
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 10,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 20
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 20,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 100000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "K"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "null+nan": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "value"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 2
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 2,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 3
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "G"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 1
+                                        },
+                                        "to": 0.1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.1,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 0.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0.5,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 3
+                                        },
+                                        "to": 1
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1,
+                                        "result": {
+                                            "color": "light-green",
+                                            "index": 4
+                                        },
+                                        "to": 1.5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 1.5,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 5
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "H"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 1
+                                        },
+                                        "to": 3
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 3,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 5,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 3
+                                        },
+                                        "to": 6
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 6,
+                                        "result": {
+                                            "color": "light-green",
+                                            "index": 4
+                                        },
+                                        "to": 7
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 7,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 5
+                                        },
+                                        "to": 1000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "I"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": -100000,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 100
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 100,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 2
+                                        },
+                                        "to": 150
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 150,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 3
+                                        },
+                                        "to": 200
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 200,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 4
+                                        },
+                                        "to": 200000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "M"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "transparent",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 1
+                                        },
+                                        "to": 3
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 3,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
+                                        "to": 5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 5,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 3
+                                        },
+                                        "to": 6
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 6,
+                                        "result": {
+                                            "color": "light-green",
+                                            "index": 4
+                                        },
+                                        "to": 7
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 7,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 5
+                                        },
+                                        "to": 1000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 6,
+                "w": 24,
+                "x": 0,
+                "y": 20
+            },
+            "id": 295,
+            "options": {
+                "colWidth": 0.9,
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "rowHeight": 0.9,
+                "showValue": "never",
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.2.5",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "sum(consensus_quinn_network_peer_connected{instance=\"$node\"})",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": "🟩",
+                    "range": true,
+                    "refId": "J"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", instance=\"$node\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟨",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"50\", instance=\"$node\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": "🟧",
+                    "range": true,
+                    "refId": "N"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(consensus_quorum_receive_latency_sum{instance=\"$node\"}[5m]) / rate(consensus_quorum_receive_latency_count{instance=\"$node\"}[5m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟥",
+                    "range": true,
+                    "refId": "K"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "sum(rate(consensus_proposed_blocks{force=\"true\"}[5m])) + sum(rate(consensus_proposed_blocks{force=\"false\"}[5m]))",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": "🟦",
+                    "range": true,
+                    "refId": "H"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(consensus_last_committed_leader_round{instance=\"$node\"}[2m])",
+                    "hide": false,
+                    "interval": "2m",
+                    "legendFormat": "⬜️",
+                    "range": true,
+                    "refId": "M"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "delta(consensus_last_committed_leader_round{instance=\"$node\"}[1m]) - ((consensus_last_committed_leader_round{instance=\"$node\"} offset 1m - consensus_last_committed_leader_round{instance=\"$node\"} offset 11m) / 10)",
+                    "hide": true,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": " 🟪",
+                    "range": true,
+                    "refId": "I"
+                }
+            ],
+            "title": "🟩 Network Connectivity    🟨 Cert Latency p95    🟧 Process Certificate p50    🟥 Proposal Latency    🟦 Proposal Rate    ⬜️ Leader Round Rate   (⚙️ MYSTICETI)",
+            "type": "status-history"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 26
+            },
+            "id": 247,
+            "panels": [],
+            "title": "Node Networking",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Certificates created vs certificated processed by the node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 1,
+                        "axisSoftMin": 0.5,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.5
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.9
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 27
+            },
+            "id": 290,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(certificates_created{instance=\"$node\"}) / max(certificates_processed{instance=\"$node\", source=\"own\"})",
+                    "legendFormat": "Narwhal",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(consensus_committed_messages{instance=\"$node\", authority=\"$host\"}) / (max(consensus_proposed_blocks{instance=\"$node\", force=\"false\"}) + max(consensus_proposed_blocks{instance=\"$node\", force=\"true\"}))",
+                    "hide": false,
+                    "legendFormat": "Mysticeti",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Certificate Sync",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Last committed round vs current round by the node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 1,
+                        "axisSoftMin": 0.5,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.5
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.9
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 8,
+                "y": 27
+            },
+            "id": 291,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "last_committed_round{instance=\"$node\"}/current_round{instance=\"$node\"}",
+                    "legendFormat": "Narwhal",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "consensus_last_committed_leader_round{instance=\"$node\"}/consensus_threshold_clock_round{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Mysticeti",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Round Sync",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Last executed checkpoint vs highest synced checkpoint by the node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 1,
+                        "axisSoftMin": 0.5,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "max": 1.01,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.5
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.9
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 16,
+                "y": 27
+            },
+            "id": 292,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "last_executed_checkpoint{instance=\"$node\"}/highest_synced_checkpoint{instance=\"$node\"}",
+                "legendFormat": "{{host}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Checkpoint Sync",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Node connected peers: Sui, Worker and Primary",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "dark-red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 50
+                            },
+                            {
+                                "color": "dark-green",
+                                "value": 90
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 36
+            },
+            "id": 265,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sui_network_peers{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Sui network",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "worker_network_peers{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Worker network",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "primary_network_peers{instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Primary network",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(consensus_quinn_network_peer_connected{instance=\"$node\"}) - 1",
+                    "hide": false,
+                    "legendFormat": "Quinn network",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "Peers",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "e2e latency of handling certificates that go through Narwhal (p67 across all certificate latencies)",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": [{
+                    "__systemRef": "hideSeriesFrom",
+                    "matcher": {
+                        "id": "byNames",
+                        "options": {
+                            "mode": "exclude",
+                            "names": [
+                                "quantile(0.67, (sequencing_certificate_latency_sum{instance=\"Sui Mainnet\"} / sequencing_certificate_latency_count{instance=\"Sui Mainnet\"})) / 1000"
+                            ],
+                            "prefix": "All except:",
+                            "readOnly": true
+                        }
+                    },
+                    "properties": [{
+                        "id": "custom.hideFrom",
+                        "value": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    }]
+                }]
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 8,
+                "y": 36
+            },
+            "id": 258,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "quantile(0.67, (sequencing_certificate_latency_sum{instance=\"$node\"} / sequencing_certificate_latency_count{instance=\"$node\"})) / 1000",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "C"
+            }],
+            "title": "Avg Consensus Adapter e2e latency",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Pruning done to database specified by node config.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Effects Checkpoint",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 2.5,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 6,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "dark-red",
+                                "value": null
+                            },
+                            {
+                                "color": "dark-yellow",
+                                "value": 1.1
+                            },
+                            {
+                                "color": "dark-green",
+                                "value": 1.5
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 16,
+                "y": 36
+            },
+            "id": 289,
+            "interval": "2m",
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "8.5.2",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "avg_over_time(last_pruned_effects_checkpoint{instance=\"$node\"}[24h])",
+                "hide": false,
+                "legendFormat": "Last Pruned Effects Checkpoint",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "DB Pruning",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Transactions (objects, certificates and orders) per second during last minute",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "TPS",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 45
+            },
+            "id": 270,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "irate(total_transaction_effects{instance=\"$node\"}[1m])",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "60s",
+                    "legendFormat": "Tx Objects",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "irate(total_transaction_certificates{instance=\"$node\"}[1m])",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "60s",
+                    "legendFormat": "Tx Certs",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "irate(total_transaction_orders{instance=\"$node\"}[1m])",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "60s",
+                    "legendFormat": "Tx Orders",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Transactions Per Second",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Cert per sec owned + shared during last minute (stacked chart)",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Cert / Sec",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green",
+                            "value": null
+                        }]
+                    }
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byName",
+                            "options": "owned obj txns"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "green",
+                                "mode": "fixed"
+                            }
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "shared obj txns"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "yellow",
+                                "mode": "fixed"
+                            }
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 8,
+                "y": 45
+            },
+            "id": 285,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(total_transaction_certificates{instance=\"$node\"}[1m]) - rate(num_shared_obj_tx{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Tx Owned Obj ",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(num_shared_obj_tx{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Certs / Second",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(num_shared_obj_tx{instance=\"$node\"}[1m])",
+                    "hide": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Certificates Per Second",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Highest synced checkpoint and last executed checkpoint rates during last minute",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Checkpoint / Sec",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 2,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.5
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 1.5
+                            }
+                        ]
+                    }
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byName",
+                            "options": "owned obj txns"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "green",
+                                "mode": "fixed"
+                            }
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "shared obj txns"
+                        },
+                        "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "yellow",
+                                "mode": "fixed"
+                            }
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 16,
+                "y": 45
+            },
+            "id": 245,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(total_transaction_certificates{instance=\"$node\"}[1m]) - rate(num_shared_obj_tx{instance=\"$node\"}[1m])",
+                    "hide": true,
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Tx Owned Obj ",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(highest_synced_checkpoint{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Highest Checkpoint",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(last_executed_checkpoint{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "",
+                    "legendFormat": "Executed Checkpoints",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Checkpoints Per Second",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Average shared obj latencies for p95, p50 and p99. Averages below 7 seconds are considered normal",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 8,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 7
+                            },
+                            {
+                                "color": "red",
+                                "value": 10
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 54
+            },
+            "id": 257,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", instance=\"$node\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "legendFormat": "pct {{pct}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"50\", instance=\"$node\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "legendFormat": "pct {{pct}}",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"99\", instance=\"$node\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "legendFormat": "pct {{pct}}",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Average Shared Obj Latency",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "p50, p95 and p99 certificates processing latencies",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 7000
+                            },
+                            {
+                                "color": "red",
+                                "value": 10000
+                            }
+                        ]
+                    },
+                    "unit": "ms"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 8,
+                "y": 54
+            },
+            "id": 246,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "validator_service_handle_certificate_consensus_latency{pct=\"50\", instance=\"$node\"}",
+                    "legendFormat": "Shared Obj p50",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "validator_service_handle_certificate_non_consensus_latency{pct=\"50\", instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Owned Obj p50",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "validator_service_handle_certificate_consensus_latency{pct=\"95\", instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Shared Obj p95",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "validator_service_handle_certificate_non_consensus_latency{pct=\"95\", instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Owned Obj p95",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "validator_service_handle_certificate_consensus_latency{pct=\"99\", instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Shared Obj p99",
+                    "range": true,
+                    "refId": "E"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "validator_service_handle_certificate_non_consensus_latency{pct=\"99\", instance=\"$node\"}",
+                    "hide": false,
+                    "legendFormat": "Owned Obj p99",
+                    "range": true,
+                    "refId": "F"
+                }
+            ],
+            "title": "Cert Processing Latencies",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Current round and last commited rates during last 1 minute",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rounds / Sec",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 2.5,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 6,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "dark-red",
+                                "value": null
+                            },
+                            {
+                                "color": "dark-yellow",
+                                "value": 1.1
+                            },
+                            {
+                                "color": "dark-green",
+                                "value": 1.5
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 16,
+                "y": 54
+            },
+            "id": 241,
+            "interval": "2m",
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "8.5.2",
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(current_round{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "legendFormat": "Current Round",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(last_committed_round{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "legendFormat": "Last Committed Round",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(consensus_threshold_clock_round{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "legendFormat": "Leader Round (Mysticeti)",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(consensus_last_committed_leader_round{instance=\"$node\"}[1m])",
+                    "hide": false,
+                    "legendFormat": "Clock Round (Mysticeti)",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Current Round Rate",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 63
+            },
+            "id": 294,
+            "panels": [],
+            "title": "Other Charts",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Network stake share delegated to the node",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.06
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.08
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.1
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 64
+            },
+            "id": 271,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "current_voting_right{instance=\"$node\"} / 10000",
+                "legendFormat": "{{host}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Voting power",
+            "type": "timeseries"
+        }
+    ],
+    "refresh": "1m",
+    "revision": 1,
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [
+        "Sui",
+        "Sonar"
+    ],
+    "templating": {
+        "list": [{
+                "current": {
+                    "selected": false,
+                    "text": "default",
+                    "value": "default"
+                },
+                "hide": 0,
+                "includeAll": false,
+                "label": "datasource",
+                "multi": false,
+                "name": "DS_PROMETHEUS",
+                "options": [],
+                "query": "prometheus",
+                "queryValue": "",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "type": "datasource"
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "sui-metrics",
+                    "value": "sui-metrics"
+                },
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "definition": "label_values(parallel_worker_batches, job)",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Job",
+                "multi": false,
+                "name": "job",
+                "options": [],
+                "query": {
+                    "query": "label_values(parallel_worker_batches, job)",
+                    "refId": "StandardVariableQuery"
+                },
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 1,
+                "tagValuesQuery": "",
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "Sui Testnet",
+                    "value": "Sui Testnet"
+                },
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "definition": "label_values(parallel_worker_batches{job=\"$job\"}, instance)",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Host:",
+                "multi": false,
+                "name": "node",
+                "options": [],
+                "query": {
+                    "query": "label_values(parallel_worker_batches{job=\"$job\"}, instance)",
+                    "refId": "StandardVariableQuery"
+                },
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 1,
+                "tagValuesQuery": "",
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "description": "Your validator name from official dashboard (or prometheus metrics) to filter the data from your validator from others..",
+                "hide": 2,
+                "label": "Your validator name",
+                "name": "host",
+                "query": "Blockscope.net",
+                "skipUrlSync": false,
+                "type": "constant"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-24h",
+        "to": "now"
+    },
+    "timepicker": {
+        "hidden": false,
+        "refresh_intervals": [
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ]
+    },
+    "timezone": "",
+    "title": "Sui Sonar dashboard",
+    "uid": "d3sdas8bbprlibnio2n0",
+    "version": 209,
+    "weekStart": "monday"
+}

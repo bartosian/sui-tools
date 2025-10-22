@@ -8,6 +8,10 @@ config.yml
 
 # Generated configuration files
 generated_configs/
+config/prometheus/generated_prometheus.yml
+config/prometheus/generated_bridges.json
+config/prometheus/rules/sui_bridge_*_alerts.yml
+config/alertmanager/generated_alertmanager.yml
 
 # Data directories
 data/

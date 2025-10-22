@@ -276,6 +276,9 @@ restart_services() {
     local compose_file=$(get_compose_file)
     log_info "Restarting services..."
     
+    # Clean up old generated files before regenerating
+    cleanup_generated_files
+    
     # Regenerate configs from config.yml
     parse_yaml_config
     
@@ -374,6 +377,16 @@ restore_data() {
     log_success "Data restored from backup"
 }
 
+# Clean up generated files
+cleanup_generated_files() {
+    log_info "Cleaning up generated configuration files..."
+    rm -rf generated_configs/
+    rm -f config/prometheus/generated_prometheus.yml
+    rm -f config/prometheus/generated_bridges.json
+    rm -f config/alertmanager/generated_alertmanager.yml
+    rm -f config/prometheus/rules/sui_bridge_*_alerts.yml
+}
+
 # Clean up
 cleanup() {
     local compose_file=$(get_compose_file)
@@ -392,7 +405,7 @@ cleanup() {
         fi
         
         rm -rf data/
-        rm -rf generated_configs/
+        cleanup_generated_files
         log_success "Cleanup completed"
     else
         log_info "Cleanup cancelled"

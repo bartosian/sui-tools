@@ -160,7 +160,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Critical uptime on {{ $labels.instance }} ({alias})",
                         "description": f"The uptime for SUI Bridge Node instance {{ $labels.instance }} ({alias}) has not increased in the last 10 minutes, suggesting a restart or failure.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "2",
                     },
                 }
@@ -184,7 +184,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Metrics Public Key Unavailable (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"The metrics public key endpoint for SUI Bridge Node instance {{ $labels.instance }} ({alias}) is not accessible.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "2",
                     },
                 }
@@ -208,7 +208,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Bridge Ingress Unavailable (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"The public ingress endpoint for SUI Bridge Node instance {{ $labels.instance }} ({alias}) is not accessible.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "2",
                     },
                 }
@@ -232,7 +232,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Zero Bridge Voting Rights (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"The SUI Bridge Node instance {{ $labels.instance }} ({alias}) has zero voting rights, indicating a potential issue with the validator's authority.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "288",
                     },
                 }
@@ -257,7 +257,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Bridge Request Errors Detected (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"The SUI Bridge Node instance {{ $labels.instance }} ({alias}) detected errors while handling SUI transaction digests in the last 5 minutes.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "294",
                     },
                 }
@@ -281,7 +281,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"High ETH RPC Latency (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"The ETH RPC queries latency for SUI Bridge Node instance {{ $labels.instance }} ({alias}) is above 5 seconds.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "294",
                     },
                 }
@@ -305,7 +305,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"High Cache Miss Rate (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"The cache miss rate for SUI Bridge Node instance {{ $labels.instance }} ({alias}) is above 50%.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "305",
                     },
                 }
@@ -329,7 +329,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"SUI RPC Errors Detected (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"SUI RPC errors detected for SUI Bridge Node instance {{ $labels.instance }} ({alias}) in the last 5 minutes.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "322",
                     },
                 }
@@ -354,7 +354,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Bridge Last Synced Checkpoints Not Increasing (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"Bridge Last Synced Checkpoints on {{ $labels.instance }} ({alias}) are not increasing for the last 30 minutes.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "331",
                     },
                 }
@@ -378,7 +378,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Bridge Last Synced ETH Blocks Not Increasing (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"Bridge Last Synced ETH Blocks on {{ $labels.instance }} ({alias}) are not increasing for the last 30 minutes.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "324",
                     },
                 }
@@ -402,7 +402,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Bridge Finalized ETH Block Not Increasing (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"Bridge Finalized ETH Block on {{ $labels.instance }} ({alias}) is not increasing for the last 10 minutes.",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "324",
                     },
                 }
@@ -426,7 +426,7 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
                     "annotations": {
                         "summary": f"Bridge Client Balance Running Low (Instance: {{ $labels.instance }}, Environment: {alias})",
                         "description": f"Bridge Client Balance on {{ $labels.instance }} ({alias}) is running out of tokens (below 10 SUI).",
-                        "__dashboardUid__": "ctles38bbprkmttbdkv0hijk",
+                        "__dashboardUid__": "d3sdagobbprlcrf8dh3g",
                         "__panelId__": "316",
                     },
                 }
