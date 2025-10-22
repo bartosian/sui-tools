@@ -32,6 +32,23 @@ def load_config(config_file: str) -> Dict[str, Any]:
         sys.exit(1)
 
 
+def validate_validators_config(validators: List[Dict[str, Any]]) -> None:
+    """Validate validators configuration structure."""
+    if not isinstance(validators, list):
+        raise ValueError("validators must be a list")
+
+    for i, validator in enumerate(validators):
+        if not isinstance(validator, dict):
+            raise ValueError(f"Validator {i} must be a dictionary")
+
+        required_fields = ["alias", "target"]
+        for field in required_fields:
+            if field not in validator:
+                raise ValueError(f"Validator {i} missing required field: {field}")
+            if not validator[field]:
+                raise ValueError(f"Validator {i} field '{field}' cannot be empty")
+
+
 def validate_bridges_config(bridges: List[Dict[str, Any]]) -> None:
     """Validate bridges configuration structure."""
     if not isinstance(bridges, list):
@@ -472,7 +489,9 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             sys.exit(1)
 
 
-def generate_prometheus_config(bridges: List[Dict[str, Any]], output_file: str) -> None:
+def generate_prometheus_config(
+    bridges: List[Dict[str, Any]], validators: List[Dict[str, Any]], output_file: str
+) -> None:
     """Generate Prometheus configuration file."""
 
     # Base Prometheus configuration
@@ -601,6 +620,42 @@ def generate_prometheus_config(bridges: List[Dict[str, Any]], output_file: str) 
             ],
         }
         prometheus_config["scrape_configs"].append(ingress_job)
+
+    # Add validator scrape configs
+    for validator in validators:
+        alias = validator["alias"]
+        target = validator["target"]
+
+        # Sanitize target for scheme detection
+        scheme = "http"
+        clean_target = target
+        if target.startswith("https://"):
+            scheme = "https"
+            clean_target = target[8:]
+        elif target.startswith("http://"):
+            scheme = "http"
+            clean_target = target[7:]
+
+        # Validator metrics scrape config
+        validator_job = {
+            "job_name": f'sui_validator_{alias.lower().replace(" ", "_")}',
+            "static_configs": [
+                {
+                    "targets": [clean_target],
+                    "labels": {
+                        "service": "sui_validator",
+                        "environment": alias,
+                        "configured": "true",
+                    },
+                }
+            ],
+            "scrape_interval": "15s",
+            "metrics_path": "/metrics",
+            "scrape_timeout": "10s",
+            "scheme": scheme,
+            "honor_labels": True,
+        }
+        prometheus_config["scrape_configs"].append(validator_job)
 
     # Write configuration file
     try:
@@ -774,6 +829,28 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
         sys.exit(1)
 
 
+def export_validator_variables(validators: List[Dict[str, Any]]) -> None:
+    """Export validator configuration as shell environment variables."""
+    print("# Validator configuration variables")
+    print(f"export SUI_VALIDATORS_COUNT={len(validators)}")
+
+    for i, validator in enumerate(validators):
+        alias = validator["alias"]
+        target = validator["target"]
+
+        # Export individual validator variables
+        print(f"export SUI_VALIDATOR_{i}_ALIAS='{alias}'")
+        print(f"export SUI_VALIDATOR_{i}_TARGET='{target}'")
+
+    # Export as JSON for complex parsing - write to separate file to avoid shell parsing issues
+    validators_json = json.dumps(validators, indent=2)
+    print(f"export SUI_VALIDATORS_CONFIG_FILE='generated_configs/validators.json'")
+
+    # Write JSON to file
+    with open("generated_configs/validators.json", "w") as f:
+        f.write(validators_json)
+
+
 def export_bridge_variables(bridges: List[Dict[str, Any]], sui_validator: str) -> None:
     """Export bridge configuration as shell environment variables."""
     print("# Bridge configuration variables")
@@ -830,11 +907,16 @@ def main():
     bridges = config["bridges"]
     validate_bridges_config(bridges)
 
+    # Validate validators configuration (optional)
+    validators = config.get("validators", [])
+    if validators:
+        validate_validators_config(validators)
+
     # Get SUI_VALIDATOR from config
     sui_validator = config.get("sui", {}).get("validator", "")
 
     # Generate Prometheus configuration
-    generate_prometheus_config(bridges, prometheus_file)
+    generate_prometheus_config(bridges, validators, prometheus_file)
 
     # Generate bridge-specific alert rules
     generate_alert_rules(bridges, alert_rules_dir)
@@ -846,7 +928,13 @@ def main():
     # Export bridge variables
     export_bridge_variables(bridges, sui_validator)
 
+    # Export validator variables if configured
+    if validators:
+        export_validator_variables(validators)
+
     print(f"Successfully parsed {len(bridges)} bridge(s)", file=sys.stderr)
+    if validators:
+        print(f"Successfully parsed {len(validators)} validator(s)", file=sys.stderr)
 
 
 if __name__ == "__main__":

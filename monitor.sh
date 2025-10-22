@@ -99,6 +99,11 @@ parse_yaml_config() {
     cp generated_configs/bridges.json config/prometheus/generated_bridges.json
     cp generated_configs/alertmanager.yml config/alertmanager/generated_alertmanager.yml
     
+    # Copy validators.json if it exists
+    if [ -f "generated_configs/validators.json" ]; then
+        cp generated_configs/validators.json config/grafana/generated_validators.json
+    fi
+    
     # Copy all bridge-specific alert rule files
     cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
     
@@ -384,6 +389,7 @@ cleanup_generated_files() {
     rm -f config/prometheus/generated_prometheus.yml
     rm -f config/prometheus/generated_bridges.json
     rm -f config/alertmanager/generated_alertmanager.yml
+    rm -f config/grafana/generated_validators.json
     rm -f config/prometheus/rules/sui_bridge_*_alerts.yml
 }
 

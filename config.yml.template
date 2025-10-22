@@ -85,6 +85,12 @@ bridges:
       stale_eth_finalization: true
       low_gas_balance: true
 
+# Sui Validators Configuration
+# Add as many validators as needed - each validator requires alias and target
+validators:
+  - alias: "Production Validator"
+    target: localhost:9184
+
 # Sui Validator
 sui:
   validator: your_validator_name

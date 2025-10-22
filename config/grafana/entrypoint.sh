@@ -37,6 +37,22 @@ else
     log_info "No bridge configuration file found - skipping bridge dashboard deployment"
 fi
 
+# Check if any validator targets are configured by checking the generated validators config file
+VALIDATOR_TARGETS_CONFIGURED=false
+if [ -f "/etc/grafana/provisioning/generated_validators.json" ]; then
+    # Check if the file is not empty and contains at least one validator
+    if grep -q '\[' "/etc/grafana/provisioning/generated_validators.json" 2>/dev/null && \
+       [ "$(cat /etc/grafana/provisioning/generated_validators.json | grep -o '"alias"' | wc -l)" -gt 0 ]; then
+        VALIDATOR_COUNT=$(cat /etc/grafana/provisioning/generated_validators.json | grep -o '"alias"' | wc -l | tr -d ' ')
+        VALIDATOR_TARGETS_CONFIGURED=true
+        log_info "Validator targets detected ($VALIDATOR_COUNT validators) - will deploy validator dashboard"
+    else
+        log_info "No validator targets configured - skipping validator dashboard deployment"
+    fi
+else
+    log_info "No validator configuration file found - skipping validator dashboard deployment"
+fi
+
 # Process dashboard templates - substitute SUI_VALIDATOR
 if [ -n "${SUI_VALIDATOR:-}" ]; then
     log_info "Substituting SUI_VALIDATOR: $SUI_VALIDATOR in dashboards"
@@ -52,6 +68,12 @@ if [ -n "${SUI_VALIDATOR:-}" ]; then
             # Skip bridge dashboard if no bridge targets are configured
             if [[ "$filename" == *"bridge"* ]] && [ "$BRIDGE_TARGETS_CONFIGURED" = false ]; then
                 log_info "Skipping bridge dashboard: $filename (no bridge targets configured)"
+                continue
+            fi
+            
+            # Skip validator dashboard if no validator targets are configured
+            if [[ "$filename" == *"validator"* ]] && [ "$VALIDATOR_TARGETS_CONFIGURED" = false ]; then
+                log_info "Skipping validator dashboard: $filename (no validator targets configured)"
                 continue
             fi
             
@@ -97,14 +119,32 @@ else
     log_warn "SUI_VALIDATOR not set, skipping dashboard substitution"
     
     # Even without SUI_VALIDATOR, we still need to conditionally deploy dashboards
-    if [ "$BRIDGE_TARGETS_CONFIGURED" = true ]; then
-        log_info "Bridge targets configured but SUI_VALIDATOR not set - deploying dashboards without substitution"
+    if [ "$BRIDGE_TARGETS_CONFIGURED" = true ] || [ "$VALIDATOR_TARGETS_CONFIGURED" = true ]; then
+        log_info "Targets configured but SUI_VALIDATOR not set - deploying dashboards without substitution"
         
         # Create a temporary directory for processed dashboards
         mkdir -p /tmp/processed_dashboards
         
-        # Copy all dashboards (including bridge dashboard)
-        cp /etc/dashboards/*.json /tmp/processed_dashboards/
+        # Copy dashboards based on what's configured
+        for dashboard in /etc/dashboards/*.json; do
+            if [ -f "$dashboard" ]; then
+                filename=$(basename "$dashboard")
+                
+                # Skip bridge dashboard if not configured
+                if [[ "$filename" == *"bridge"* ]] && [ "$BRIDGE_TARGETS_CONFIGURED" = false ]; then
+                    log_info "Skipping bridge dashboard: $filename (no bridge targets configured)"
+                    continue
+                fi
+                
+                # Skip validator dashboard if not configured
+                if [[ "$filename" == *"validator"* ]] && [ "$VALIDATOR_TARGETS_CONFIGURED" = false ]; then
+                    log_info "Skipping validator dashboard: $filename (no validator targets configured)"
+                    continue
+                fi
+                
+                cp "$dashboard" /tmp/processed_dashboards/
+            fi
+        done
         
         # Create a new provisioning file that points to processed dashboards
         mkdir -p /tmp/grafana_provisioning/dashboards
@@ -132,7 +172,7 @@ EOF
         export GF_PATHS_PROVISIONING=/tmp/grafana_provisioning
         log_info "Updated Grafana provisioning path to use processed dashboards"
     else
-        log_info "No bridge targets configured - using default provisioning (no bridge dashboard)"
+        log_info "No targets configured - using default provisioning (no dashboards)"
     fi
 fi
 
