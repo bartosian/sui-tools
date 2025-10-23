@@ -22,7 +22,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 1,
+    "id": 2,
     "links": [],
     "liveNow": false,
     "panels": [{
@@ -66,7 +66,7 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 5,
+                "w": 4,
                 "x": 0,
                 "y": 1
             },
@@ -147,8 +147,8 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 6,
-                "x": 5,
+                "w": 4,
+                "x": 4,
                 "y": 1
             },
             "id": 45,
@@ -225,8 +225,8 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 5,
-                "x": 11,
+                "w": 4,
+                "x": 8,
                 "y": 1
             },
             "id": 274,
@@ -304,8 +304,8 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 5,
-                "x": 16,
+                "w": 4,
+                "x": 12,
                 "y": 1
             },
             "id": 273,
@@ -354,6 +354,184 @@
                     "valueLabel": "client_enabled"
                 }
             }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the pause status for both ETH and SUI bridges.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "decimals": 0,
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "false"
+                            },
+                            "1": {
+                                "color": "orange",
+                                "index": 1,
+                                "text": "true"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "orange",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": [{
+                        "matcher": {
+                            "id": "byName",
+                            "options": "eth"
+                        },
+                        "properties": [{
+                            "id": "displayName",
+                            "value": "ETH Bridge"
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "sui"
+                        },
+                        "properties": [{
+                            "id": "displayName",
+                            "value": "SUI Bridge"
+                        }]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 16,
+                "y": 1
+            },
+            "id": 267,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "vertical",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value_and_name",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                    "editorMode": "code",
+                    "expr": "max(bridge_eth_bridge_paused{environment=\"$instance\"})",
+                    "hide": false,
+                    "legendFormat": "eth",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(bridge_sui_bridge_paused{environment=\"$instance\"})",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "sui",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Is Bridge Paused",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the current voting power distribution within the bridge committee, offering insights into the committee's decision-making influence and individual authority contributions.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red"
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.1
+                            }
+                        ]
+                    },
+                    "unit": "percent"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 20,
+                "y": 1
+            },
+            "id": 288,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "value",
+                "wideLayout": false
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "max(current_bridge_voting_rights{authority=\"$SUI_VALIDATOR\", environment=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{environment=\"$instance\"}) \n* 100",
+                "legendFormat": "Voting Power %",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Voting Power",
             "type": "stat"
         },
         {
@@ -467,7 +645,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Status (UP/DOWN)",
+                        "axisLabel": "Status",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "bars",
@@ -530,7 +708,7 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 15,
+                "w": 19,
                 "x": 5,
                 "y": 6
             },
@@ -540,7 +718,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -561,124 +739,13 @@
                 "expr": "rate(uptime{process=\"bridge\", environment=\"$instance\"}[$__rate_interval])",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
-                "legendFormat": "{{process}}",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
             }],
             "title": "Uptime Timeline",
             "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the pause status for both ETH and SUI bridges.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "decimals": 0,
-                    "mappings": [{
-                        "options": {
-                            "0": {
-                                "color": "green",
-                                "index": 0,
-                                "text": "false"
-                            },
-                            "1": {
-                                "color": "orange",
-                                "index": 1,
-                                "text": "true"
-                            }
-                        },
-                        "type": "value"
-                    }],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "orange",
-                                "value": 1
-                            }
-                        ]
-                    }
-                },
-                "overrides": [{
-                        "matcher": {
-                            "id": "byName",
-                            "options": "eth"
-                        },
-                        "properties": [{
-                            "id": "displayName",
-                            "value": "ETH Bridge"
-                        }]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "sui"
-                        },
-                        "properties": [{
-                            "id": "displayName",
-                            "value": "SUI Bridge"
-                        }]
-                    }
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 4,
-                "x": 20,
-                "y": 6
-            },
-            "id": 267,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "center",
-                "orientation": "horizontal",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "value_and_name",
-                "wideLayout": true
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                    "editorMode": "code",
-                    "expr": "max(bridge_eth_bridge_paused{environment=\"$instance\"})",
-                    "hide": false,
-                    "legendFormat": "eth",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "editorMode": "code",
-                    "expr": "max(bridge_sui_bridge_paused{environment=\"$instance\"})",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "sui",
-                    "range": true,
-                    "refId": "B"
-                }
-            ],
-            "title": "Is Bridge Paused",
-            "type": "stat"
         },
         {
             "datasource": {
@@ -782,7 +849,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Status (UP/DOWN)",
+                        "axisLabel": "Status",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "bars",
@@ -846,7 +913,7 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 15,
+                "w": 19,
                 "x": 5,
                 "y": 10
             },
@@ -856,7 +923,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -876,7 +943,7 @@
                 "expr": "probe_success{job=~\"sui_bridge_.*_public_key_check\", environment=~\"$instance\"}",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Public Metrics Key",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
@@ -985,7 +1052,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Status (UP/DOWN)",
+                        "axisLabel": "Status",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "bars",
@@ -1049,7 +1116,7 @@
             },
             "gridPos": {
                 "h": 4,
-                "w": 15,
+                "w": 19,
                 "x": 5,
                 "y": 14
             },
@@ -1061,7 +1128,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "placement": "bottom",
                 "showLegend": true,
@@ -1081,80 +1148,13 @@
                 "expr": "probe_success{job=~\"sui_bridge_.*_ingress_check\", environment=~\"$instance\"}",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Public Endpoint Ingress",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
             }],
             "title": "Public Endpoint Ingress Timeline",
             "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Shows the current voting power distribution within the bridge committee, offering insights into the committee's decision-making influence and individual authority contributions.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "red"
-                            },
-                            {
-                                "color": "green",
-                                "value": 0.1
-                            }
-                        ]
-                    },
-                    "unit": "percent"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 4,
-                "x": 20,
-                "y": 14
-            },
-            "id": 288,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "center",
-                "orientation": "horizontal",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "value",
-                "wideLayout": false
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
-                },
-                "editorMode": "code",
-                "expr": "max(current_bridge_voting_rights{authority=\"$SUI_VALIDATOR\", environment=\"$instance\"}) \n/ \nsum(current_bridge_voting_rights{environment=\"$instance\"}) \n* 100",
-                "legendFormat": "Voting Power %",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Voting Power",
-            "type": "stat"
         },
         {
             "datasource": {
@@ -1265,7 +1265,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 5,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1274,8 +1274,8 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
+                        "lineWidth": 2,
+                        "pointSize": 1,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -1472,7 +1472,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 10,
+                        "fillOpacity": 5,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1482,7 +1482,7 @@
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
-                        "pointSize": 5,
+                        "pointSize": 1,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -1873,7 +1873,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 5,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1882,7 +1882,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 1,
+                        "lineWidth": 2,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -2066,7 +2066,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 10,
+                        "fillOpacity": 5,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -2544,7 +2544,7 @@
             "id": 316,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -2611,7 +2611,7 @@
             "id": 315,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -2674,7 +2674,7 @@
             "id": 266,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -2737,7 +2737,7 @@
             "id": 280,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -2836,7 +2836,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -2848,13 +2848,17 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
                 "disableTextWrap": false,
                 "editorMode": "code",
                 "expr": "avg(bridge_gas_coin_balance{environment=\"$instance\"}) / 1000000000",
                 "fullMetaSearch": false,
                 "hide": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Balance",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
@@ -2934,7 +2938,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -2946,13 +2950,17 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
                 "disableTextWrap": false,
                 "editorMode": "code",
                 "expr": "avg(bridge_usdt_vault_balance{environment=\"$instance\"}) / 1000000",
                 "fullMetaSearch": false,
                 "hide": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Balance",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
@@ -3032,7 +3040,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -3044,13 +3052,17 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
                 "disableTextWrap": false,
                 "editorMode": "code",
                 "expr": "avg(bridge_eth_vault_balance{environment=\"$instance\"}) / 100000000",
                 "fullMetaSearch": false,
                 "hide": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Balance",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
@@ -3130,7 +3142,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -3152,7 +3164,7 @@
                 "fullMetaSearch": false,
                 "hide": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Balance",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
@@ -3196,7 +3208,7 @@
             "id": 279,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -3295,7 +3307,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "timezone": [
                     "browser"
@@ -3317,7 +3329,7 @@
                 "fullMetaSearch": false,
                 "hide": false,
                 "includeNullMetadata": true,
-                "legendFormat": "Balance",
+                "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
                 "useBackend": false
@@ -4417,15 +4429,15 @@
                 "hide": 2,
                 "label": "Validator",
                 "name": "SUI_VALIDATOR",
-                "query": "${SUI_VALIDATOR}",
+                "query": "BartestneT",
                 "skipUrlSync": false,
                 "type": "constant"
             },
             {
                 "current": {
                     "selected": false,
-                    "text": "",
-                    "value": ""
+                    "text": "Testnet Bridge",
+                    "value": "Testnet Bridge"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -4470,6 +4482,6 @@
     "timezone": "",
     "title": "Sui Bridge",
     "uid": "d3sdagobbprlcrf8dh3g",
-    "version": 66,
+    "version": 10,
     "weekStart": "monday"
 }
