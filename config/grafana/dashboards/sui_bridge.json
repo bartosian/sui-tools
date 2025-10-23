@@ -35,7 +35,7 @@
             },
             "id": 272,
             "panels": [],
-            "title": "Build Info",
+            "title": "Overview",
             "type": "row"
         },
         {
@@ -4482,6 +4482,6 @@
     "timezone": "",
     "title": "Sui Bridge",
     "uid": "d3sdagobbprlcrf8dh3g",
-    "version": 13,
+    "version": 16,
     "weekStart": "monday"
 }
