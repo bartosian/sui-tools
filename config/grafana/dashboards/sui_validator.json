@@ -88,7 +88,7 @@
             "id": 353,
             "options": {
                 "colorMode": "background",
-                "graphMode": "area",
+                "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -243,6 +243,197 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
+            "description": "Indicates if this validator is among the low-scoring authorities based on reputation scores.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "NO"
+                            },
+                            "1": {
+                                "color": "red",
+                                "index": 1,
+                                "text": "YES"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 5
+            },
+            "id": 365,
+            "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{environment=\"$instance\"}), consensus_reputation_scores{environment=\"$instance\"}))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Low-Scoring Status",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows validator reputation status over time. Green indicates good standing, red indicates low-scoring status.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Score",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "log": 2,
+                            "type": "symlog"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 0,
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "color": "red",
+                                "index": 1,
+                                "text": "LOW"
+                            },
+                            "1": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "HIGH"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "max": 1,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red"
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 20,
+                "x": 4,
+                "y": 5
+            },
+            "id": 366,
+            "interval": "15s",
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "timezone": [
+                    "browser"
+                ],
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "1 - (scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{environment=\"$instance\"}), consensus_reputation_scores{environment=\"$instance\"})))",
+                "hide": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Consensus Reputation Score Timeline",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
             "description": "Displays If network is running in safe mode or not.",
             "fieldConfig": {
                 "defaults": {
@@ -280,7 +471,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 5
+                "y": 9
             },
             "id": 256,
             "options": {
@@ -336,7 +527,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 5
+                "y": 9
             },
             "id": 204,
             "options": {
@@ -400,7 +591,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 5
+                "y": 9
             },
             "id": 268,
             "options": {
@@ -465,7 +656,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 16,
-                "y": 5
+                "y": 9
             },
             "id": 361,
             "options": {
@@ -488,12 +679,82 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_reputation_scores{environment=\"$instance\", authority=\"BartestneT\"}",
+                "expr": "consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
             }],
             "title": "Consensus Reputation Score",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Current rank of the validator based on consensus reputation score (1 = highest score).",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 30
+                            },
+                            {
+                                "color": "orange",
+                                "value": 60
+                            },
+                            {
+                                "color": "red",
+                                "value": 90
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 20,
+                "y": 9
+            },
+            "id": 363,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Consensus Reputation Rank",
             "type": "stat"
         },
         {
@@ -558,7 +819,7 @@
                 "h": 8,
                 "w": 9,
                 "x": 4,
-                "y": 9
+                "y": 13
             },
             "id": 362,
             "interval": "2m",
@@ -580,84 +841,14 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_reputation_scores{environment=\"$instance\", authority=\"BartestneT\"}",
+                "expr": "consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}",
                 "hide": false,
-                "legendFormat": "Last Pruned Effects Checkpoint",
+                "legendFormat": "Reputation Score",
                 "range": true,
                 "refId": "A"
             }],
             "title": "Reputation Score Over Time",
             "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Current rank of the validator based on consensus reputation score (1 = highest score).",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "yellow",
-                                "value": 30
-                            },
-                            {
-                                "color": "orange",
-                                "value": 60
-                            },
-                            {
-                                "color": "red",
-                                "value": 90
-                            }
-                        ]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 4,
-                "x": 20,
-                "y": 5
-            },
-            "id": 363,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "textMode": "auto"
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > on() group_left() consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}) + 1",
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Consensus Reputation Rank",
-            "type": "stat"
         },
         {
             "datasource": {
@@ -719,7 +910,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 13,
-                "y": 9
+                "y": 13
             },
             "id": 364,
             "interval": "2m",
@@ -741,7 +932,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > on() group_left() consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}) + 1",
+                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
                 "hide": false,
                 "legendFormat": "Rank",
                 "range": true,
@@ -755,7 +946,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 17
+                "y": 21
             },
             "id": 356,
             "title": "Throughput",
@@ -786,7 +977,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 18
+                "y": 22
             },
             "id": 277,
             "options": {
@@ -843,7 +1034,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 18
+                "y": 22
             },
             "id": 358,
             "options": {
@@ -900,7 +1091,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 18
+                "y": 22
             },
             "id": 359,
             "options": {
@@ -957,7 +1148,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 18,
-                "y": 18
+                "y": 22
             },
             "id": 360,
             "options": {
@@ -1052,7 +1243,7 @@
                 "h": 9,
                 "w": 6,
                 "x": 0,
-                "y": 22
+                "y": 26
             },
             "id": 270,
             "options": {
@@ -1200,7 +1391,7 @@
                 "h": 9,
                 "w": 6,
                 "x": 6,
-                "y": 22
+                "y": 26
             },
             "id": 285,
             "options": {
@@ -1312,7 +1503,7 @@
                 "h": 9,
                 "w": 6,
                 "x": 12,
-                "y": 22
+                "y": 26
             },
             "id": 245,
             "options": {
@@ -1450,7 +1641,7 @@
                 "h": 9,
                 "w": 6,
                 "x": 18,
-                "y": 22
+                "y": 26
             },
             "id": 241,
             "interval": "2m",
@@ -1499,7 +1690,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 31
+                "y": 35
             },
             "id": 354,
             "panels": [],
@@ -1590,7 +1781,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 0,
-                "y": 32
+                "y": 36
             },
             "id": 258,
             "options": {
@@ -1710,7 +1901,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 8,
-                "y": 32
+                "y": 36
             },
             "id": 246,
             "options": {
@@ -1856,7 +2047,7 @@
                 "h": 9,
                 "w": 9,
                 "x": 0,
-                "y": 41
+                "y": 45
             },
             "id": 332,
             "options": {
@@ -1966,7 +2157,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 9,
-                "y": 41
+                "y": 45
             },
             "id": 342,
             "options": {
@@ -2002,7 +2193,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 50
+                "y": 54
             },
             "id": 351,
             "title": "Certificates",
@@ -2050,7 +2241,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 51
+                "y": 55
             },
             "id": 279,
             "options": {
@@ -2156,7 +2347,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 51
+                "y": 55
             },
             "id": 290,
             "options": {
@@ -2210,7 +2401,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 55
+                "y": 59
             },
             "id": 276,
             "options": {
@@ -2267,7 +2458,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 55
+                "y": 59
             },
             "id": 357,
             "options": {
@@ -2304,7 +2495,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 59
+                "y": 63
             },
             "id": 350,
             "title": "Rounds",
@@ -2352,7 +2543,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 60
+                "y": 64
             },
             "id": 278,
             "options": {
@@ -2458,7 +2649,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 60
+                "y": 64
             },
             "id": 291,
             "options": {
@@ -2512,7 +2703,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 64
+                "y": 68
             },
             "id": 266,
             "options": {
@@ -2569,7 +2760,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 64
+                "y": 68
             },
             "id": 352,
             "options": {
@@ -2626,7 +2817,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 64
+                "y": 68
             },
             "id": 275,
             "options": {
@@ -2663,7 +2854,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 68
+                "y": 72
             },
             "id": 349,
             "title": "Checkpoints",
@@ -2711,7 +2902,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 69
+                "y": 73
             },
             "id": 280,
             "options": {
@@ -2817,7 +3008,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 69
+                "y": 73
             },
             "id": 292,
             "options": {
@@ -2870,7 +3061,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 73
+                "y": 77
             },
             "id": 254,
             "options": {
@@ -2925,7 +3116,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 73
+                "y": 77
             },
             "id": 274,
             "options": {
@@ -2981,7 +3172,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 73
+                "y": 77
             },
             "id": 348,
             "options": {
@@ -3018,7 +3209,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 77
+                "y": 81
             },
             "id": 282,
             "panels": [],
@@ -3069,7 +3260,7 @@
                 "h": 6,
                 "w": 4,
                 "x": 16,
-                "y": 78
+                "y": 82
             },
             "id": 269,
             "options": {
@@ -3140,7 +3331,7 @@
                 "h": 6,
                 "w": 4,
                 "x": 20,
-                "y": 78
+                "y": 82
             },
             "id": 272,
             "options": {
@@ -3177,7 +3368,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 84
+                "y": 88
             },
             "id": 297,
             "panels": [],
@@ -3739,7 +3930,7 @@
                 "h": 6,
                 "w": 24,
                 "x": 0,
-                "y": 85
+                "y": 89
             },
             "id": 295,
             "options": {
@@ -3849,7 +4040,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 91
+                "y": 95
             },
             "id": 247,
             "panels": [],
@@ -3922,7 +4113,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 0,
-                "y": 92
+                "y": 96
             },
             "id": 265,
             "options": {
@@ -4053,7 +4244,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 0,
-                "y": 101
+                "y": 105
             },
             "id": 257,
             "options": {
@@ -4111,7 +4302,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 110
+                "y": 114
             },
             "id": 294,
             "panels": [],
@@ -4189,7 +4380,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 0,
-                "y": 111
+                "y": 115
             },
             "id": 271,
             "options": {
@@ -4223,7 +4414,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 120
+                "y": 124
             },
             "id": 310,
             "panels": [],
@@ -4259,7 +4450,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 121
+                "y": 125
             },
             "id": 311,
             "options": {
@@ -4319,7 +4510,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 121
+                "y": 125
             },
             "id": 312,
             "options": {
@@ -4379,7 +4570,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 121
+                "y": 125
             },
             "id": 313,
             "options": {
@@ -4416,7 +4607,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 125
+                "y": 129
             },
             "id": 320,
             "panels": [],
@@ -4447,7 +4638,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 126
+                "y": 130
             },
             "id": 321,
             "options": {
@@ -4539,7 +4730,7 @@
                 "h": 8,
                 "w": 9,
                 "x": 6,
-                "y": 126
+                "y": 130
             },
             "id": 289,
             "interval": "2m",
@@ -4594,7 +4785,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 130
+                "y": 134
             },
             "id": 322,
             "options": {
@@ -4693,6 +4884,6 @@
     "timezone": "",
     "title": "Sui Validator",
     "uid": "d3sdas8bbprlibnio2n0",
-    "version": 60,
+    "version": 80,
     "weekStart": "monday"
 }
