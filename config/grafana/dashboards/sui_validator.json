@@ -26,11 +26,376 @@
     "links": [],
     "liveNow": false,
     "panels": [{
+            "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
                 "y": 0
+            },
+            "id": 367,
+            "panels": [],
+            "title": "Overview",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays If network is running in safe mode or not.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [{
+                        "options": {
+                            "0": {
+                                "index": 0,
+                                "text": "No"
+                            },
+                            "1": {
+                                "index": 1,
+                                "text": "Yes"
+                            }
+                        },
+                        "type": "value"
+                    }],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 1
+            },
+            "id": 256,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "is_safe_mode{environment=\"$instance\"}",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Safe Mode",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the chain identifier of the SUI Chain.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red"
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 4,
+                "y": 1
+            },
+            "id": 387,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "name",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "uptime{process=\"validator\", environment=\"$instance\"}",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Chain ID",
+            "transformations": [{
+                "id": "labelsToFields",
+                "options": {
+                    "keepLabels": [
+                        "chain_identifier",
+                        "sui_chain_identifier"
+                    ],
+                    "valueLabel": "chain_identifier"
+                }
+            }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Shows the current build version of the SUI Bridge Node.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red"
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 8,
+                "y": 1
+            },
+            "id": 385,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                    "titleSize": 1
+                },
+                "textMode": "name",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "uptime{process=\"validator\", environment=\"$instance\"}",
+                "fullMetaSearch": false,
+                "includeNullMetadata": true,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Build Version",
+            "transformations": [{
+                "id": "labelsToFields",
+                "options": {
+                    "keepLabels": [
+                        "version"
+                    ],
+                    "valueLabel": "version"
+                }
+            }],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "The protocol version used in this epoch",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 12,
+                "y": 1
+            },
+            "id": 389,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "consensus_protocol_version{environment=\"$instance\"}",
+                "legendFormat": "{{instance}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Protocol Version",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Node stake share ",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "max": 20,
+                    "min": 0,
+                    "noValue": "N/A",
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "red"
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.1
+                            }
+                        ]
+                    },
+                    "unit": "percent"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 16,
+                "y": 1
+            },
+            "id": 268,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "current_voting_right{environment=\"$instance\"} / 100 ",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Voting Power",
+            "type": "stat"
+        },
+        {
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 5
             },
             "id": 368,
             "title": "Epoch",
@@ -61,7 +426,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 1
+                "y": 6
             },
             "id": 204,
             "options": {
@@ -118,7 +483,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 1
+                "y": 6
             },
             "id": 369,
             "options": {
@@ -174,7 +539,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 1
+                "y": 6
             },
             "id": 370,
             "options": {
@@ -230,7 +595,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 1
+                "y": 6
             },
             "id": 371,
             "options": {
@@ -287,7 +652,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 16,
-                "y": 1
+                "y": 6
             },
             "id": 372,
             "options": {
@@ -353,7 +718,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 20,
-                "y": 1
+                "y": 6
             },
             "id": 373,
             "options": {
@@ -382,154 +747,6 @@
                 "refId": "A"
             }],
             "title": "Validator Halt Duration",
-            "type": "stat"
-        },
-        {
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 5
-            },
-            "id": 367,
-            "title": "Overview",
-            "type": "row"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays If network is running in safe mode or not.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [{
-                        "options": {
-                            "0": {
-                                "index": 0,
-                                "text": "No"
-                            },
-                            "1": {
-                                "index": 1,
-                                "text": "Yes"
-                            }
-                        },
-                        "type": "value"
-                    }],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "red",
-                                "value": 1
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 4,
-                "x": 0,
-                "y": 6
-            },
-            "id": 256,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "textMode": "auto"
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "is_safe_mode{environment=\"$instance\"}",
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Safe Mode",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Node stake share ",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "max": 20,
-                    "min": 0,
-                    "noValue": "N/A",
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "red"
-                            },
-                            {
-                                "color": "green",
-                                "value": 0.1
-                            }
-                        ]
-                    },
-                    "unit": "percent"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 4,
-                "x": 4,
-                "y": 6
-            },
-            "id": 268,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "textMode": "auto"
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "current_voting_right{environment=\"$instance\"} / 100 ",
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Voting Power",
             "type": "stat"
         },
         {
@@ -1049,11 +1266,11 @@
                             "fill": "solid"
                         },
                         "lineWidth": 1,
-                        "pointSize": 6,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "never",
+                        "showPoints": "auto",
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
@@ -1140,11 +1357,11 @@
                             "fill": "solid"
                         },
                         "lineWidth": 1,
-                        "pointSize": 6,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "never",
+                        "showPoints": "auto",
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
@@ -1315,7 +1532,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(consensus_proposed_blocks{environment=\"$instance\", force=\"false\"}[$__rate_interval])",
+                "expr": "sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"false\"}[$__rate_interval])) + sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"true\"}[$__rate_interval]))",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -1467,7 +1684,7 @@
                         "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
-                        "pointSize": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -1712,7 +1929,7 @@
                         "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
-                        "pointSize": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -1841,11 +2058,11 @@
                             "fill": "solid"
                         },
                         "lineWidth": 1,
-                        "pointSize": 6,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "never",
+                        "showPoints": "auto",
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
@@ -1960,7 +2177,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "e2e latency of handling certificates that go through Narwhal (p67 across all certificate latencies)",
+            "description": "Consensus proposal latency (quorum receive latency)",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1974,7 +2191,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -2002,38 +2219,12 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
+                            "color": "green"
+                        }]
                     },
                     "unit": "s"
                 },
-                "overrides": [{
-                    "__systemRef": "hideSeriesFrom",
-                    "matcher": {
-                        "id": "byNames",
-                        "options": {
-                            "mode": "exclude",
-                            "names": [
-                                "quantile(0.67, (sequencing_certificate_latency_sum{instance=\"Sui Mainnet\"} / sequencing_certificate_latency_count{instance=\"Sui Mainnet\"})) / 1000"
-                            ],
-                            "prefix": "All except:",
-                            "readOnly": true
-                        }
-                    },
-                    "properties": [{
-                        "id": "custom.hideFrom",
-                        "value": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        }
-                    }]
-                }]
+                "overrides": []
             },
             "gridPos": {
                 "h": 9,
@@ -2041,13 +2232,13 @@
                 "x": 0,
                 "y": 42
             },
-            "id": 258,
+            "id": 342,
             "options": {
                 "legend": {
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": false
+                    "showLegend": true
                 },
                 "tooltip": {
                     "mode": "single",
@@ -2055,42 +2246,16 @@
                 }
             },
             "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "sequencing_certificate_latency_sum{environment=\"$instance\"}",
-                    "hide": true,
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "C"
+                "datasource": {
+                    "type": "prometheus"
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "editorMode": "code",
-                    "expr": "sequencing_certificate_latency_count{environment=\"$instance\"}",
-                    "hide": true,
-                    "instant": false,
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "name": "Expression",
-                        "type": "__expr__",
-                        "uid": "__expr__"
-                    },
-                    "expression": "$C / $A",
-                    "hide": false,
-                    "refId": "B",
-                    "type": "math"
-                }
-            ],
-            "title": "Avg Consensus Adapter e2e latency",
+                "editorMode": "code",
+                "expr": "rate(consensus_quorum_receive_latency_sum{environment=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{environment=\"$instance\"}[5m])",
+                "legendFormat": "Proposal Latency",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Consensus Proposal Latency",
             "type": "timeseries"
         },
         {
@@ -2245,6 +2410,242 @@
         },
         {
             "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "e2e latency of handling certificates that go through Narwhal (p67 across all certificate latencies)",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 1,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": [{
+                    "__systemRef": "hideSeriesFrom",
+                    "matcher": {
+                        "id": "byNames",
+                        "options": {
+                            "mode": "exclude",
+                            "names": [
+                                "quantile(0.67, (sequencing_certificate_latency_sum{instance=\"Sui Mainnet\"} / sequencing_certificate_latency_count{instance=\"Sui Mainnet\"})) / 1000"
+                            ],
+                            "prefix": "All except:",
+                            "readOnly": true
+                        }
+                    },
+                    "properties": [{
+                        "id": "custom.hideFrom",
+                        "value": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    }]
+                }]
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 51
+            },
+            "id": 258,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "rate(sequencing_certificate_latency_sum{environment=\"$instance\"}[5m]) / rate(sequencing_certificate_latency_count{environment=\"$instance\"}[5m])",
+                "hide": true,
+                "instant": false,
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Consensus Adapter e2e latency",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Average shared obj latencies for p95, p50 and p99. Averages below 7 seconds are considered normal",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 8,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 7
+                            },
+                            {
+                                "color": "red",
+                                "value": 10
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 8,
+                "y": 51
+            },
+            "id": 257,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "legendFormat": "pct {{pct}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"50\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "legendFormat": "pct {{pct}}",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"99\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "hide": false,
+                    "legendFormat": "pct {{pct}}",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Average Shared Obj Latency",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
                 "type": "prometheus"
             },
             "description": "Owned objects certificate execution latency over time",
@@ -2305,7 +2706,7 @@
                 "h": 9,
                 "w": 9,
                 "x": 0,
-                "y": 51
+                "y": 60
             },
             "id": 332,
             "options": {
@@ -2359,99 +2760,11 @@
             "type": "timeseries"
         },
         {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Consensus proposal latency (quorum receive latency)",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "bars",
-                        "fillOpacity": 60,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 9,
-                "y": 51
-            },
-            "id": 342,
-            "options": {
-                "legend": {
-                    "calcs": [
-                        "mean",
-                        "max"
-                    ],
-                    "displayMode": "table",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "rate(consensus_quorum_receive_latency_sum{environment=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{environment=\"$instance\"}[5m])",
-                "legendFormat": "Proposal Latency",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Consensus Proposal Latency",
-            "type": "timeseries"
-        },
-        {
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 60
+                "y": 69
             },
             "id": 351,
             "title": "Certificates",
@@ -2499,7 +2812,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 61
+                "y": 70
             },
             "id": 279,
             "options": {
@@ -2605,7 +2918,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 61
+                "y": 70
             },
             "id": 290,
             "options": {
@@ -2659,7 +2972,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 65
+                "y": 74
             },
             "id": 276,
             "options": {
@@ -2716,7 +3029,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 65
+                "y": 74
             },
             "id": 357,
             "options": {
@@ -2753,7 +3066,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 69
+                "y": 78
             },
             "id": 350,
             "title": "Rounds",
@@ -2801,7 +3114,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 70
+                "y": 79
             },
             "id": 278,
             "options": {
@@ -2907,7 +3220,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 70
+                "y": 79
             },
             "id": 291,
             "options": {
@@ -2961,7 +3274,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 74
+                "y": 83
             },
             "id": 266,
             "options": {
@@ -3018,7 +3331,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 74
+                "y": 83
             },
             "id": 352,
             "options": {
@@ -3075,7 +3388,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 74
+                "y": 83
             },
             "id": 275,
             "options": {
@@ -3112,7 +3425,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 78
+                "y": 87
             },
             "id": 349,
             "title": "Checkpoints",
@@ -3160,7 +3473,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 79
+                "y": 88
             },
             "id": 280,
             "options": {
@@ -3266,7 +3579,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 79
+                "y": 88
             },
             "id": 292,
             "options": {
@@ -3319,7 +3632,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 83
+                "y": 92
             },
             "id": 254,
             "options": {
@@ -3374,7 +3687,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 83
+                "y": 92
             },
             "id": 274,
             "options": {
@@ -3430,7 +3743,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 83
+                "y": 92
             },
             "id": 348,
             "options": {
@@ -3467,170 +3780,11 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 87
-            },
-            "id": 282,
-            "panels": [],
-            "title": "Node Sync Status",
-            "type": "row"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Network transactions per second during latest minute",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "max": 25000,
-                    "min": 0,
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "#6ED0E0",
-                                "value": 1000
-                            },
-                            {
-                                "color": "#EAB839",
-                                "value": 5000
-                            },
-                            {
-                                "color": "orange",
-                                "value": 10000
-                            },
-                            {
-                                "color": "red",
-                                "value": 20000
-                            }
-                        ]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 6,
-                "w": 4,
-                "x": 16,
-                "y": 88
-            },
-            "id": 269,
-            "options": {
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "irate(total_transaction_effects{environment=\"$instance\"}[1m])   ",
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Transactions Per Second",
-            "type": "gauge"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Network certificates per second during latest minute",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "max": 20,
-                    "min": 0,
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "red"
-                            },
-                            {
-                                "color": "orange",
-                                "value": 0.4
-                            },
-                            {
-                                "color": "green",
-                                "value": 0.7
-                            },
-                            {
-                                "color": "#6ED0E0",
-                                "value": 2
-                            }
-                        ]
-                    },
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 6,
-                "w": 4,
-                "x": 20,
-                "y": 88
-            },
-            "id": 272,
-            "options": {
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true
-            },
-            "pluginVersion": "10.2.0",
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "rate(num_shared_obj_tx{environment=\"$instance\"}[1m])",
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Certs Per Second",
-            "type": "gauge"
-        },
-        {
-            "collapsed": false,
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 94
+                "y": 96
             },
             "id": 297,
             "panels": [],
-            "title": "Mysticeti Performance",
+            "title": "Performance",
             "type": "row"
         },
         {
@@ -3992,6 +4146,17 @@
                                             "color": "red",
                                             "index": 1
                                         },
+                                        "to": 0
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 2
+                                        },
                                         "to": 3
                                     },
                                     "type": "range"
@@ -4000,8 +4165,8 @@
                                     "options": {
                                         "from": 3,
                                         "result": {
-                                            "color": "orange",
-                                            "index": 2
+                                            "color": "yellow",
+                                            "index": 3
                                         },
                                         "to": 5
                                     },
@@ -4011,18 +4176,7 @@
                                     "options": {
                                         "from": 5,
                                         "result": {
-                                            "color": "yellow",
-                                            "index": 3
-                                        },
-                                        "to": 6
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 6,
-                                        "result": {
-                                            "color": "light-green",
+                                            "color": "super-light-blue",
                                             "index": 4
                                         },
                                         "to": 7
@@ -4188,7 +4342,7 @@
                 "h": 6,
                 "w": 24,
                 "x": 0,
-                "y": 95
+                "y": 97
             },
             "id": 295,
             "options": {
@@ -4254,7 +4408,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "sum(rate(consensus_proposed_blocks{force=\"true\"}[5m])) + sum(rate(consensus_proposed_blocks{force=\"false\"}[5m]))",
+                    "expr": "sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"false\"}[$__rate_interval])) + sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"true\"}[$__rate_interval]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4289,7 +4443,7 @@
                     "refId": "I"
                 }
             ],
-            "title": " 🟨 Cert Latency p95    🟧 Process Certificate p50    🟥 Proposal Latency    🟦 Proposal Rate    ⬜️ Leader Round Rate   (⚙️ MYSTICETI)",
+            "title": " 🟨 Cert Latency p95    🟧 Process Certificate p50    🟥 Proposal Latency    🟦 Consensus Block Commit Rate   ⬜️ Leader Round Rate",
             "type": "status-history"
         },
         {
@@ -4298,7 +4452,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 101
+                "y": 103
             },
             "id": 247,
             "panels": [],
@@ -4307,363 +4461,151 @@
         },
         {
             "datasource": {
-                "type": "prometheus"
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Node connected peers: Sui, Worker and Primary",
+            "description": "The number of connected peers",
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "dashed"
-                        }
+                        "mode": "thresholds"
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "dark-red"
-                            },
-                            {
-                                "color": "orange",
-                                "value": 50
-                            },
-                            {
-                                "color": "dark-green",
-                                "value": 90
-                            }
-                        ]
-                    },
-                    "unit": "none"
+                            "color": "green"
+                        }]
+                    }
                 },
                 "overrides": []
             },
             "gridPos": {
-                "h": 9,
-                "w": 8,
+                "h": 4,
+                "w": 4,
                 "x": 0,
-                "y": 102
+                "y": 104
             },
-            "id": 265,
+            "id": 383,
             "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
                 },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
+                "textMode": "auto"
             },
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "sui_network_peers{environment=\"$instance\"}",
-                    "hide": false,
-                    "legendFormat": "Sui network",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "worker_network_peers{environment=\"$instance\"}",
-                    "hide": false,
-                    "legendFormat": "Worker network",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "primary_network_peers{environment=\"$instance\"}",
-                    "hide": false,
-                    "legendFormat": "Primary network",
-                    "range": true,
-                    "refId": "C"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "sum(consensus_quinn_network_peer_connected{environment=\"$instance\"}) - 1",
-                    "hide": false,
-                    "legendFormat": "Quinn network",
-                    "range": true,
-                    "refId": "D"
-                }
-            ],
-            "title": "Peers",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Average shared obj latencies for p95, p50 and p99. Averages below 7 seconds are considered normal",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "axisSoftMax": 8,
-                        "axisSoftMin": 0,
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "dashed"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "yellow",
-                                "value": 7
-                            },
-                            {
-                                "color": "red",
-                                "value": 10
-                            }
-                        ]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 8,
-                "x": 0,
-                "y": 111
-            },
-            "id": 257,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", environment=\"$instance\"}[5m:1m]) / 1000",
-                    "hide": false,
-                    "legendFormat": "pct {{pct}}",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"50\", environment=\"$instance\"}[5m:1m]) / 1000",
-                    "hide": false,
-                    "legendFormat": "pct {{pct}}",
-                    "range": true,
-                    "refId": "C"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"99\", environment=\"$instance\"}[5m:1m]) / 1000",
-                    "hide": false,
-                    "legendFormat": "pct {{pct}}",
-                    "range": true,
-                    "refId": "B"
-                }
-            ],
-            "title": "Average Shared Obj Latency",
-            "type": "timeseries"
-        },
-        {
-            "collapsed": false,
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 120
-            },
-            "id": 294,
-            "panels": [],
-            "title": "Other Charts",
-            "type": "row"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Network stake share delegated to the node",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "axisSoftMin": 0,
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "dashed"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "#EAB839",
-                                "value": 0.06
-                            },
-                            {
-                                "color": "orange",
-                                "value": 0.08
-                            },
-                            {
-                                "color": "red",
-                                "value": 0.1
-                            }
-                        ]
-                    },
-                    "unit": "percentunit"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 8,
-                "x": 0,
-                "y": 121
-            },
-            "id": 271,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": false
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
+            "pluginVersion": "10.2.0",
             "targets": [{
                 "datasource": {
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "current_voting_right{environment=\"$instance\"} / 10000",
+                "expr": "max(sui_quinn_network_peers{environment=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
             }],
-            "title": "Voting power",
+            "title": "Connected Peers",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "The number of connected peers over time",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Checkpoint Number",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 2.5,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 108
+            },
+            "id": 384,
+            "interval": "2m",
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "8.5.2",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "sui_quinn_network_peers{environment=\"$instance\"}",
+                "hide": false,
+                "legendFormat": "Checkpoint",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Connected Peers Over Time",
             "type": "timeseries"
         },
         {
@@ -4672,7 +4614,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 130
+                "y": 116
             },
             "id": 310,
             "panels": [],
@@ -4708,7 +4650,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 131
+                "y": 117
             },
             "id": 311,
             "options": {
@@ -4768,7 +4710,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 131
+                "y": 117
             },
             "id": 312,
             "options": {
@@ -4828,7 +4770,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 131
+                "y": 117
             },
             "id": 313,
             "options": {
@@ -4865,7 +4807,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 135
+                "y": 121
             },
             "id": 320,
             "panels": [],
@@ -4896,7 +4838,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 136
+                "y": 122
             },
             "id": 321,
             "options": {
@@ -4951,7 +4893,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 136
+                "y": 122
             },
             "id": 322,
             "options": {
@@ -5006,7 +4948,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 136
+                "y": 122
             },
             "id": 379,
             "options": {
@@ -5061,7 +5003,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 136
+                "y": 122
             },
             "id": 380,
             "options": {
@@ -5106,7 +5048,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "blue"
+                            "color": "green"
                         }]
                     }
                 },
@@ -5116,12 +5058,12 @@
                 "h": 4,
                 "w": 4,
                 "x": 16,
-                "y": 136
+                "y": 122
             },
             "id": 377,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -5161,7 +5103,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "blue"
+                            "color": "green"
                         }]
                     }
                 },
@@ -5171,12 +5113,12 @@
                 "h": 4,
                 "w": 4,
                 "x": 20,
-                "y": 136
+                "y": 122
             },
             "id": 378,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -5223,7 +5165,7 @@
                         "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -5235,12 +5177,12 @@
                         "lineStyle": {
                             "fill": "solid"
                         },
-                        "lineWidth": 2,
-                        "pointSize": 6,
+                        "lineWidth": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "never",
+                        "showPoints": "auto",
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
@@ -5264,7 +5206,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 140
+                "y": 126
             },
             "id": 289,
             "interval": "2m",
@@ -5313,7 +5255,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -5325,12 +5267,12 @@
                         "lineStyle": {
                             "fill": "solid"
                         },
-                        "lineWidth": 2,
-                        "pointSize": 6,
+                        "lineWidth": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "never",
+                        "showPoints": "auto",
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
@@ -5354,7 +5296,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 140
+                "y": 126
             },
             "id": 381,
             "interval": "2m",
@@ -5403,7 +5345,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -5415,12 +5357,12 @@
                         "lineStyle": {
                             "fill": "solid"
                         },
-                        "lineWidth": 2,
-                        "pointSize": 6,
+                        "lineWidth": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "never",
+                        "showPoints": "auto",
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
@@ -5444,7 +5386,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 140
+                "y": 126
             },
             "id": 382,
             "interval": "2m",
@@ -5525,7 +5467,7 @@
         ]
     },
     "time": {
-        "from": "now-15m",
+        "from": "now-30m",
         "to": "now"
     },
     "timepicker": {
@@ -5543,6 +5485,6 @@
     "timezone": "",
     "title": "Sui Validator",
     "uid": "d3sdas8bbprlibnio2n0",
-    "version": 104,
+    "version": 127,
     "weekStart": "monday"
 }

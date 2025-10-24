@@ -597,7 +597,7 @@
             "id": 2,
             "options": {
                 "colorMode": "background",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -797,7 +797,7 @@
             "id": 301,
             "options": {
                 "colorMode": "background",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -1001,7 +1001,7 @@
             "id": 277,
             "options": {
                 "colorMode": "background",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -1174,8 +1174,8 @@
                         "axisLabel": "Block Height",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
-                        "drawStyle": "bars",
-                        "fillOpacity": 100,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1184,7 +1184,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "linear",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -1265,7 +1265,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1274,8 +1274,8 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "linear",
-                        "lineWidth": 2,
-                        "pointSize": 1,
+                        "lineWidth": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -1362,7 +1362,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1472,7 +1472,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1481,8 +1481,8 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 1,
+                        "lineWidth": 1,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -1570,7 +1570,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -1663,7 +1663,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -1778,7 +1778,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -1873,7 +1873,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1882,7 +1882,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -1963,7 +1963,7 @@
                         "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1972,7 +1972,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -2066,7 +2066,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 5,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -2075,7 +2075,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -2268,7 +2268,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -2359,7 +2359,7 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -3369,7 +3369,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 100,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -3378,7 +3378,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -3472,7 +3472,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 100,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -3481,7 +3481,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -3576,7 +3576,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -3690,7 +3690,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -3804,7 +3804,7 @@
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 10,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -3940,7 +3940,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "linear",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -4066,7 +4066,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -4176,7 +4176,7 @@
                         },
                         "insertNulls": false,
                         "lineInterpolation": "smooth",
-                        "lineWidth": 2,
+                        "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -4482,6 +4482,6 @@
     "timezone": "",
     "title": "Sui Bridge",
     "uid": "d3sdagobbprlcrf8dh3g",
-    "version": 16,
+    "version": 20,
     "weekStart": "monday"
 }
