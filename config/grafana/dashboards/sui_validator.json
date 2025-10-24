@@ -954,6 +954,7 @@
                 "expr": "rate(uptime{environment=\"$instance\"}[$__rate_interval])",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
+                "interval": "",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A",
@@ -1646,7 +1647,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(consensus_threshold_clock_round{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(consensus_last_committed_leader_round{environment=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -2134,28 +2135,16 @@
             },
             "pluginVersion": "8.5.2",
             "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(consensus_threshold_clock_round{environment=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "legendFormat": "Current Round",
-                    "range": true,
-                    "refId": "D"
+                "datasource": {
+                    "type": "prometheus"
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(consensus_last_committed_leader_round{environment=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "legendFormat": "Committed Round",
-                    "range": true,
-                    "refId": "C"
-                }
-            ],
+                "editorMode": "code",
+                "expr": "rate(consensus_last_committed_leader_round{environment=\"$instance\"}[$__rate_interval])",
+                "hide": false,
+                "legendFormat": "Committed Round",
+                "range": true,
+                "refId": "C"
+            }],
             "title": "Rounds Rate",
             "type": "timeseries"
         },
@@ -2344,7 +2333,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "validator_service_handle_certificate_consensus_latency{pct=\"50\", environment=\"$instance\"}",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "legendFormat": "Shared Obj p50",
                     "range": true,
                     "refId": "A"
@@ -2354,7 +2343,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "validator_service_handle_certificate_non_consensus_latency{pct=\"50\", environment=\"$instance\"}",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p50",
                     "range": true,
@@ -2365,7 +2354,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "validator_service_handle_certificate_consensus_latency{pct=\"95\", environment=\"$instance\"}",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Shared Obj p95",
                     "range": true,
@@ -2376,7 +2365,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "validator_service_handle_certificate_non_consensus_latency{pct=\"95\", environment=\"$instance\"}",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p95",
                     "range": true,
@@ -2387,7 +2376,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "validator_service_handle_certificate_consensus_latency{pct=\"99\", environment=\"$instance\"}",
+                    "expr": "histogram_quantile(0.99, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Shared Obj p99",
                     "range": true,
@@ -2398,7 +2387,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "validator_service_handle_certificate_non_consensus_latency{pct=\"99\", environment=\"$instance\"}",
+                    "expr": "histogram_quantile(0.99, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p99",
                     "range": true,
@@ -2508,18 +2497,32 @@
                 }
             },
             "targets": [{
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "ctles38bbprkmttbdkv0"
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.50, sum by(le) (rate(sequencing_certificate_latency_bucket{environment=\"$instance\"}[5m])))",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "p50",
+                    "range": true,
+                    "refId": "A"
                 },
-                "editorMode": "code",
-                "expr": "rate(sequencing_certificate_latency_sum{environment=\"$instance\"}[5m]) / rate(sequencing_certificate_latency_count{environment=\"$instance\"}[5m])",
-                "hide": true,
-                "instant": false,
-                "legendFormat": "__auto",
-                "range": true,
-                "refId": "A"
-            }],
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "ctles38bbprkmttbdkv0"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.95, sum by(le) (rate(sequencing_certificate_latency_bucket{environment=\"$instance\"}[5m])))",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "p95",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
             "title": "Consensus Adapter e2e latency",
             "type": "timeseries"
         },
@@ -2612,9 +2615,9 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "avg_over_time(histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
                     "hide": false,
-                    "legendFormat": "pct {{pct}}",
+                    "legendFormat": "pct 95",
                     "range": true,
                     "refId": "A"
                 },
@@ -2623,9 +2626,9 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"50\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "avg_over_time(histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
                     "hide": false,
-                    "legendFormat": "pct {{pct}}",
+                    "legendFormat": "pct 50",
                     "range": true,
                     "refId": "C"
                 },
@@ -2634,9 +2637,9 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"99\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "avg_over_time(histogram_quantile(0.99, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
                     "hide": false,
-                    "legendFormat": "pct {{pct}}",
+                    "legendFormat": "pct 99",
                     "range": true,
                     "refId": "B"
                 }
@@ -2730,7 +2733,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_non_consensus_latency{pct=\"50\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "avg_over_time(histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
                     "legendFormat": "p50",
                     "range": true,
                     "refId": "A"
@@ -2740,7 +2743,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_non_consensus_latency{pct=\"95\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "avg_over_time(histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
                     "legendFormat": "p95",
                     "range": true,
                     "refId": "B"
@@ -2750,7 +2753,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "avg_over_time(validator_service_handle_certificate_non_consensus_latency{pct=\"99\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "avg_over_time(histogram_quantile(0.99, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
                     "legendFormat": "p99",
                     "range": true,
                     "refId": "C"
@@ -3792,7 +3795,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Condensed \"Node Performance\" widget for small screens.\n\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⬜️ Leader Round Rate\n\n⚙️ MYSTICETI",
+            "description": "\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⬜️ Committed Round Rate",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3805,33 +3808,20 @@
                             "tooltip": false,
                             "viz": false
                         },
-                        "lineWidth": 1
+                        "lineWidth": 2
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
-                            },
-                            {
-                                "color": "dark-orange",
-                                "value": 70
-                            },
-                            {
-                                "color": "dark-yellow",
-                                "value": 80
-                            },
-                            {
-                                "color": "dark-green",
-                                "value": 90
-                            }
-                        ]
+                            "color": "red"
+                        }]
                     }
                 },
                 "overrides": [{
                         "matcher": {
                             "id": "byFrameRefID",
-                            "options": "B"
+                            "options": "A"
                         },
                         "properties": [{
                             "id": "mappings",
@@ -3883,70 +3873,7 @@
                     {
                         "matcher": {
                             "id": "byFrameRefID",
-                            "options": "J"
-                        },
-                        "properties": [{
-                            "id": "mappings",
-                            "value": [{
-                                    "options": {
-                                        "null+nan": {
-                                            "color": "transparent",
-                                            "index": 0
-                                        }
-                                    },
-                                    "type": "value"
-                                },
-                                {
-                                    "options": {
-                                        "from": 90,
-                                        "result": {
-                                            "color": "dark-green",
-                                            "index": 1
-                                        },
-                                        "to": 1000
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 80,
-                                        "result": {
-                                            "color": "yellow",
-                                            "index": 2
-                                        },
-                                        "to": 90
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 50,
-                                        "result": {
-                                            "color": "orange",
-                                            "index": 3
-                                        },
-                                        "to": 80
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 0,
-                                        "result": {
-                                            "color": "red",
-                                            "index": 4
-                                        },
-                                        "to": 50
-                                    },
-                                    "type": "range"
-                                }
-                            ]
-                        }]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byFrameRefID",
-                            "options": "N"
+                            "options": "B"
                         },
                         "properties": [{
                             "id": "mappings",
@@ -3998,7 +3925,7 @@
                     {
                         "matcher": {
                             "id": "byFrameRefID",
-                            "options": "K"
+                            "options": "C"
                         },
                         "properties": [{
                             "id": "mappings",
@@ -4050,82 +3977,7 @@
                     {
                         "matcher": {
                             "id": "byFrameRefID",
-                            "options": "G"
-                        },
-                        "properties": [{
-                            "id": "mappings",
-                            "value": [{
-                                    "options": {
-                                        "match": "null+nan",
-                                        "result": {
-                                            "color": "transparent",
-                                            "index": 0
-                                        }
-                                    },
-                                    "type": "special"
-                                },
-                                {
-                                    "options": {
-                                        "from": 0,
-                                        "result": {
-                                            "color": "red",
-                                            "index": 1
-                                        },
-                                        "to": 0.1
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 0.1,
-                                        "result": {
-                                            "color": "orange",
-                                            "index": 2
-                                        },
-                                        "to": 0.5
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 0.5,
-                                        "result": {
-                                            "color": "yellow",
-                                            "index": 3
-                                        },
-                                        "to": 1
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 1,
-                                        "result": {
-                                            "color": "light-green",
-                                            "index": 4
-                                        },
-                                        "to": 1.5
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 1.5,
-                                        "result": {
-                                            "color": "dark-green",
-                                            "index": 5
-                                        },
-                                        "to": 1000
-                                    },
-                                    "type": "range"
-                                }
-                            ]
-                        }]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byFrameRefID",
-                            "options": "H"
+                            "options": "D"
                         },
                         "properties": [{
                             "id": "mappings",
@@ -4200,71 +4052,7 @@
                     {
                         "matcher": {
                             "id": "byFrameRefID",
-                            "options": "I"
-                        },
-                        "properties": [{
-                            "id": "mappings",
-                            "value": [{
-                                    "options": {
-                                        "match": "null+nan",
-                                        "result": {
-                                            "color": "transparent",
-                                            "index": 0
-                                        }
-                                    },
-                                    "type": "special"
-                                },
-                                {
-                                    "options": {
-                                        "from": -100000,
-                                        "result": {
-                                            "color": "dark-green",
-                                            "index": 1
-                                        },
-                                        "to": 100
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 100,
-                                        "result": {
-                                            "color": "yellow",
-                                            "index": 2
-                                        },
-                                        "to": 150
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 150,
-                                        "result": {
-                                            "color": "orange",
-                                            "index": 3
-                                        },
-                                        "to": 200
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 200,
-                                        "result": {
-                                            "color": "red",
-                                            "index": 4
-                                        },
-                                        "to": 200000000
-                                    },
-                                    "type": "range"
-                                }
-                            ]
-                        }]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byFrameRefID",
-                            "options": "M"
+                            "options": "E"
                         },
                         "properties": [{
                             "id": "mappings",
@@ -4366,13 +4154,13 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"95\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
                     "legendFormat": " 🟨",
                     "range": true,
-                    "refId": "B"
+                    "refId": "A"
                 },
                 {
                     "datasource": {
@@ -4380,13 +4168,13 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "avg_over_time(validator_service_handle_certificate_consensus_latency{pct=\"50\", environment=\"$instance\"}[5m:1m]) / 1000",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
                     "legendFormat": "🟧",
                     "range": true,
-                    "refId": "N"
+                    "refId": "B"
                 },
                 {
                     "datasource": {
@@ -4400,7 +4188,7 @@
                     "interval": "2m",
                     "legendFormat": " 🟥",
                     "range": true,
-                    "refId": "K"
+                    "refId": "C"
                 },
                 {
                     "datasource": {
@@ -4414,7 +4202,7 @@
                     "interval": "2m",
                     "legendFormat": "🟦",
                     "range": true,
-                    "refId": "H"
+                    "refId": "D"
                 },
                 {
                     "datasource": {
@@ -4426,24 +4214,10 @@
                     "interval": "2m",
                     "legendFormat": "⬜️",
                     "range": true,
-                    "refId": "M"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "exemplar": false,
-                    "expr": "delta(consensus_last_committed_leader_round{environment=\"$instance\"}[1m]) - ((consensus_last_committed_leader_round{environment=\"$instance\"} offset 1m - consensus_last_committed_leader_round{environment=\"$instance\"} offset 11m) / 10)",
-                    "hide": true,
-                    "instant": false,
-                    "interval": "2m",
-                    "legendFormat": " 🟪",
-                    "range": true,
-                    "refId": "I"
+                    "refId": "E"
                 }
             ],
-            "title": " 🟨 Cert Latency p95    🟧 Process Certificate p50    🟥 Proposal Latency    🟦 Consensus Block Commit Rate   ⬜️ Leader Round Rate",
+            "title": " 🟨 Tx Processing Latency p95 |  🟧 Tx Processing Latency p50 |  🟥 Proposal Latency | 🟦 Consensus Block Commit Rate | ⬜️ Committed Round Rate",
             "type": "status-history"
         },
         {
@@ -5467,7 +5241,7 @@
         ]
     },
     "time": {
-        "from": "now-30m",
+        "from": "now-3h",
         "to": "now"
     },
     "timepicker": {
@@ -5485,6 +5259,6 @@
     "timezone": "",
     "title": "Sui Validator",
     "uid": "d3sdas8bbprlibnio2n0",
-    "version": 127,
+    "version": 141,
     "weekStart": "monday"
 }
