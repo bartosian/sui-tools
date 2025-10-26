@@ -65,8 +65,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -127,8 +126,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -206,8 +204,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -288,8 +285,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -347,8 +343,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -421,8 +416,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -478,8 +472,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -536,8 +529,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -593,8 +585,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -650,8 +641,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "short"
@@ -708,8 +698,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "yellow",
@@ -802,8 +791,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -921,8 +909,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -991,8 +978,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1133,8 +1119,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -1202,8 +1187,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -1301,8 +1285,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1393,8 +1376,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1461,8 +1443,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1519,8 +1500,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1577,8 +1557,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1635,8 +1614,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1726,8 +1704,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1854,8 +1831,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1972,8 +1948,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "orange",
@@ -2102,8 +2077,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "dark-red",
-                                "value": null
+                                "color": "dark-red"
                             },
                             {
                                 "color": "dark-yellow",
@@ -2234,8 +2208,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -2320,8 +2293,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "#EAB839",
@@ -2472,8 +2444,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2584,8 +2555,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "orange",
@@ -2691,8 +2661,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2760,8 +2729,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2818,8 +2786,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2890,8 +2857,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "orange",
@@ -2997,8 +2963,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3066,8 +3031,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -3124,8 +3088,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -3182,8 +3145,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -3254,8 +3216,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "orange",
@@ -3361,8 +3322,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3429,8 +3389,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -3485,8 +3444,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -3542,8 +3500,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -3602,7 +3559,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⬜️ Committed Round Rate",
+            "description": "\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⬜️ Committed Round Rate\n\n🟪 Fullnode Connectivity: RPC Error Rate",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3835,7 +3792,7 @@
                                     "options": {
                                         "from": 5,
                                         "result": {
-                                            "color": "super-light-blue",
+                                            "color": "green",
                                             "index": 4
                                         },
                                         "to": 7
@@ -3923,6 +3880,70 @@
                                         "result": {
                                             "color": "dark-green",
                                             "index": 5
+                                        },
+                                        "to": 1000000
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byFrameRefID",
+                            "options": "F"
+                        },
+                        "properties": [{
+                            "id": "mappings",
+                            "value": [{
+                                    "options": {
+                                        "match": "null+nan",
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 0
+                                        }
+                                    },
+                                    "type": "special"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "dark-green",
+                                            "index": 1
+                                        },
+                                        "to": 0
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 0,
+                                        "result": {
+                                            "color": "yellow",
+                                            "index": 2
+                                        },
+                                        "to": 5
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 5,
+                                        "result": {
+                                            "color": "orange",
+                                            "index": 3
+                                        },
+                                        "to": 10
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "options": {
+                                        "from": 10,
+                                        "result": {
+                                            "color": "red",
+                                            "index": 4
                                         },
                                         "to": 1000000
                                     },
@@ -4022,9 +4043,23 @@
                     "legendFormat": "⬜️",
                     "range": true,
                     "refId": "E"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "rate(total_rpc_err{environment=\"$instance\", name=\"$validator_name\"}[2m]) or vector(0)",
+                    "hide": false,
+                    "instant": false,
+                    "interval": "2m",
+                    "legendFormat": "🟪",
+                    "range": true,
+                    "refId": "F"
                 }
             ],
-            "title": " 🟨 Tx Processing Latency p95 |  🟧 Tx Processing Latency p50 |  🟥 Proposal Latency | 🟦 Consensus Block Commit Rate | ⬜️ Committed Round Rate",
+            "title": " 🟨 Tx Processing Latency p95 |  🟧 Tx Processing Latency p50 |  🟥 Proposal Latency | 🟦 Consensus Block Commit Rate | ⬜️ Committed Round Rate | 🟪 Fullnode Connectivity",
             "type": "status-history"
         },
         {
@@ -4199,7 +4234,7 @@
             },
             "id": 310,
             "panels": [],
-            "title": "Error Metrics",
+            "title": "Errors",
             "type": "row"
         },
         {
@@ -4380,6 +4415,66 @@
                 "refId": "A"
             }],
             "title": "Consensus Round Prober Request Errors (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Total RPC errors returned from this validator",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 18,
+                "y": 99
+            },
+            "id": 390,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(total_rpc_err{environment=\"$instance\", name=\"$validator_name\"}[24h])) or vector(0)",
+                "legendFormat": "{{instance}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Total RPC Errors (24h)",
             "type": "stat"
         },
         {
@@ -5048,7 +5143,7 @@
         ]
     },
     "time": {
-        "from": "now-3h",
+        "from": "now-6h",
         "to": "now"
     },
     "timepicker": {
@@ -5066,6 +5161,6 @@
     "timezone": "",
     "title": "Sui Validator",
     "uid": "d3sdas8bbprlibnio2n0",
-    "version": 142,
+    "version": 151,
     "weekStart": "monday"
 }
