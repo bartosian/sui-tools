@@ -65,7 +65,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -126,7 +127,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -204,7 +206,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -285,7 +288,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -343,7 +347,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -416,7 +421,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -472,7 +478,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "s"
@@ -529,7 +536,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -585,7 +593,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -641,7 +650,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "short"
@@ -698,7 +708,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "yellow",
@@ -791,7 +802,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -909,7 +921,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -978,7 +991,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1119,7 +1133,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1187,7 +1202,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -1285,7 +1301,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1376,7 +1393,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1443,7 +1461,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1500,7 +1519,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1557,7 +1577,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1614,7 +1635,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1704,7 +1726,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1831,7 +1854,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -1948,7 +1972,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "orange",
@@ -2077,7 +2102,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "dark-red"
+                                "color": "dark-red",
+                                "value": null
                             },
                             {
                                 "color": "dark-yellow",
@@ -2208,7 +2234,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     },
                     "unit": "s"
@@ -2293,7 +2320,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "#EAB839",
@@ -2444,7 +2472,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2480,8 +2509,8 @@
             "gridPos": {
                 "h": 9,
                 "w": 8,
-                "x": 0,
-                "y": 51
+                "x": 16,
+                "y": 42
             },
             "id": 258,
             "options": {
@@ -2527,247 +2556,11 @@
             "type": "timeseries"
         },
         {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Average shared obj latencies for p95, p50 and p99. Averages below 7 seconds are considered normal",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "axisSoftMax": 8,
-                        "axisSoftMin": 0,
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "dashed"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "yellow",
-                                "value": 7
-                            },
-                            {
-                                "color": "red",
-                                "value": 10
-                            }
-                        ]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 8,
-                "x": 8,
-                "y": 51
-            },
-            "id": 257,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
-                    "hide": false,
-                    "legendFormat": "pct 95",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
-                    "hide": false,
-                    "legendFormat": "pct 50",
-                    "range": true,
-                    "refId": "C"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(histogram_quantile(0.99, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
-                    "hide": false,
-                    "legendFormat": "pct 99",
-                    "range": true,
-                    "refId": "B"
-                }
-            ],
-            "title": "Average Shared Obj Latency",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "Owned objects certificate execution latency over time",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 20,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "line"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "red",
-                                "value": 2
-                            }
-                        ]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 9,
-                "x": 0,
-                "y": 60
-            },
-            "id": 332,
-            "options": {
-                "legend": {
-                    "calcs": [
-                        "mean",
-                        "max",
-                        "min"
-                    ],
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
-                    "legendFormat": "p50",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
-                    "legendFormat": "p95",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "avg_over_time(histogram_quantile(0.99, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))[5m:1m]) / 1000",
-                    "legendFormat": "p99",
-                    "range": true,
-                    "refId": "C"
-                }
-            ],
-            "title": "Owned Objects Certificates Execution Latency",
-            "type": "timeseries"
-        },
-        {
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 69
+                "y": 51
             },
             "id": 351,
             "title": "Certificates",
@@ -2791,7 +2584,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "orange",
@@ -2815,7 +2609,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 70
+                "y": 52
             },
             "id": 279,
             "options": {
@@ -2897,7 +2691,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2921,7 +2716,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 70
+                "y": 52
             },
             "id": 290,
             "options": {
@@ -2965,7 +2760,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -2975,7 +2771,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 74
+                "y": 56
             },
             "id": 276,
             "options": {
@@ -3022,7 +2818,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3032,7 +2829,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 74
+                "y": 56
             },
             "id": 357,
             "options": {
@@ -3069,7 +2866,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 78
+                "y": 60
             },
             "id": 350,
             "title": "Rounds",
@@ -3093,7 +2890,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "orange",
@@ -3117,7 +2915,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 79
+                "y": 61
             },
             "id": 278,
             "options": {
@@ -3199,7 +2997,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -3223,7 +3022,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 79
+                "y": 61
             },
             "id": 291,
             "options": {
@@ -3267,7 +3066,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3277,7 +3077,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 83
+                "y": 65
             },
             "id": 266,
             "options": {
@@ -3324,7 +3124,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3334,7 +3135,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 83
+                "y": 65
             },
             "id": 352,
             "options": {
@@ -3381,7 +3182,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3391,7 +3193,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 83
+                "y": 65
             },
             "id": 275,
             "options": {
@@ -3428,7 +3230,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 87
+                "y": 69
             },
             "id": 349,
             "title": "Checkpoints",
@@ -3452,7 +3254,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "orange",
@@ -3476,7 +3279,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 88
+                "y": 70
             },
             "id": 280,
             "options": {
@@ -3558,7 +3361,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -3582,7 +3386,7 @@
                 "h": 4,
                 "w": 20,
                 "x": 4,
-                "y": 88
+                "y": 70
             },
             "id": 292,
             "options": {
@@ -3625,7 +3429,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3635,7 +3440,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 92
+                "y": 74
             },
             "id": 254,
             "options": {
@@ -3680,7 +3485,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3690,7 +3496,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 92
+                "y": 74
             },
             "id": 274,
             "options": {
@@ -3736,7 +3542,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
+                            "color": "green",
+                            "value": null
                         }]
                     }
                 },
@@ -3746,7 +3553,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 92
+                "y": 74
             },
             "id": 348,
             "options": {
@@ -3783,7 +3590,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 96
+                "y": 78
             },
             "id": 297,
             "panels": [],
@@ -4130,7 +3937,7 @@
                 "h": 6,
                 "w": 24,
                 "x": 0,
-                "y": 97
+                "y": 79
             },
             "id": 295,
             "options": {
@@ -4226,7 +4033,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 103
+                "y": 85
             },
             "id": 247,
             "panels": [],
@@ -4258,7 +4065,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 104
+                "y": 86
             },
             "id": 383,
             "options": {
@@ -4351,7 +4158,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 108
+                "y": 90
             },
             "id": 384,
             "interval": "2m",
@@ -4388,7 +4195,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 116
+                "y": 98
             },
             "id": 310,
             "panels": [],
@@ -4424,7 +4231,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 117
+                "y": 99
             },
             "id": 311,
             "options": {
@@ -4484,7 +4291,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 117
+                "y": 99
             },
             "id": 312,
             "options": {
@@ -4544,7 +4351,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 117
+                "y": 99
             },
             "id": 313,
             "options": {
@@ -4581,7 +4388,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 121
+                "y": 103
             },
             "id": 320,
             "panels": [],
@@ -4612,7 +4419,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 122
+                "y": 104
             },
             "id": 321,
             "options": {
@@ -4667,7 +4474,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 122
+                "y": 104
             },
             "id": 322,
             "options": {
@@ -4722,7 +4529,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 122
+                "y": 104
             },
             "id": 379,
             "options": {
@@ -4777,7 +4584,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 122
+                "y": 104
             },
             "id": 380,
             "options": {
@@ -4832,7 +4639,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 16,
-                "y": 122
+                "y": 104
             },
             "id": 377,
             "options": {
@@ -4887,7 +4694,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 20,
-                "y": 122
+                "y": 104
             },
             "id": 378,
             "options": {
@@ -4980,7 +4787,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 126
+                "y": 108
             },
             "id": 289,
             "interval": "2m",
@@ -5070,7 +4877,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 126
+                "y": 108
             },
             "id": 381,
             "interval": "2m",
@@ -5160,7 +4967,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 126
+                "y": 108
             },
             "id": 382,
             "interval": "2m",
@@ -5259,6 +5066,6 @@
     "timezone": "",
     "title": "Sui Validator",
     "uid": "d3sdas8bbprlibnio2n0",
-    "version": 141,
+    "version": 142,
     "weekStart": "monday"
 }
