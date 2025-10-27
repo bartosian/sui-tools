@@ -107,6 +107,11 @@ parse_yaml_config() {
     # Copy all bridge-specific alert rule files
     cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
     
+    # Copy all validator-specific alert rule files if they exist
+    if ls generated_configs/alert_rules/sui_validator_*_alerts.yml 1> /dev/null 2>&1; then
+        cp generated_configs/alert_rules/sui_validator_*_alerts.yml config/prometheus/rules/
+    fi
+    
     # Source the exported variables from Python parser
     # Use a temporary file to avoid shell parsing issues with JSON
     local temp_file=$(mktemp)
@@ -212,6 +217,9 @@ parse_yaml_config() {
     
     log_success "Configuration loaded successfully"
     log_info "Parsed $SUI_BRIDGES_COUNT bridge(s)"
+    if [ -n "${SUI_VALIDATORS_COUNT:-}" ] && [ "$SUI_VALIDATORS_COUNT" -gt 0 ]; then
+        log_info "Parsed $SUI_VALIDATORS_COUNT validator(s)"
+    fi
 }
 
 # Check if required tools are installed
@@ -391,6 +399,7 @@ cleanup_generated_files() {
     rm -f config/alertmanager/generated_alertmanager.yml
     rm -f config/grafana/generated_validators.json
     rm -f config/prometheus/rules/sui_bridge_*_alerts.yml
+    rm -f config/prometheus/rules/sui_validator_*_alerts.yml
 }
 
 # Clean up

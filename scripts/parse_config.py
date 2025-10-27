@@ -48,6 +48,13 @@ def validate_validators_config(validators: List[Dict[str, Any]]) -> None:
             if not validator[field]:
                 raise ValueError(f"Validator {i} field '{field}' cannot be empty")
 
+        # Validate alerts configuration if present
+        if "alerts" in validator:
+            validate_validator_alerts_config(validator["alerts"], i)
+        else:
+            # Set default alerts if not specified
+            validator["alerts"] = get_default_validator_alerts()
+
 
 def validate_bridges_config(bridges: List[Dict[str, Any]]) -> None:
     """Validate bridges configuration structure."""
@@ -107,6 +114,38 @@ def validate_alerts_config(alerts: Dict[str, Any], bridge_index: int) -> None:
             )
 
 
+def validate_validator_alerts_config(
+    alerts: Dict[str, Any], validator_index: int
+) -> None:
+    """Validate validator alerts configuration structure."""
+    if not isinstance(alerts, dict):
+        raise ValueError(f"Validator {validator_index} alerts must be a dictionary")
+
+    valid_alert_types = {
+        "uptime",
+        "reputation_rank",
+        "voting_power",
+        "tx_processing_latency_p95",
+        "tx_processing_latency_p95_10s",
+        "tx_processing_latency_p95_3s",
+        "tx_processing_latency_p50",
+        "proposal_latency",
+        "consensus_block_commit_rate",
+        "committed_round_rate",
+        "fullnode_connectivity",
+    }
+
+    for alert_type, enabled in alerts.items():
+        if alert_type not in valid_alert_types:
+            raise ValueError(
+                f"Validator {validator_index} has invalid alert type: {alert_type}"
+            )
+        if not isinstance(enabled, bool):
+            raise ValueError(
+                f"Validator {validator_index} alert '{alert_type}' must be a boolean"
+            )
+
+
 def get_default_alerts() -> Dict[str, bool]:
     """Get default alerts configuration with all alerts enabled."""
     return {
@@ -125,6 +164,23 @@ def get_default_alerts() -> Dict[str, bool]:
         "stale_eth_sync": True,
         "stale_eth_finalization": True,
         "low_gas_balance": True,
+    }
+
+
+def get_default_validator_alerts() -> Dict[str, bool]:
+    """Get default validator alerts configuration with all alerts enabled."""
+    return {
+        "uptime": True,
+        "reputation_rank": True,
+        "voting_power": True,
+        "tx_processing_latency_p95": True,
+        "tx_processing_latency_p95_10s": True,
+        "tx_processing_latency_p95_3s": True,
+        "tx_processing_latency_p50": True,
+        "proposal_latency": True,
+        "consensus_block_commit_rate": True,
+        "committed_round_rate": True,
+        "fullnode_connectivity": True,
     }
 
 
@@ -484,6 +540,330 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
         except Exception as e:
             print(
                 f"ERROR: Failed to write bridge alert rules for {alias}: {e}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+
+def generate_validator_alert_rules(
+    validators: List[Dict[str, Any]], sui_validator: str, output_dir: str
+) -> None:
+    """Generate validator-specific alert rules organized by validator."""
+
+    import os
+
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Generate individual validator alert files
+    for i, validator in enumerate(validators):
+        alias = validator["alias"]
+        alerts = validator.get("alerts", get_default_validator_alerts())
+
+        # Sanitize alias for filename
+        safe_alias = alias.lower().replace(" ", "_").replace("-", "_")
+        validator_file = os.path.join(
+            output_dir, f"sui_validator_{i}_{safe_alias}_alerts.yml"
+        )
+
+        validator_rules = {"groups": []}
+        critical_alerts = []
+        warning_alerts = []
+
+        # Generate validator-specific alert rules based on enabled alerts
+        if alerts.get("uptime", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_Uptime_{alias.replace(' ', '_')}",
+                    "expr": f'rate(uptime{{environment="{alias}"}}[5m]) == 0',
+                    "for": "2m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "uptime",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Validator Uptime Issue (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The uptime for SUI Validator instance {{ $labels.instance }} ({alias}) is not increasing, suggesting a potential restart or failure.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "347",
+                    },
+                }
+            )
+
+        if alerts.get("reputation_rank", False):
+            warning_alerts.append(
+                {
+                    "alert": f"SuiValidator_ReputationRank_{alias.replace(' ', '_')}",
+                    "expr": f'(scalar(consensus_reputation_scores{{environment="{alias}", authority="{sui_validator}"}}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{{environment="{alias}"}}), consensus_reputation_scores{{environment="{alias}"}}))) == 1',
+                    "for": "30m",
+                    "labels": {
+                        "severity": "warning",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "reputation_rank",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Validator Low Reputation Rank (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The SUI Validator instance {{ $labels.instance }} ({alias}) is in the bottom N low-scoring validators based on consensus reputation scores.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "366",
+                    },
+                }
+            )
+
+        if alerts.get("voting_power", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_VotingPower_{alias.replace(' ', '_')}",
+                    "expr": f'current_voting_right{{environment="{alias}"}} == 0',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "voting_power",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Zero Validator Voting Power (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The SUI Validator instance {{ $labels.instance }} ({alias}) has zero voting power, indicating a critical issue with the validator's authority.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "268",
+                    },
+                }
+            )
+
+        if alerts.get("tx_processing_latency_p95", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_TxProcessingLatencyP95_{alias.replace(' ', '_')}",
+                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 15000',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "tx_processing_latency_p95",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"High Transaction Processing Latency P95 (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The 95th percentile transaction processing latency for SUI Validator instance {{ $labels.instance }} ({alias}) is above 15 seconds.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "295",
+                    },
+                }
+            )
+
+        if alerts.get("tx_processing_latency_p95_10s", False):
+            warning_alerts.append(
+                {
+                    "alert": f"SuiValidator_TxProcessingLatencyP95_10s_{alias.replace(' ', '_')}",
+                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 10000',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "warning",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "tx_processing_latency_p95_10s",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Elevated Transaction Processing Latency P95 (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The 95th percentile transaction processing latency for SUI Validator instance {{ $labels.instance }} ({alias}) is above 10 seconds.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "295",
+                    },
+                }
+            )
+
+        if alerts.get("tx_processing_latency_p95_3s", False):
+            warning_alerts.append(
+                {
+                    "alert": f"SuiValidator_TxProcessingLatencyP95_3s_{alias.replace(' ', '_')}",
+                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 3000',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "warning",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "tx_processing_latency_p95_3s",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Moderate Transaction Processing Latency P95 (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The 95th percentile transaction processing latency for SUI Validator instance {{ $labels.instance }} ({alias}) is above 3 seconds.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "295",
+                    },
+                }
+            )
+
+        if alerts.get("tx_processing_latency_p50", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_TxProcessingLatencyP50_{alias.replace(' ', '_')}",
+                    "expr": f'histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 5000',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "tx_processing_latency_p50",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"High Transaction Processing Latency P50 (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The 50th percentile transaction processing latency for SUI Validator instance {{ $labels.instance }} ({alias}) is above 5 seconds.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "295",
+                    },
+                }
+            )
+
+        if alerts.get("proposal_latency", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_ProposalLatency_{alias.replace(' ', '_')}",
+                    "expr": f'rate(consensus_quorum_receive_latency_sum{{environment="{alias}"}}[5m]) / rate(consensus_quorum_receive_latency_count{{environment="{alias}"}}[5m]) > 2',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "proposal_latency",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"High Consensus Proposal Latency (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The consensus proposal latency for SUI Validator instance {{ $labels.instance }} ({alias}) is above 2 seconds.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "342",
+                    },
+                }
+            )
+
+        if alerts.get("consensus_block_commit_rate", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_ConsensusBlockCommitRate_{alias.replace(' ', '_')}",
+                    "expr": f'sum(rate(consensus_proposed_blocks{{environment="{alias}", force="false"}}[5m])) + sum(rate(consensus_proposed_blocks{{environment="{alias}", force="true"}}[5m])) < 3',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "consensus_block_commit_rate",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Low Consensus Block Commit Rate (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The consensus block commit rate for SUI Validator instance {{ $labels.instance }} ({alias}) is below 3 blocks per second.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "295",
+                    },
+                }
+            )
+
+        if alerts.get("committed_round_rate", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_CommittedRoundRate_{alias.replace(' ', '_')}",
+                    "expr": f'rate(consensus_last_committed_leader_round{{environment="{alias}"}}[2m]) < 3',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "committed_round_rate",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Low Committed Round Rate (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The committed round rate for SUI Validator instance {{ $labels.instance }} ({alias}) is below 3 rounds per second.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "241",
+                    },
+                }
+            )
+
+        if alerts.get("fullnode_connectivity", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_FullnodeConnectivity_{alias.replace(' ', '_')}",
+                    "expr": f'rate(total_rpc_err{{environment="{alias}", name="{sui_validator}"}}[2m]) > 0',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "environment": f'"{alias}"',
+                        "alert_type": "fullnode_connectivity",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Fullnode Connectivity Issues (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The SUI Validator instance {{ $labels.instance }} ({alias}) is experiencing RPC errors indicating connectivity issues with fullnodes.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "390",
+                    },
+                }
+            )
+
+        # Add critical alerts group to validator rules
+        if critical_alerts:
+            validator_rules["groups"].append(
+                {
+                    "name": f"sui_validator_critical_alerts_{alias.replace(' ', '_')}",
+                    "rules": critical_alerts,
+                }
+            )
+
+        # Add warning alerts group to validator rules
+        if warning_alerts:
+            validator_rules["groups"].append(
+                {
+                    "name": f"sui_validator_warning_alerts_{alias.replace(' ', '_')}",
+                    "rules": warning_alerts,
+                }
+            )
+
+        # Write validator-specific alert rules file
+        try:
+            with open(validator_file, "w") as f:
+                yaml.dump(validator_rules, f, default_flow_style=False, sort_keys=False)
+            print(
+                f"Generated validator-specific alert rules: {validator_file}",
+                file=sys.stderr,
+            )
+        except Exception as e:
+            print(
+                f"ERROR: Failed to write validator alert rules for {alias}: {e}",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -920,6 +1300,10 @@ def main():
 
     # Generate bridge-specific alert rules
     generate_alert_rules(bridges, alert_rules_dir)
+
+    # Generate validator-specific alert rules if validators are configured
+    if validators:
+        generate_validator_alert_rules(validators, sui_validator, alert_rules_dir)
 
     # Generate Alertmanager configuration
     alertmanager_file = "generated_configs/alertmanager.yml"
