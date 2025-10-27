@@ -8,6 +8,7 @@ This repository provides a comprehensive **end-to-end monitoring solution** for 
 
 Currently supported services:
 - **Sui Bridge** - Cross-chain bridge monitoring (Mainnet & Testnet)
+- **Sui Validator** - Validator node performance and health monitoring
 
 *Additional Sui services will be added in future releases*
 
@@ -82,6 +83,25 @@ bridges:
 sui:
   validator: your_validator_name
 
+validators:
+  - alias: "Production Validator"
+    target: localhost:9184
+    alerts:
+      # Critical alerts
+      uptime: true
+      voting_power: true
+      tx_processing_latency_p95: true
+      tx_processing_latency_p50: true
+      proposal_latency: true
+      consensus_block_commit_rate: true
+      committed_round_rate: true
+      fullnode_connectivity: true
+      
+      # Warning alerts
+      reputation_rank: true
+      tx_processing_latency_p95_10s: true
+      tx_processing_latency_p95_3s: true
+
 # Notification Services (Optional)
 pagerduty:
   integration_key: your_pagerduty_key
@@ -154,16 +174,20 @@ sui-tools/
 │       ├── entrypoint.sh
 │       ├── generated_prometheus.yml    # Auto-generated (used by container)
 │       └── rules/
-│           └── sui_bridge_*_alerts.yml # Auto-generated per bridge
+│           ├── sui_bridge_*_alerts.yml     # Auto-generated per bridge
+│           └── sui_validator_*_alerts.yml  # Auto-generated per validator
 ├── scripts/                          # Configuration processing
 │   └── parse_config.py               # Python parser (generates all configs)
 ├── generated_configs/                # Auto-generated configs (runtime)
 │   ├── prometheus.yml                # Generated Prometheus config
 │   ├── alertmanager.yml              # Generated Alertmanager config
 │   ├── bridges.json                  # Bridge metadata JSON
-│   └── alert_rules/                  # Generated alert rules per bridge
-│       ├── sui_bridge_0_*_alerts.yml
-│       └── sui_bridge_1_*_alerts.yml
+│   ├── validators.json               # Validator metadata JSON
+│   └── alert_rules/                  # Generated alert rules per service
+│       ├── sui_bridge_0_*_alerts.yml     # Per-bridge alerts
+│       ├── sui_bridge_1_*_alerts.yml
+│       ├── sui_validator_0_*_alerts.yml  # Per-validator alerts
+│       └── sui_validator_1_*_alerts.yml
 ├── data/                            # Persistent data storage
 │   ├── alertmanager/
 │   ├── grafana/
@@ -191,6 +215,7 @@ The monitoring stack automatically adapts based on your configuration:
 ### **Pre-configured Dashboards**
 
 - **Sui Bridge Dashboard**: Comprehensive monitoring of Sui Bridge Node performance
+- **Sui Validator Dashboard**: Complete validator node performance and health monitoring
 
 ### **Alert Rules**
 
@@ -217,6 +242,29 @@ The system includes comprehensive alert rules for configured services. Alerts ar
 12. **Low Gas Balance** - Bridge client gas balance below threshold (10 SUI)
 
 **Alert Configuration**: Each bridge can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
+
+**Sui Validator Alerts** (11 alert types available per validator):
+
+**Critical Alerts** (severity: critical):
+1. **Uptime** - Detects unexpected validator restarts or failures (5m window)
+2. **Voting Power** - Critical validator voting rights issues (5m window)
+3. **Tx Processing Latency P95** - P95 transaction latency > 15s (5m window)
+4. **Tx Processing Latency P50** - P50 transaction latency > 5s (5m window)
+5. **Proposal Latency** - Consensus proposal latency > 2s (5m window)
+6. **Consensus Block Commit Rate** - Block commit rate < 3 blocks/s (5m window)
+7. **Committed Round Rate** - Committed round rate < 3 rounds/s (5m window)
+8. **Fullnode Connectivity** - RPC errors indicating connectivity issues (5m window)
+
+**Warning Alerts** (severity: warning):
+9. **Reputation Rank** - Validator consistently in bottom N low-scoring validators (30m window)
+10. **Tx Processing Latency P95 (10s)** - P95 transaction latency > 10s (5m window)
+11. **Tx Processing Latency P95 (3s)** - P95 transaction latency > 3s (5m window)
+
+**Alert Routing**:
+- **Critical alerts** → PagerDuty + Telegram + Discord + Webhook
+- **Warning alerts** → Telegram + Discord + Webhook (no PagerDuty)
+
+**Alert Configuration**: Each validator can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
 
 *Additional alert rules will be added as more Sui services are supported*
 
@@ -280,13 +328,19 @@ The `config.yml` file supports the following configuration sections:
 | **bridges** | `alias` | Human-readable bridge name | ❌* |
 | | `target` | Bridge target endpoint (IP:port) | ❌* |
 | | `public_address` | Bridge public HTTP address | ❌ |
-| **sui** | `validator` | Validator name for alerts | ❌ |
+| | `alerts` | Per-bridge alert enable/disable flags | ❌ |
+| **validators** | `alias` | Human-readable validator name | ❌** |
+| | `target` | Validator metrics endpoint (IP:port) | ❌** |
+| | `alerts` | Per-validator alert enable/disable flags | ❌ |
+| **sui** | `validator` | Validator authority name for alerts | ❌** |
 | **pagerduty** | `integration_key` | PagerDuty integration key | ❌ |
 | **telegram** | `bot_token` | Telegram bot token | ❌ |
 | | `chat_id` | Telegram chat ID | ❌ |
 | **discord** | `webhook_url` | Discord webhook URL | ❌ |
 
 *Required only if you want to monitor Sui Bridge services. You can configure any number of bridges with custom aliases. If no bridges are configured, bridge monitoring will be skipped.
+
+**Required only if you want to monitor Sui Validator nodes. You can configure any number of validators with custom aliases. The `sui.validator` field is required when configuring validators to set the authority name for alerts.
 
 ### **Service Configuration**
 

@@ -54,7 +54,8 @@ config/
 │   ├── entrypoint.sh                     # Prometheus startup script
 │   ├── generated_prometheus.yml          # Auto-generated (used by container)
 │   └── rules/
-│       └── sui_bridge_*_alerts.yml       # Auto-generated per bridge
+│       ├── sui_bridge_*_alerts.yml       # Auto-generated per bridge
+│       └── sui_validator_*_alerts.yml    # Auto-generated per validator
 ├── alertmanager/
 │   ├── alertmanager.yml                  # Static template (reference only)
 │   └── generated_alertmanager.yml        # Auto-generated (used by container)
@@ -75,9 +76,12 @@ generated_configs/                        # Auto-generated at runtime
 ├── prometheus.yml                        # Generated Prometheus config
 ├── alertmanager.yml                      # Generated Alertmanager config
 ├── bridges.json                          # Bridge configuration JSON
-└── alert_rules/                          # Per-bridge alert rules
-    ├── sui_bridge_0_*_alerts.yml
-    └── sui_bridge_1_*_alerts.yml
+├── validators.json                       # Validator configuration JSON
+└── alert_rules/                          # Per-service alert rules
+    ├── sui_bridge_0_*_alerts.yml         # Per-bridge alerts
+    ├── sui_bridge_1_*_alerts.yml
+    ├── sui_validator_0_*_alerts.yml      # Per-validator alerts
+    └── sui_validator_1_*_alerts.yml
 ```
 
 ### Customization
@@ -120,12 +124,51 @@ bridges:
 - Each bridge can have different alert configurations
 - Missing alerts default to `false` (disabled)
 
+#### Update Validator Configuration
+Edit `config.yml` to add/modify validators with per-validator alert configuration:
+```yaml
+sui:
+  validator: your_validator_authority_name  # Required for validator alerts
+
+validators:
+  - alias: "Production Validator"
+    target: localhost:9184
+    alerts:
+      # Critical alerts (severity: critical → PagerDuty + Telegram + Discord + Webhook)
+      uptime: true                              # Monitor validator uptime (5m window)
+      voting_power: true                        # Alert if validator has zero voting power (5m window)
+      tx_processing_latency_p95: true           # Critical: P95 transaction latency > 15s (5m window)
+      tx_processing_latency_p50: true           # Critical: P50 transaction latency > 5s (5m window)
+      proposal_latency: true                    # Critical: Consensus proposal latency > 2s (5m window)
+      consensus_block_commit_rate: true         # Critical: Consensus block commit rate < 3 blocks/s (5m window)
+      committed_round_rate: true                # Critical: Committed round rate < 3 rounds/s (5m window)
+      fullnode_connectivity: true               # Critical: RPC errors indicating connectivity issues (5m window)
+      
+      # Warning alerts (severity: warning → Telegram + Discord + Webhook, NO PagerDuty)
+      reputation_rank: true                     # Alert if validator is consistently in bottom N (30m window)
+      tx_processing_latency_p95_10s: true       # Warning: P95 transaction latency > 10s (5m window)
+      tx_processing_latency_p95_3s: true        # Warning: P95 transaction latency > 3s (5m window)
+  - alias: "Test Validator"
+    target: test-validator:9184
+    alerts:
+      uptime: true
+      # ... configure alerts per validator
+```
+
+**Important**:
+- Alerts are **opt-in** - only explicitly enabled alerts will be generated
+- Each validator can have different alert configurations
+- Missing alerts default to `false` (disabled)
+- Critical alerts trigger PagerDuty, warning alerts do not
+- The `sui.validator` field must contain your validator's authority name
+
 #### Update Prometheus Targets
 Prometheus targets are automatically generated from `config.yml`. No manual editing required!
 
 #### Update Alert Rules
 Alert rules are automatically generated based on enabled alerts in `config.yml`:
 - Each bridge gets its own alert rules file
+- Each validator gets its own alert rules file
 - Only enabled alerts are generated
 - Restart services to apply: `./monitor.sh restart`
 
@@ -287,7 +330,23 @@ bridges:
     public_address: http://localhost:9190
 
 sui:
-  validator: your_validator_name
+  validator: your_validator_authority_name
+
+validators:
+  - alias: "Production Validator"
+    target: localhost:9184
+    alerts:
+      uptime: true
+      voting_power: true
+      tx_processing_latency_p95: true
+      tx_processing_latency_p50: true
+      proposal_latency: true
+      consensus_block_commit_rate: true
+      committed_round_rate: true
+      fullnode_connectivity: true
+      reputation_rank: true
+      tx_processing_latency_p95_10s: true
+      tx_processing_latency_p95_3s: true
 
 # Notifications (optional)
 pagerduty:
@@ -317,8 +376,9 @@ docker compose ps
 
 1. **Configure `config.yml`**:
    - Set Grafana credentials
-   - Add your bridge targets with custom aliases
-   - Enable desired alerts per bridge
+   - Add your bridge targets with custom aliases (if monitoring bridges)
+   - Add your validator targets with custom aliases (if monitoring validators)
+   - Enable desired alerts per bridge/validator
    - Add notification integrations (PagerDuty, Telegram, Discord)
 
 2. **Start services**: `./monitor.sh start`
@@ -333,7 +393,8 @@ docker compose ps
    - Trigger a test alert
    - Verify notifications arrive via configured channels
 
-5. **Monitor your bridges**:
-   - View Sui Bridge dashboard in Grafana
+5. **Monitor your services**:
+   - View Sui Bridge dashboard in Grafana (if bridges configured)
+   - View Sui Validator dashboard in Grafana (if validators configured)
    - Check alert status in Prometheus/Alertmanager
    - Review metrics and performance
