@@ -968,7 +968,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows validator rank with color indicating reputation status. Green = good standing, Red = low-scoring authority.",
+            "description": "Shows validator rank based on consensus reputation scores. Lower rank number is better (rank 1 = highest reputation score).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -978,13 +978,8 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "red",
-                                "value": 66
-                            }
-                        ]
+                            "color": "green"
+                        }]
                     },
                     "unit": "none"
                 },
@@ -1000,8 +995,8 @@
             "options": {
                 "colorMode": "background",
                 "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
+                "justifyMode": "center",
+                "orientation": "horizontal",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -1009,49 +1004,21 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "value_and_name"
+                "textMode": "value"
             },
             "pluginVersion": "10.2.0",
             "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
-                    "legendFormat": "Rank",
-                    "range": true,
-                    "refId": "A"
+                "datasource": {
+                    "type": "prometheus"
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "count(consensus_reputation_scores{environment=\"$instance\"}) - scalar(consensus_handler_num_low_scoring_authorities{environment=\"$instance\"})",
-                    "hide": true,
-                    "refId": "B"
-                }
-            ],
-            "title": "Reputation Rank",
-            "transformations": [{
-                "id": "configFromData",
-                "options": {
-                    "configRefId": "B",
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green",
-                                "value": 0
-                            },
-                            {
-                                "color": "red",
-                                "value": "${__field.name}"
-                            }
-                        ]
-                    }
-                }
+                "editorMode": "code",
+                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
+                "legendFormat": "Rank",
+                "range": true,
+                "refId": "A"
             }],
+            "title": "Reputation Rank",
+            "transformations": [],
             "type": "stat"
         },
         {
@@ -1059,7 +1026,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows validator reputation status over time. Green indicates good standing, red indicates low-scoring status.",
+            "description": "Shows validator reputation status over time. Green bars (value=1) indicate good standing (NOT in bottom N low-scoring validators). Red bars (value=0) indicate low-scoring status (IN bottom N validators, where N=consensus_handler_num_low_scoring_authorities).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1069,7 +1036,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rank",
+                        "axisLabel": "Status",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "bars",
@@ -1331,7 +1298,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Validator rank over time based on consensus reputation score.",
+            "description": "Validator rank over time based on consensus reputation score. Lower rank number is better (rank 1 = highest score). The red threshold line shows the cutoff for low-scoring validators (rank > threshold means in bottom N low-scoring group).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1380,7 +1347,38 @@
                         }]
                     }
                 },
-                "overrides": []
+                "overrides": [{
+                    "matcher": {
+                        "id": "byName",
+                        "options": "Low-Scoring Threshold"
+                    },
+                    "properties": [{
+                            "id": "color",
+                            "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                            }
+                        },
+                        {
+                            "id": "custom.lineStyle",
+                            "value": {
+                                "dash": [
+                                    10,
+                                    10
+                                ],
+                                "fill": "dash"
+                            }
+                        },
+                        {
+                            "id": "custom.lineWidth",
+                            "value": 2
+                        },
+                        {
+                            "id": "custom.fillOpacity",
+                            "value": 0
+                        }
+                    ]
+                }]
             },
             "gridPos": {
                 "h": 8,
@@ -1404,16 +1402,28 @@
             },
             "pluginVersion": "8.5.2",
             "targets": [{
-                "datasource": {
-                    "type": "prometheus"
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
+                    "hide": false,
+                    "legendFormat": "Rank",
+                    "range": true,
+                    "refId": "A"
                 },
-                "editorMode": "code",
-                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
-                "hide": false,
-                "legendFormat": "Rank",
-                "range": true,
-                "refId": "A"
-            }],
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "count(consensus_reputation_scores{environment=\"$instance\"}) - scalar(consensus_handler_num_low_scoring_authorities{environment=\"$instance\"})",
+                    "hide": false,
+                    "legendFormat": "Low-Scoring Threshold",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
             "title": "Reputation Rank Over Time",
             "type": "timeseries"
         },
@@ -1458,7 +1468,7 @@
             "id": 277,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -1515,7 +1525,7 @@
             "id": 358,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -1572,7 +1582,7 @@
             "id": 359,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -1629,7 +1639,7 @@
             "id": 360,
             "options": {
                 "colorMode": "value",
-                "graphMode": "none",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "reduceOptions": {
@@ -1904,7 +1914,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Highest synced checkpoint and last executed checkpoint rates during last minute",
+            "description": "Last executed checkpoint rates during last minute",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1995,33 +2005,19 @@
                 }
             },
             "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "exemplar": false,
-                    "expr": "rate(last_executed_checkpoint{environment=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "instant": false,
-                    "interval": "",
-                    "legendFormat": "Executed Checkpoints",
-                    "range": true,
-                    "refId": "C"
+                "datasource": {
+                    "type": "prometheus"
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(highest_synced_checkpoint{environment=\"$instance\"}[$__rate_interval])",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Highest Synced Checkpoints",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
+                "editorMode": "code",
+                "exemplar": false,
+                "expr": "rate(last_executed_checkpoint{environment=\"$instance\"}[$__rate_interval])",
+                "hide": false,
+                "instant": false,
+                "interval": "",
+                "legendFormat": "Executed Checkpoints",
+                "range": true,
+                "refId": "C"
+            }],
             "title": "Checkpoints Per Second",
             "type": "timeseries"
         },
@@ -2166,243 +2162,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Consensus proposal latency (quorum receive latency)",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 1,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "green"
-                        }]
-                    },
-                    "unit": "s"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 8,
-                "x": 0,
-                "y": 42
-            },
-            "id": 342,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                "datasource": {
-                    "type": "prometheus"
-                },
-                "editorMode": "code",
-                "expr": "rate(consensus_quorum_receive_latency_sum{environment=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{environment=\"$instance\"}[5m])",
-                "legendFormat": "Proposal Latency",
-                "range": true,
-                "refId": "A"
-            }],
-            "title": "Consensus Proposal Latency",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus"
-            },
-            "description": "p50, p95 and p99 certificates processing latencies",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "dashed"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                                "color": "green"
-                            },
-                            {
-                                "color": "#EAB839",
-                                "value": 7000
-                            },
-                            {
-                                "color": "red",
-                                "value": 10000
-                            }
-                        ]
-                    },
-                    "unit": "ms"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 9,
-                "w": 8,
-                "x": 8,
-                "y": 42
-            },
-            "id": 246,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [{
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
-                    "legendFormat": "Shared Obj p50",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
-                    "hide": false,
-                    "legendFormat": "Owned Obj p50",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
-                    "hide": false,
-                    "legendFormat": "Shared Obj p95",
-                    "range": true,
-                    "refId": "C"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
-                    "hide": false,
-                    "legendFormat": "Owned Obj p95",
-                    "range": true,
-                    "refId": "D"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.99, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
-                    "hide": false,
-                    "legendFormat": "Shared Obj p99",
-                    "range": true,
-                    "refId": "E"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.99, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
-                    "hide": false,
-                    "legendFormat": "Owned Obj p99",
-                    "range": true,
-                    "refId": "F"
-                }
-            ],
-            "title": "Cert Processing Latencies",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "e2e latency of handling certificates that go through Narwhal (p67 across all certificate latencies)",
+            "description": "e2e latency of transactions processing through consensus",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2480,7 +2240,7 @@
             "gridPos": {
                 "h": 9,
                 "w": 8,
-                "x": 16,
+                "x": 0,
                 "y": 42
             },
             "id": 258,
@@ -2489,7 +2249,7 @@
                     "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": false
+                    "showLegend": true
                 },
                 "tooltip": {
                     "mode": "single",
@@ -2524,6 +2284,221 @@
                 }
             ],
             "title": "Consensus Adapter e2e latency",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Consensus proposal latency (quorum receive latency)",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 1,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 8,
+                "y": 42
+            },
+            "id": 342,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "rate(consensus_quorum_receive_latency_sum{environment=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{environment=\"$instance\"}[5m])",
+                "legendFormat": "Proposal Latency",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Consensus Proposal Latency",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "p50, p95 certificates processing latencies",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "dashed"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 7000
+                            },
+                            {
+                                "color": "red",
+                                "value": 10000
+                            }
+                        ]
+                    },
+                    "unit": "ms"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 16,
+                "y": 42
+            },
+            "id": 246,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "legendFormat": "Shared Obj p50",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "hide": false,
+                    "legendFormat": "Owned Obj p50",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "hide": false,
+                    "legendFormat": "Shared Obj p95",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "hide": false,
+                    "legendFormat": "Owned Obj p95",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "Cert Processing Latencies",
             "type": "timeseries"
         },
         {
@@ -3559,7 +3534,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "\n🟩 Consensus Network Connectivity\n\n🟨 Cert Processing Latency: p95 shared objects \n\n🟧 p50 Process Certificate (Internal Processing Only)\n\n🟥 Average Time To Generate Consensus Proposal Latency\n\n🟦 Consensus Proposal Rate\n\n⬜️ Committed Round Rate\n\n🟪 Fullnode Connectivity: RPC Error Rate",
+            "description": "",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3881,7 +3856,7 @@
                                             "color": "dark-green",
                                             "index": 5
                                         },
-                                        "to": 1000000
+                                        "to": 100
                                     },
                                     "type": "range"
                                 }
@@ -3920,19 +3895,8 @@
                                     "options": {
                                         "from": 0,
                                         "result": {
-                                            "color": "yellow",
-                                            "index": 2
-                                        },
-                                        "to": 5
-                                    },
-                                    "type": "range"
-                                },
-                                {
-                                    "options": {
-                                        "from": 5,
-                                        "result": {
                                             "color": "orange",
-                                            "index": 3
+                                            "index": 2
                                         },
                                         "to": 10
                                     },
@@ -3943,9 +3907,9 @@
                                         "from": 10,
                                         "result": {
                                             "color": "red",
-                                            "index": 4
+                                            "index": 3
                                         },
-                                        "to": 1000000
+                                        "to": 100
                                     },
                                     "type": "range"
                                 }
@@ -4361,7 +4325,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Consensus round prober request errors",
+            "description": "Total transaction processing errors from this validator",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4374,7 +4338,7 @@
                                 "color": "green"
                             },
                             {
-                                "color": "yellow",
+                                "color": "red",
                                 "value": 1
                             }
                         ]
@@ -4388,7 +4352,7 @@
                 "x": 12,
                 "y": 99
             },
-            "id": 313,
+            "id": 391,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
@@ -4409,12 +4373,12 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(increase(consensus_round_prober_request_errors{environment=\"$instance\"}[24h]))",
+                "expr": "sum(increase(process_tx_errors{name=\"$validator_name\"}[24h])) or vector(0)",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
             }],
-            "title": "Consensus Round Prober Request Errors (24h)",
+            "title": "Transaction Processing Errors (24h)",
             "type": "stat"
         },
         {
@@ -4478,12 +4442,350 @@
             "type": "stat"
         },
         {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Transaction signature errors over time",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Errors",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 0,
+                "y": 103
+            },
+            "id": 392,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "rate(total_signature_errors{environment=\"$instance\"}[5m])",
+                "legendFormat": "Signature Errors",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Transaction Signature Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus"
+            },
+            "description": "Checkpoint execution errors over time",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Errors",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 6,
+                "y": 103
+            },
+            "id": 393,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "rate(checkpoint_exec_errors{environment=\"$instance\"}[5m])",
+                "legendFormat": "Checkpoint Errors",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Checkpoint Execution Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Transaction Processing Errors Over Time",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Errors",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 12,
+                "y": 103
+            },
+            "id": 396,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "desc"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "rate(process_tx_errors{environment=\"$instance\", name=\"Brightlystake\"}[5m])",
+                "legendFormat": "{{error}}",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Transaction Processing Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "RPC errors over time",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Errors",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 18,
+                "y": 103
+            },
+            "id": 395,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "rate(total_rpc_err{environment=\"$instance\", name=\"$validator_name\"}[5m]) or vector(0)",
+                "legendFormat": "RPC Errors",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "RPC Errors Over Time",
+            "type": "timeseries"
+        },
+        {
             "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 103
+                "y": 111
             },
             "id": 320,
             "panels": [],
@@ -4514,7 +4816,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 104
+                "y": 112
             },
             "id": 321,
             "options": {
@@ -4569,7 +4871,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 104
+                "y": 112
             },
             "id": 322,
             "options": {
@@ -4624,7 +4926,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 104
+                "y": 112
             },
             "id": 379,
             "options": {
@@ -4679,7 +4981,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 104
+                "y": 112
             },
             "id": 380,
             "options": {
@@ -4734,7 +5036,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 16,
-                "y": 104
+                "y": 112
             },
             "id": 377,
             "options": {
@@ -4789,7 +5091,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 20,
-                "y": 104
+                "y": 112
             },
             "id": 378,
             "options": {
@@ -4882,7 +5184,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 108
+                "y": 116
             },
             "id": 289,
             "interval": "2m",
@@ -4972,7 +5274,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 108
+                "y": 116
             },
             "id": 381,
             "interval": "2m",
@@ -5062,7 +5364,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 108
+                "y": 116
             },
             "id": 382,
             "interval": "2m",
@@ -5103,9 +5405,9 @@
     ],
     "templating": {
         "list": [{
-                "description": "Your validator name from official dashboard (or prometheus metrics) to filter the data from your validator from others..",
+                "description": "SUI Validator name from config.yml. This is used to filter reputation and other validator-specific data.",
                 "hide": 2,
-                "label": "Your validator name",
+                "label": "Validator Name",
                 "name": "validator_name",
                 "query": "BartestneT",
                 "skipUrlSync": false,
@@ -5143,7 +5445,7 @@
         ]
     },
     "time": {
-        "from": "now-30m",
+        "from": "now-15m",
         "to": "now"
     },
     "timepicker": {
@@ -5161,6 +5463,6 @@
     "timezone": "",
     "title": "Sui Validator",
     "uid": "d3sdas8bbprlibnio2n0",
-    "version": 156,
+    "version": 183,
     "weekStart": "monday"
 }

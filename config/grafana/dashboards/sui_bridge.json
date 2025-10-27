@@ -4425,11 +4425,11 @@
     ],
     "templating": {
         "list": [{
-                "description": "SUI Validator name from environment variable",
+                "description": "SUI Validator name from config.yml",
                 "hide": 2,
                 "label": "Validator",
                 "name": "SUI_VALIDATOR",
-                "query": "BartestneT",
+                "query": "${SUI_VALIDATOR}",
                 "skipUrlSync": false,
                 "type": "constant"
             },
