@@ -104,7 +104,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "is_safe_mode{alias=\"$instance\"}",
+                "expr": "max(is_safe_mode{alias=\"$instance\"})",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -322,7 +322,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_protocol_version{alias=\"$instance\"}",
+                "expr": "max(consensus_protocol_version{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -387,7 +387,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "current_voting_right{alias=\"$instance\"} / 100 ",
+                "expr": "max(current_voting_right{alias=\"$instance\"}) / 100",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -457,7 +457,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "current_epoch{alias=\"$instance\"}",
+                "expr": "max(current_epoch{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -515,7 +515,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_total_duration{alias=\"$instance\"} / 1000",
+                "expr": "max(epoch_total_duration{alias=\"$instance\"}) / 1000",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -572,7 +572,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_checkpoint_count{alias=\"$instance\"}",
+                "expr": "max(epoch_checkpoint_count{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -629,7 +629,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_transaction_count{alias=\"$instance\"}",
+                "expr": "max(epoch_transaction_count{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -687,7 +687,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_total_gas_reward{alias=\"$instance\"} / 1000000000",
+                "expr": "max(epoch_total_gas_reward{alias=\"$instance\"}) / 1000000000",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -745,7 +745,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_validator_halt_duration_ms{alias=\"$instance\"}",
+                "expr": "max(epoch_validator_halt_duration_ms{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -1794,7 +1794,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_threshold_clock_round{alias=\"$instance\"}",
+                "expr": "max(consensus_threshold_clock_round{alias=\"$instance\"})",
                 "hide": false,
                 "legendFormat": "Mysticeti",
                 "range": true,
@@ -2041,7 +2041,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_highest_accepted_round{alias=\"$instance\"}",
+                "expr": "max(consensus_highest_accepted_round{alias=\"$instance\"})",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -2928,7 +2928,7 @@
                     "refId": "F"
                 }
             ],
-            "title": " 🟨 Tx Processing Latency p95 |  🟧 Tx Processing Latency p50 |  🟥 Proposal Latency | 🟦 Consensus Block Commit Rate | ⬜️ Committed Round Rate | 🟪 Fullnode Connectivity",
+            "title": "🟨 Tx Processing Latency p95 | 🟧 Tx Processing Latency p50 | 🟥 Proposal Latency | 🟦 Consensus Block Commit Rate | ⬜️ Committed Round Rate | 🟪 Fullnode Connectivity",
             "type": "status-history"
         },
         {
@@ -3306,7 +3306,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays certificates per second (owned + shared) processed by the validator over time (stacked chart).",
+            "description": "Displays consensus block proposals per second, split by forced vs non-forced blocks.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3316,7 +3316,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Cert / Sec",
+                        "axisLabel": "Blocks / Sec",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -3357,7 +3357,7 @@
                 "overrides": [{
                         "matcher": {
                             "id": "byName",
-                            "options": "owned obj txns"
+                            "options": "Forced - false"
                         },
                         "properties": [{
                             "id": "color",
@@ -3370,12 +3370,12 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "shared obj txns"
+                            "options": "Forced - true"
                         },
                         "properties": [{
                             "id": "color",
                             "value": {
-                                "fixedColor": "yellow",
+                                "fixedColor": "orange",
                                 "mode": "fixed"
                             }
                         }]
@@ -4951,7 +4951,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "successfully_pruned_consensus_dbs{alias=\"$instance\"}",
+                "expr": "max(successfully_pruned_consensus_dbs{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5007,7 +5007,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_pruned_objects{alias=\"$instance\"}",
+                "expr": "max(num_pruned_objects{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5063,7 +5063,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_epochs_to_retain_for_checkpoints{alias=\"$instance\"}",
+                "expr": "max(num_epochs_to_retain_for_checkpoints{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5119,7 +5119,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_epochs_to_retain_for_objects{alias=\"$instance\"}",
+                "expr": "max(num_epochs_to_retain_for_objects{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
