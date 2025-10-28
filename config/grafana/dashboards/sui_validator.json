@@ -5487,7 +5487,7 @@
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
-                "definition": "label_values(up{service=\"sui_validator\",configured=\"true\"},environment)",
+                "definition": "label_values(up{service=\"sui_validator\",configured=\"true\"},alias)",
                 "description": "This variable dynamically fetches and displays all available SUI Validator environments (aliases) from the config.yml file based on the configured validators.",
                 "hide": 0,
                 "includeAll": false,
