@@ -1774,11 +1774,10 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_transaction_effects{alias=\"$instance\"}[1m])",
+                    "expr": "rate(total_transaction_effects{alias=\"$instance\"}[$__rate_interval])",
                     "format": "time_series",
                     "hide": false,
                     "instant": false,
-                    "interval": "60s",
                     "legendFormat": "Tx Effects",
                     "range": true,
                     "refId": "A"
@@ -1789,11 +1788,10 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_transaction_certificates{alias=\"$instance\"}[1m])",
+                    "expr": "rate(total_transaction_certificates{alias=\"$instance\"}[$__rate_interval])",
                     "format": "time_series",
                     "hide": false,
                     "instant": false,
-                    "interval": "60s",
                     "legendFormat": "Tx Certs",
                     "range": true,
                     "refId": "B"
@@ -1804,11 +1802,10 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_transaction_orders{alias=\"$instance\"}[1m])",
+                    "expr": "rate(total_transaction_orders{alias=\"$instance\"}[$__rate_interval])",
                     "format": "time_series",
                     "hide": false,
                     "instant": false,
-                    "interval": "60s",
                     "legendFormat": "Tx Orders",
                     "range": true,
                     "refId": "C"
@@ -2290,7 +2287,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[5m])))",
+                    "expr": "histogram_quantile(0.50, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[$__rate_interval])))",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "p50",
@@ -2303,7 +2300,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[5m])))",
+                    "expr": "histogram_quantile(0.95, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[$__rate_interval])))",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "p95",
@@ -2393,7 +2390,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[5m])",
+                "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[$__rate_interval]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[$__rate_interval])",
                 "legendFormat": "Proposal Latency",
                 "range": true,
                 "refId": "A"
@@ -2489,7 +2486,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
                     "legendFormat": "Shared Obj p50",
                     "range": true,
                     "refId": "A"
@@ -2499,7 +2496,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p50",
                     "range": true,
@@ -2510,7 +2507,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
                     "hide": false,
                     "legendFormat": "Shared Obj p95",
                     "range": true,
@@ -2521,7 +2518,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p95",
                     "range": true,
@@ -3991,7 +3988,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4005,7 +4002,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4019,7 +4016,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[5m])",
+                    "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[$__rate_interval]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[$__rate_interval])",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4046,7 +4043,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "rate(consensus_last_committed_leader_round{alias=\"$instance\"}[2m])",
+                    "expr": "rate(consensus_last_committed_leader_round{alias=\"$instance\"}[$__rate_interval])",
                     "hide": false,
                     "interval": "2m",
                     "legendFormat": "⬜️",
@@ -4059,7 +4056,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[2m]) or vector(0)",
+                    "expr": "rate(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[$__rate_interval]) or vector(0)",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4569,7 +4566,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(total_signature_errors{alias=\"$instance\"}[5m])",
+                "expr": "rate(total_signature_errors{alias=\"$instance\"}[$__rate_interval])",
                 "legendFormat": "Signature Errors",
                 "range": true,
                 "refId": "A"
@@ -4654,7 +4651,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(checkpoint_exec_errors{alias=\"$instance\"}[5m])",
+                "expr": "rate(checkpoint_exec_errors{alias=\"$instance\"}[$__rate_interval])",
                 "legendFormat": "Checkpoint Errors",
                 "range": true,
                 "refId": "A"
@@ -4740,7 +4737,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(process_tx_errors{alias=\"$instance\", name=\"Brightlystake\"}[5m])",
+                "expr": "rate(process_tx_errors{alias=\"$instance\", name=\"$validator_name\"}[$__rate_interval])",
                 "legendFormat": "{{error}}",
                 "range": true,
                 "refId": "A"
@@ -4826,7 +4823,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[5m]) or vector(0)",
+                "expr": "rate(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[$__rate_interval]) or vector(0)",
                 "legendFormat": "RPC Errors",
                 "range": true,
                 "refId": "A"
