@@ -744,7 +744,7 @@
                 "refId": "A",
                 "useBackend": false
             }],
-            "title": "Uptime Timeline",
+            "title": "Uptime Over Time",
             "type": "timeseries"
         },
         {
@@ -948,7 +948,7 @@
                 "refId": "A",
                 "useBackend": false
             }],
-            "title": "Metrics Public Key Timeline",
+            "title": "Metrics Public Key Over Time",
             "type": "timeseries"
         },
         {
@@ -1153,7 +1153,7 @@
                 "refId": "A",
                 "useBackend": false
             }],
-            "title": "Public Endpoint Ingress Timeline",
+            "title": "Public Endpoint Ingress Over Time",
             "type": "timeseries"
         },
         {
@@ -1348,7 +1348,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "This only increments when there is a sui event emitted. So it can stay flat when there is not such traffic.",
+            "description": "Displays the last synced SUI checkpoints for detected events. This only increments when a SUI event is emitted, and may stay flat during periods of low traffic.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2769,7 +2769,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
+            "description": "Displays the SUI gas coin balance over time for the SUI Bridge Node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2871,7 +2871,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
+            "description": "Displays the USDT vault balance over time for the SUI Bridge Node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2973,7 +2973,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the timeline of the SUI Gas Balance for the SUI Bridge Node.",
+            "description": "Displays the ETH vault balance over time for the SUI Bridge Node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3075,7 +3075,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the timeline of the LBTC Balance for the SUI Bridge Node.",
+            "description": "Displays the LBTC vault balance over time for the SUI Bridge Node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3240,7 +3240,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the timeline of the WBTC Balance for the SUI Bridge Node.",
+            "description": "Displays the WBTC vault balance over time for the SUI Bridge Node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {

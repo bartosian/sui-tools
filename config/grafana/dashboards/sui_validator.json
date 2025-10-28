@@ -196,7 +196,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the current build version of the SUI Bridge Node.",
+            "description": "Shows the current build version of the SUI Validator.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -778,7 +778,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the current operational status of the SUI Bridge Node (UP/DOWN).",
+            "description": "Shows the current operational status of the SUI Validator (UP/DOWN).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -973,7 +973,7 @@
                 "refId": "A",
                 "useBackend": false
             }],
-            "title": "Uptime Timeline",
+            "title": "Uptime Over Time",
             "type": "timeseries"
         },
         {
@@ -1149,7 +1149,7 @@
                 "range": true,
                 "refId": "A"
             }],
-            "title": "Reputation Rank Timeline",
+            "title": "Reputation Status Over Time",
             "type": "timeseries"
         },
         {
@@ -1223,7 +1223,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays Cpnsensus repuattion Score Of validator",
+            "description": "Displays consensus reputation score of the validator over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1694,7 +1694,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Transactions (objects, certificates and orders) per second during last minute",
+            "description": "Displays transactions (objects, certificates and orders) per second processed by the validator.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1822,7 +1822,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Cert per sec owned + shared during last minute (stacked chart)",
+            "description": "Displays certificates per second (owned + shared) processed by the validator over time (stacked chart).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1939,7 +1939,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Last executed checkpoint rates during last minute",
+            "description": "Displays last executed checkpoint rates over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2052,7 +2052,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Current round and last commited rates",
+            "description": "Displays current round and last committed round rates over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2189,7 +2189,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "e2e latency of transactions processing through consensus",
+            "description": "Displays end-to-end latency of transaction processing through consensus.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2319,7 +2319,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Consensus proposal latency (quorum receive latency)",
+            "description": "Displays consensus proposal latency (quorum receive latency) for the validator.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2406,7 +2406,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "p50, p95 certificates processing latencies",
+            "description": "Displays p50 and p95 certificate processing latencies for the validator.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2622,7 +2622,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Certificates created vs certificated processed by the node.",
+            "description": "Displays certificates created vs certificates processed by the node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2726,7 +2726,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Network certificates",
+            "description": "Displays network-wide certificate metrics.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2784,7 +2784,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Network certificates",
+            "description": "Displays network-wide certificate metrics.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3395,7 +3395,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Network highest checkpoint",
+            "description": "Displays the network's highest synced checkpoint.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3451,7 +3451,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Node highest executed checkpoint",
+            "description": "Displays the node's highest executed checkpoint.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -3508,7 +3508,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Node last certified checkpoint",
+            "description": "Displays the node's last certified checkpoint.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4313,7 +4313,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Checkpoint execution errors",
+            "description": "Displays the total count of checkpoint execution errors in the last 24 hours.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4581,7 +4581,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Checkpoint execution errors over time",
+            "description": "Displays checkpoint execution errors over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4907,7 +4907,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Last pruned effects checkpoint",
+            "description": "Displays the last pruned effects checkpoint number.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
