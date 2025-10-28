@@ -104,7 +104,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "is_safe_mode{environment=\"$instance\"}",
+                "expr": "is_safe_mode{alias=\"$instance\"}",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -173,7 +173,7 @@
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "uptime{process=\"validator\", environment=\"$instance\"}",
+                "expr": "uptime{process=\"validator\", alias=\"$instance\"}",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -253,7 +253,7 @@
                 },
                 "disableTextWrap": false,
                 "editorMode": "code",
-                "expr": "uptime{process=\"validator\", environment=\"$instance\"}",
+                "expr": "uptime{process=\"validator\", alias=\"$instance\"}",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
                 "legendFormat": "__auto",
@@ -322,7 +322,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_protocol_version{environment=\"$instance\"}",
+                "expr": "consensus_protocol_version{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -387,7 +387,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "current_voting_right{environment=\"$instance\"} / 100 ",
+                "expr": "current_voting_right{alias=\"$instance\"} / 100 ",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -455,7 +455,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "current_epoch{environment=\"$instance\"}",
+                "expr": "current_epoch{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -513,7 +513,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_total_duration{environment=\"$instance\"} / 1000",
+                "expr": "epoch_total_duration{alias=\"$instance\"} / 1000",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -570,7 +570,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_checkpoint_count{environment=\"$instance\"}",
+                "expr": "epoch_checkpoint_count{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -627,7 +627,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_transaction_count{environment=\"$instance\"}",
+                "expr": "epoch_transaction_count{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -685,7 +685,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_total_gas_reward{environment=\"$instance\"} / 1000000000",
+                "expr": "epoch_total_gas_reward{alias=\"$instance\"} / 1000000000",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -752,7 +752,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "epoch_validator_halt_duration_ms{environment=\"$instance\"}",
+                "expr": "epoch_validator_halt_duration_ms{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -849,7 +849,7 @@
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "up{service=\"sui_validator\", environment=\"$instance\"}",
+                "expr": "up{service=\"sui_validator\", alias=\"$instance\"}",
                 "legendFormat": "",
                 "range": true,
                 "refId": "A"
@@ -964,7 +964,7 @@
                 },
                 "disableTextWrap": false,
                 "editorMode": "code",
-                "expr": "rate(uptime{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(uptime{alias=\"$instance\"}[$__rate_interval])",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
                 "interval": "",
@@ -1026,7 +1026,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
+                "expr": "count(consensus_reputation_scores{alias=\"$instance\"} > scalar(consensus_reputation_scores{alias=\"$instance\", authority=\"$validator_name\"})) + 1",
                 "legendFormat": "Rank",
                 "range": true,
                 "refId": "A"
@@ -1143,7 +1143,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "1 - (scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{environment=\"$instance\"}), consensus_reputation_scores{environment=\"$instance\"})))",
+                "expr": "1 - (scalar(consensus_reputation_scores{alias=\"$instance\", authority=\"$validator_name\"}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{alias=\"$instance\"}), consensus_reputation_scores{alias=\"$instance\"})))",
                 "hide": false,
                 "legendFormat": "__auto",
                 "range": true,
@@ -1210,7 +1210,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}",
+                "expr": "consensus_reputation_scores{alias=\"$instance\", authority=\"$validator_name\"}",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -1302,7 +1302,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"}",
+                "expr": "consensus_reputation_scores{alias=\"$instance\", authority=\"$validator_name\"}",
                 "hide": false,
                 "legendFormat": "Reputation Score",
                 "range": true,
@@ -1425,7 +1425,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "count(consensus_reputation_scores{environment=\"$instance\"} > scalar(consensus_reputation_scores{environment=\"$instance\", authority=\"$validator_name\"})) + 1",
+                    "expr": "count(consensus_reputation_scores{alias=\"$instance\"} > scalar(consensus_reputation_scores{alias=\"$instance\", authority=\"$validator_name\"})) + 1",
                     "hide": false,
                     "legendFormat": "Rank",
                     "range": true,
@@ -1436,7 +1436,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "count(consensus_reputation_scores{environment=\"$instance\"}) - scalar(consensus_handler_num_low_scoring_authorities{environment=\"$instance\"})",
+                    "expr": "count(consensus_reputation_scores{alias=\"$instance\"}) - scalar(consensus_handler_num_low_scoring_authorities{alias=\"$instance\"})",
                     "hide": false,
                     "legendFormat": "Low-Scoring Threshold",
                     "range": true,
@@ -1506,7 +1506,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(total_transaction_effects{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(total_transaction_effects{alias=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -1564,7 +1564,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"false\"}[$__rate_interval])) + sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"true\"}[$__rate_interval]))",
+                "expr": "sum(rate(consensus_proposed_blocks{alias=\"$instance\", force=\"false\"}[$__rate_interval])) + sum(rate(consensus_proposed_blocks{alias=\"$instance\", force=\"true\"}[$__rate_interval]))",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -1622,7 +1622,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(last_executed_checkpoint{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(last_executed_checkpoint{alias=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -1680,7 +1680,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(consensus_last_committed_leader_round{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(consensus_last_committed_leader_round{alias=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -1774,7 +1774,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_transaction_effects{environment=\"$instance\"}[1m])",
+                    "expr": "rate(total_transaction_effects{alias=\"$instance\"}[1m])",
                     "format": "time_series",
                     "hide": false,
                     "instant": false,
@@ -1789,7 +1789,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_transaction_certificates{environment=\"$instance\"}[1m])",
+                    "expr": "rate(total_transaction_certificates{alias=\"$instance\"}[1m])",
                     "format": "time_series",
                     "hide": false,
                     "instant": false,
@@ -1804,7 +1804,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_transaction_orders{environment=\"$instance\"}[1m])",
+                    "expr": "rate(total_transaction_orders{alias=\"$instance\"}[1m])",
                     "format": "time_series",
                     "hide": false,
                     "instant": false,
@@ -1923,7 +1923,7 @@
                 },
                 "editorMode": "code",
                 "exemplar": false,
-                "expr": "rate(consensus_proposed_blocks{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(consensus_proposed_blocks{alias=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "instant": false,
                 "interval": "",
@@ -2036,7 +2036,7 @@
                 },
                 "editorMode": "code",
                 "exemplar": false,
-                "expr": "rate(last_executed_checkpoint{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(last_executed_checkpoint{alias=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "instant": false,
                 "interval": "",
@@ -2162,7 +2162,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(consensus_last_committed_leader_round{environment=\"$instance\"}[$__rate_interval])",
+                "expr": "rate(consensus_last_committed_leader_round{alias=\"$instance\"}[$__rate_interval])",
                 "hide": false,
                 "legendFormat": "Committed Round",
                 "range": true,
@@ -2290,7 +2290,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, sum by(le) (rate(sequencing_certificate_latency_bucket{environment=\"$instance\"}[5m])))",
+                    "expr": "histogram_quantile(0.50, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[5m])))",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "p50",
@@ -2303,7 +2303,7 @@
                         "uid": "ctles38bbprkmttbdkv0"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, sum by(le) (rate(sequencing_certificate_latency_bucket{environment=\"$instance\"}[5m])))",
+                    "expr": "histogram_quantile(0.95, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[5m])))",
                     "hide": false,
                     "instant": false,
                     "legendFormat": "p95",
@@ -2393,7 +2393,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(consensus_quorum_receive_latency_sum{environment=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{environment=\"$instance\"}[5m])",
+                "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[5m])",
                 "legendFormat": "Proposal Latency",
                 "range": true,
                 "refId": "A"
@@ -2489,7 +2489,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
                     "legendFormat": "Shared Obj p50",
                     "range": true,
                     "refId": "A"
@@ -2499,7 +2499,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p50",
                     "range": true,
@@ -2510,7 +2510,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Shared Obj p95",
                     "range": true,
@@ -2521,7 +2521,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
                     "hide": false,
                     "legendFormat": "Owned Obj p95",
                     "range": true,
@@ -2608,7 +2608,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "(sum(consensus_proposed_blocks{environment=\"$instance\"}) / max(consensus_last_committed_leader_round)) * 100",
+                "expr": "(sum(consensus_proposed_blocks{alias=\"$instance\"}) / max(consensus_last_committed_leader_round)) * 100",
                 "hide": false,
                 "legendFormat": "__auto",
                 "range": true,
@@ -2712,7 +2712,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(consensus_committed_messages{environment=\"$instance\", authority=\"$validator_name\"}) / (max(consensus_proposed_blocks{environment=\"$instance\", force=\"false\"}) + max(consensus_proposed_blocks{environment=\"$instance\", force=\"true\"}))",
+                "expr": "max(consensus_committed_messages{alias=\"$instance\", authority=\"$validator_name\"}) / (max(consensus_proposed_blocks{alias=\"$instance\", force=\"false\"}) + max(consensus_proposed_blocks{alias=\"$instance\", force=\"true\"}))",
                 "hide": false,
                 "legendFormat": "__auto",
                 "range": true,
@@ -2770,7 +2770,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(consensus_proposed_blocks{environment=\"$instance\"})",
+                "expr": "sum(consensus_proposed_blocks{alias=\"$instance\"})",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -2828,7 +2828,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(consensus_proposed_blocks{environment=\"$instance\"})",
+                "expr": "sum(consensus_proposed_blocks{alias=\"$instance\"})",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -2914,7 +2914,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_threshold_clock_round{environment=\"$instance\"}/consensus_highest_accepted_round{environment=\"$instance\"} * 100",
+                "expr": "consensus_threshold_clock_round{alias=\"$instance\"}/consensus_highest_accepted_round{alias=\"$instance\"} * 100",
                 "hide": false,
                 "legendFormat": "__auto",
                 "range": true,
@@ -3018,7 +3018,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_threshold_clock_round{environment=\"$instance\"}/consensus_highest_accepted_round{environment=\"$instance\"}",
+                "expr": "consensus_threshold_clock_round{alias=\"$instance\"}/consensus_highest_accepted_round{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "__auto",
                 "range": true,
@@ -3076,7 +3076,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_threshold_clock_round{environment=\"$instance\"}",
+                "expr": "consensus_threshold_clock_round{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "Mysticeti",
                 "range": true,
@@ -3134,7 +3134,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_last_committed_leader_round{environment=\"$instance\"}",
+                "expr": "consensus_last_committed_leader_round{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -3192,7 +3192,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "consensus_highest_accepted_round{environment=\"$instance\"}",
+                "expr": "consensus_highest_accepted_round{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "{{instance}}",
                 "range": true,
@@ -3278,7 +3278,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "last_executed_checkpoint{environment=\"$instance\"}/highest_synced_checkpoint{environment=\"$instance\"} * 100",
+                "expr": "last_executed_checkpoint{alias=\"$instance\"}/highest_synced_checkpoint{alias=\"$instance\"} * 100",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -3382,7 +3382,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "last_executed_checkpoint{environment=\"$instance\"}/highest_synced_checkpoint{environment=\"$instance\"}",
+                "expr": "last_executed_checkpoint{alias=\"$instance\"}/highest_synced_checkpoint{alias=\"$instance\"}",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -3439,7 +3439,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(highest_synced_checkpoint{environment=\"$instance\"})",
+                "expr": "max(highest_synced_checkpoint{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -3495,7 +3495,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(last_executed_checkpoint{environment=\"$instance\"})",
+                "expr": "max(last_executed_checkpoint{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -3552,7 +3552,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(last_certified_checkpoint{environment=\"$instance\"})",
+                "expr": "max(last_certified_checkpoint{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -3991,7 +3991,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4005,7 +4005,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{environment=\"$instance\"}[5m]))",
+                    "expr": "histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[5m]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4019,7 +4019,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(consensus_quorum_receive_latency_sum{environment=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{environment=\"$instance\"}[5m])",
+                    "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[5m]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[5m])",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4033,7 +4033,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"false\"}[$__rate_interval])) + sum(rate(consensus_proposed_blocks{environment=\"$instance\", force=\"true\"}[$__rate_interval]))",
+                    "expr": "sum(rate(consensus_proposed_blocks{alias=\"$instance\", force=\"false\"}[$__rate_interval])) + sum(rate(consensus_proposed_blocks{alias=\"$instance\", force=\"true\"}[$__rate_interval]))",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4046,7 +4046,7 @@
                         "type": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "rate(consensus_last_committed_leader_round{environment=\"$instance\"}[2m])",
+                    "expr": "rate(consensus_last_committed_leader_round{alias=\"$instance\"}[2m])",
                     "hide": false,
                     "interval": "2m",
                     "legendFormat": "⬜️",
@@ -4059,7 +4059,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "rate(total_rpc_err{environment=\"$instance\", name=\"$validator_name\"}[2m]) or vector(0)",
+                    "expr": "rate(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[2m]) or vector(0)",
                     "hide": false,
                     "instant": false,
                     "interval": "2m",
@@ -4133,7 +4133,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(sui_quinn_network_peers{environment=\"$instance\"})",
+                "expr": "max(sui_quinn_network_peers{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -4226,7 +4226,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sui_quinn_network_peers{environment=\"$instance\"}",
+                "expr": "sui_quinn_network_peers{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "Checkpoint",
                 "range": true,
@@ -4301,7 +4301,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(increase(total_signature_errors{environment=\"$instance\"}[24h]))",
+                "expr": "sum(increase(total_signature_errors{alias=\"$instance\"}[24h]))",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -4362,7 +4362,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(increase(checkpoint_exec_errors{environment=\"$instance\"}[24h]))",
+                "expr": "sum(increase(checkpoint_exec_errors{alias=\"$instance\"}[24h]))",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -4484,7 +4484,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "sum(increase(total_rpc_err{environment=\"$instance\", name=\"$validator_name\"}[24h])) or vector(0)",
+                "expr": "sum(increase(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[24h])) or vector(0)",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -4569,7 +4569,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(total_signature_errors{environment=\"$instance\"}[5m])",
+                "expr": "rate(total_signature_errors{alias=\"$instance\"}[5m])",
                 "legendFormat": "Signature Errors",
                 "range": true,
                 "refId": "A"
@@ -4654,7 +4654,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(checkpoint_exec_errors{environment=\"$instance\"}[5m])",
+                "expr": "rate(checkpoint_exec_errors{alias=\"$instance\"}[5m])",
                 "legendFormat": "Checkpoint Errors",
                 "range": true,
                 "refId": "A"
@@ -4740,7 +4740,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(process_tx_errors{environment=\"$instance\", name=\"Brightlystake\"}[5m])",
+                "expr": "rate(process_tx_errors{alias=\"$instance\", name=\"Brightlystake\"}[5m])",
                 "legendFormat": "{{error}}",
                 "range": true,
                 "refId": "A"
@@ -4826,7 +4826,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "rate(total_rpc_err{environment=\"$instance\", name=\"$validator_name\"}[5m]) or vector(0)",
+                "expr": "rate(total_rpc_err{alias=\"$instance\", name=\"$validator_name\"}[5m]) or vector(0)",
                 "legendFormat": "RPC Errors",
                 "range": true,
                 "refId": "A"
@@ -4895,7 +4895,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(last_pruned_consensus_db_epoch{environment=\"$instance\"})",
+                "expr": "max(last_pruned_consensus_db_epoch{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -4951,7 +4951,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "max(last_pruned_effects_checkpoint{environment=\"$instance\"})",
+                "expr": "max(last_pruned_effects_checkpoint{alias=\"$instance\"})",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5007,7 +5007,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "successfully_pruned_consensus_dbs{environment=\"$instance\"}",
+                "expr": "successfully_pruned_consensus_dbs{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5063,7 +5063,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_pruned_objects{environment=\"$instance\"}",
+                "expr": "num_pruned_objects{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5119,7 +5119,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_epochs_to_retain_for_checkpoints{environment=\"$instance\"}",
+                "expr": "num_epochs_to_retain_for_checkpoints{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5175,7 +5175,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_epochs_to_retain_for_objects{environment=\"$instance\"}",
+                "expr": "num_epochs_to_retain_for_objects{alias=\"$instance\"}",
                 "legendFormat": "{{instance}}",
                 "range": true,
                 "refId": "A"
@@ -5268,7 +5268,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "last_pruned_effects_checkpoint{environment=\"$instance\"}",
+                "expr": "last_pruned_effects_checkpoint{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "Checkpoint",
                 "range": true,
@@ -5359,7 +5359,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "num_pruned_objects{environment=\"$instance\"}",
+                "expr": "num_pruned_objects{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "Pruned Objects",
                 "range": true,
@@ -5450,7 +5450,7 @@
                     "type": "prometheus"
                 },
                 "editorMode": "code",
-                "expr": "successfully_pruned_consensus_dbs{environment=\"$instance\"}",
+                "expr": "successfully_pruned_consensus_dbs{alias=\"$instance\"}",
                 "hide": false,
                 "legendFormat": "Pruned DBs",
                 "range": true,
@@ -5497,7 +5497,7 @@
                 "options": [],
                 "query": {
                     "qryType": 1,
-                    "query": "label_values(up{service=\"sui_validator\",configured=\"true\"},environment)",
+                    "query": "label_values(up{service=\"sui_validator\",configured=\"true\"},alias)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,

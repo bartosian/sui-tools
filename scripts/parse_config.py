@@ -219,13 +219,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_Uptime_{alias.replace(' ', '_')}",
-                    "expr": f'increase(uptime{{service="sui_bridge", environment="{alias}"}}[10m]) == 0',
+                    "expr": f'increase(uptime{{service="sui_bridge", alias="{alias}"}}[10m]) == 0',
                     "for": "1m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "uptime",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -243,13 +243,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_MetricsPublicKeyAvailability_{alias.replace(' ', '_')}",
-                    "expr": f'probe_success{{service="sui_bridge_health_check", environment="{alias}"}} == 0',
+                    "expr": f'probe_success{{service="sui_bridge_health_check", alias="{alias}"}} == 0',
                     "for": "2m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "metrics_public_key_availability",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -267,13 +267,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_IngressAccess_{alias.replace(' ', '_')}",
-                    "expr": f'probe_success{{service="sui_bridge_ingress_check", environment="{alias}"}} == 0',
+                    "expr": f'probe_success{{service="sui_bridge_ingress_check", alias="{alias}"}} == 0',
                     "for": "2m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "ingress_access",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -291,13 +291,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             common_alerts.append(
                 {
                     "alert": f"SuiBridge_VotingPower_{alias.replace(' ', '_')}",
-                    "expr": f'current_bridge_voting_rights{{service="sui_bridge", authority="${{SUI_VALIDATOR}}", environment="{alias}"}} == 0',
+                    "expr": f'current_bridge_voting_rights{{service="sui_bridge", authority="${{SUI_VALIDATOR}}", alias="{alias}"}} == 0',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "voting_power",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -316,13 +316,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_BridgeRequestErrors_{alias.replace(' ', '_')}",
-                    "expr": f'increase(bridge_err_requests{{service="sui_bridge", type="handle_sui_tx_digest", environment="{alias}"}}[5m]) > 0',
+                    "expr": f'increase(bridge_err_requests{{service="sui_bridge", type="handle_sui_tx_digest", alias="{alias}"}}[5m]) > 0',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "bridge_requests_errors",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -340,13 +340,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_HighETHRPCLatency_{alias.replace(' ', '_')}",
-                    "expr": f'bridge_eth_rpc_queries_latency{{service="sui_bridge", environment="{alias}"}} > 5000',
+                    "expr": f'bridge_eth_rpc_queries_latency{{service="sui_bridge", alias="{alias}"}} > 5000',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "bridge_high_latency",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -364,13 +364,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_HighCacheMisses_{alias.replace(' ', '_')}",
-                    "expr": f'(rate(bridge_signer_with_cache_miss{{service="sui_bridge", environment="{alias}"}}[5m]) / (rate(bridge_signer_with_cache_hit{{service="sui_bridge", environment="{alias}"}}[5m]) + rate(bridge_signer_with_cache_miss{{service="sui_bridge", environment="{alias}"}}[5m]))) > 0.5',
+                    "expr": f'(rate(bridge_signer_with_cache_miss{{service="sui_bridge", alias="{alias}"}}[5m]) / (rate(bridge_signer_with_cache_hit{{service="sui_bridge", alias="{alias}"}}[5m]) + rate(bridge_signer_with_cache_miss{{service="sui_bridge", alias="{alias}"}}[5m]))) > 0.5',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "bridge_high_cache_misses",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -388,13 +388,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_disabled_alerts.append(
                 {
                     "alert": f"SuiBridge_SUIRPCErrors_{alias.replace(' ', '_')}",
-                    "expr": f'increase(bridge_sui_rpc_errors{{service="sui_bridge", environment="{alias}"}}[5m]) > 0',
+                    "expr": f'increase(bridge_sui_rpc_errors{{service="sui_bridge", alias="{alias}"}}[5m]) > 0',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "bridge_rpc_errors",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -413,13 +413,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_StaleSUISync_{alias.replace(' ', '_')}",
-                    "expr": f'increase(bridge_last_synced_sui_checkpoints{{service="sui_bridge", module_name="bridge", environment="{alias}"}}[30m]) == 0',
+                    "expr": f'increase(bridge_last_synced_sui_checkpoints{{service="sui_bridge", module_name="bridge", alias="{alias}"}}[30m]) == 0',
                     "for": "1m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "stale_sui_sync",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -437,13 +437,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_StaleETHSync_{alias.replace(' ', '_')}",
-                    "expr": f'increase(bridge_last_synced_eth_blocks{{service="sui_bridge", environment="{alias}"}}[30m]) == 0',
+                    "expr": f'increase(bridge_last_synced_eth_blocks{{service="sui_bridge", alias="{alias}"}}[30m]) == 0',
                     "for": "1m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "stale_eth_sync",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -461,13 +461,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_StaleETHFinalization_{alias.replace(' ', '_')}",
-                    "expr": f'increase(bridge_last_finalized_eth_block{{service="sui_bridge", environment="{alias}"}}[10m]) == 0',
+                    "expr": f'increase(bridge_last_finalized_eth_block{{service="sui_bridge", alias="{alias}"}}[10m]) == 0',
                     "for": "1m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "stale_eth_finalization",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -485,13 +485,13 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
             client_enabled_alerts.append(
                 {
                     "alert": f"SuiBridge_LowGasBalance_{alias.replace(' ', '_')}",
-                    "expr": f'bridge_gas_coin_balance{{service="sui_bridge", environment="{alias}"}} < 10000000000',
+                    "expr": f'bridge_gas_coin_balance{{service="sui_bridge", alias="{alias}"}} < 10000000000',
                     "for": "1m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_bridge",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "low_gas_balance",
                         "bridge_index": str(i),
                         "bridge_alias": alias,
@@ -575,13 +575,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_Uptime_{alias.replace(' ', '_')}",
-                    "expr": f'rate(uptime{{environment="{alias}"}}[5m]) == 0',
+                    "expr": f'rate(uptime{{alias="{alias}"}}[5m]) == 0',
                     "for": "2m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "uptime",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -599,13 +599,13 @@ def generate_validator_alert_rules(
             warning_alerts.append(
                 {
                     "alert": f"SuiValidator_ReputationRank_{alias.replace(' ', '_')}",
-                    "expr": f'(scalar(consensus_reputation_scores{{environment="{alias}", authority="{sui_validator}"}}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{{environment="{alias}"}}), consensus_reputation_scores{{environment="{alias}"}}))) == 1',
+                    "expr": f'(scalar(consensus_reputation_scores{{alias="{alias}", authority="{sui_validator}"}}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{{alias="{alias}"}}), consensus_reputation_scores{{alias="{alias}"}}))) == 1',
                     "for": "30m",
                     "labels": {
                         "severity": "warning",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "reputation_rank",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -623,13 +623,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_VotingPower_{alias.replace(' ', '_')}",
-                    "expr": f'current_voting_right{{environment="{alias}"}} == 0',
+                    "expr": f'current_voting_right{{alias="{alias}"}} == 0',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "voting_power",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -647,13 +647,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_TxProcessingLatencyP95_{alias.replace(' ', '_')}",
-                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 15000',
+                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{alias="{alias}"}}[5m])) > 15000',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "tx_processing_latency_p95",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -671,13 +671,13 @@ def generate_validator_alert_rules(
             warning_alerts.append(
                 {
                     "alert": f"SuiValidator_TxProcessingLatencyP95_10s_{alias.replace(' ', '_')}",
-                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 10000',
+                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{alias="{alias}"}}[5m])) > 10000',
                     "for": "5m",
                     "labels": {
                         "severity": "warning",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "tx_processing_latency_p95_10s",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -695,13 +695,13 @@ def generate_validator_alert_rules(
             warning_alerts.append(
                 {
                     "alert": f"SuiValidator_TxProcessingLatencyP95_3s_{alias.replace(' ', '_')}",
-                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 3000',
+                    "expr": f'histogram_quantile(0.95, rate(validator_service_handle_certificate_consensus_latency_bucket{{alias="{alias}"}}[5m])) > 3000',
                     "for": "5m",
                     "labels": {
                         "severity": "warning",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "tx_processing_latency_p95_3s",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -719,13 +719,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_TxProcessingLatencyP50_{alias.replace(' ', '_')}",
-                    "expr": f'histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{{environment="{alias}"}}[5m])) > 5000',
+                    "expr": f'histogram_quantile(0.50, rate(validator_service_handle_certificate_consensus_latency_bucket{{alias="{alias}"}}[5m])) > 5000',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "tx_processing_latency_p50",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -743,13 +743,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_ProposalLatency_{alias.replace(' ', '_')}",
-                    "expr": f'rate(consensus_quorum_receive_latency_sum{{environment="{alias}"}}[5m]) / rate(consensus_quorum_receive_latency_count{{environment="{alias}"}}[5m]) > 2',
+                    "expr": f'rate(consensus_quorum_receive_latency_sum{{alias="{alias}"}}[5m]) / rate(consensus_quorum_receive_latency_count{{alias="{alias}"}}[5m]) > 2',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "proposal_latency",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -767,13 +767,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_ConsensusBlockCommitRate_{alias.replace(' ', '_')}",
-                    "expr": f'sum(rate(consensus_proposed_blocks{{environment="{alias}", force="false"}}[5m])) + sum(rate(consensus_proposed_blocks{{environment="{alias}", force="true"}}[5m])) < 3',
+                    "expr": f'sum(rate(consensus_proposed_blocks{{alias="{alias}", force="false"}}[5m])) + sum(rate(consensus_proposed_blocks{{alias="{alias}", force="true"}}[5m])) < 3',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "consensus_block_commit_rate",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -791,13 +791,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_CommittedRoundRate_{alias.replace(' ', '_')}",
-                    "expr": f'rate(consensus_last_committed_leader_round{{environment="{alias}"}}[2m]) < 3',
+                    "expr": f'rate(consensus_last_committed_leader_round{{alias="{alias}"}}[2m]) < 3',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "committed_round_rate",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -815,13 +815,13 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_FullnodeConnectivity_{alias.replace(' ', '_')}",
-                    "expr": f'rate(total_rpc_err{{environment="{alias}", name="{sui_validator}"}}[2m]) > 0',
+                    "expr": f'rate(total_rpc_err{{alias="{alias}", name="{sui_validator}"}}[2m]) > 0',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
-                        "environment": f'"{alias}"',
+                        "alias": f'"{alias}"',
                         "alert_type": "fullnode_connectivity",
                         "validator_index": str(i),
                         "validator_alias": alias,
@@ -921,7 +921,7 @@ def generate_prometheus_config(
                     "targets": [clean_target],
                     "labels": {
                         "service": "sui_bridge",
-                        "environment": alias,
+                        "alias": alias,
                         "configured": "true",
                     },
                 }
@@ -947,7 +947,7 @@ def generate_prometheus_config(
                     "targets": [f"{public_address}/metrics_pub_key"],
                     "labels": {
                         "service": "sui_bridge_health_check",
-                        "environment": alias,
+                        "alias": alias,
                         "configured": "true",
                     },
                 }
@@ -979,7 +979,7 @@ def generate_prometheus_config(
                     "targets": [public_address],
                     "labels": {
                         "service": "sui_bridge_ingress_check",
-                        "environment": alias,
+                        "alias": alias,
                         "configured": "true",
                     },
                 }
@@ -1024,7 +1024,7 @@ def generate_prometheus_config(
                     "targets": [clean_target],
                     "labels": {
                         "service": "sui_validator",
-                        "environment": alias,
+                        "alias": alias,
                         "configured": "true",
                     },
                 }
