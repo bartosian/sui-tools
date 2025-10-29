@@ -18,7 +18,7 @@
             "type": "dashboard"
         }]
     },
-    "description": "Sui validator dashboard",
+    "description": "Sui fullnode dashboard",
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
@@ -171,7 +171,7 @@
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "uptime{process=\"validator\", alias=\"$instance\"}",
+                "expr": "uptime{process=\"fullnode\", alias=\"$instance\"}",
                 "legendFormat": "__auto",
                 "range": true,
                 "refId": "A"
@@ -194,7 +194,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the current build version of the SUI Validator.",
+            "description": "Shows the current build version of the SUI Fullnode.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -250,7 +250,7 @@
                 },
                 "disableTextWrap": false,
                 "editorMode": "code",
-                "expr": "uptime{process=\"validator\", alias=\"$instance\"}",
+                "expr": "uptime{process=\"fullnode\", alias=\"$instance\"}",
                 "fullMetaSearch": false,
                 "includeNullMetadata": true,
                 "legendFormat": "__auto",
@@ -833,7 +833,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Shows the current operational status of the SUI Validator (UP/DOWN).",
+            "description": "Shows the current operational status of the SUI Fullnode (UP/DOWN).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -903,7 +903,7 @@
                     "uid": "ctles38bbprkmttbdkv0"
                 },
                 "editorMode": "code",
-                "expr": "up{service=\"sui_validator\", alias=\"$instance\"}",
+                "expr": "up{service=\"sui_fullnode\", alias=\"$instance\"}",
                 "legendFormat": "",
                 "range": true,
                 "refId": "A"
@@ -916,7 +916,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays the uptime trend status of the SUI Validator. Green indicates uptime is increasing, and red indicates it is not.",
+            "description": "Displays the uptime trend status of the SUI Fullnode. Green indicates uptime is increasing, and red indicates it is not.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -5420,7 +5420,7 @@
     "schemaVersion": 38,
     "tags": [
         "Sui",
-        "Validator"
+        "Fullnode"
     ],
     "templating": {
         "list": [{
@@ -5442,17 +5442,17 @@
                     "type": "prometheus",
                     "uid": "ctles38bbprkmttbdkv0"
                 },
-                "definition": "label_values(up{service=\"sui_validator\",configured=\"true\"},alias)",
-                "description": "This variable dynamically fetches and displays all available SUI Validator environments (aliases) from the config.yml file based on the configured validators.",
+                "definition": "label_values(up{service=\"sui_fullnode\",configured=\"true\"},alias)",
+                "description": "This variable dynamically fetches and displays all available SUI Fullnode environments (aliases) from the config.yml file based on the configured fullnodes.",
                 "hide": 0,
                 "includeAll": false,
-                "label": "Validator Target",
+                "label": "Fullnode Target",
                 "multi": false,
                 "name": "instance",
                 "options": [],
                 "query": {
                     "qryType": 1,
-                    "query": "label_values(up{service=\"sui_validator\",configured=\"true\"},alias)",
+                    "query": "label_values(up{service=\"sui_fullnode\",configured=\"true\"},alias)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,
@@ -5480,8 +5480,8 @@
         ]
     },
     "timezone": "",
-    "title": "Sui Validator",
-    "uid": "d3sdas8bbprlibnio2n0",
+    "title": "Sui Fullnode",
+    "uid": "f3sdas8bbprlibnio2f0",
     "version": 40,
     "weekStart": "monday"
 }

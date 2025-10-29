@@ -56,6 +56,23 @@ def validate_validators_config(validators: List[Dict[str, Any]]) -> None:
             validator["alerts"] = get_default_validator_alerts()
 
 
+def validate_fullnodes_config(fullnodes: List[Dict[str, Any]]) -> None:
+    """Validate fullnodes configuration structure."""
+    if not isinstance(fullnodes, list):
+        raise ValueError("fullnodes must be a list")
+
+    for i, fullnode in enumerate(fullnodes):
+        if not isinstance(fullnode, dict):
+            raise ValueError(f"Fullnode {i} must be a dictionary")
+
+        required_fields = ["alias", "target"]
+        for field in required_fields:
+            if field not in fullnode:
+                raise ValueError(f"Fullnode {i} missing required field: {field}")
+            if not fullnode[field]:
+                raise ValueError(f"Fullnode {i} field '{field}' cannot be empty")
+
+
 def validate_bridges_config(bridges: List[Dict[str, Any]]) -> None:
     """Validate bridges configuration structure."""
     if not isinstance(bridges, list):
@@ -974,7 +991,10 @@ def generate_validator_alert_rules(
 
 
 def generate_prometheus_config(
-    bridges: List[Dict[str, Any]], validators: List[Dict[str, Any]], output_file: str
+    bridges: List[Dict[str, Any]], 
+    validators: List[Dict[str, Any]], 
+    fullnodes: List[Dict[str, Any]],
+    output_file: str
 ) -> None:
     """Generate Prometheus configuration file."""
 
@@ -1140,6 +1160,42 @@ def generate_prometheus_config(
             "honor_labels": True,
         }
         prometheus_config["scrape_configs"].append(validator_job)
+
+    # Add fullnode scrape configs
+    for fullnode in fullnodes:
+        alias = fullnode["alias"]
+        target = fullnode["target"]
+
+        # Sanitize target for scheme detection
+        scheme = "http"
+        clean_target = target
+        if target.startswith("https://"):
+            scheme = "https"
+            clean_target = target[8:]
+        elif target.startswith("http://"):
+            scheme = "http"
+            clean_target = target[7:]
+
+        # Fullnode metrics scrape config
+        fullnode_job = {
+            "job_name": f'sui_fullnode_{alias.lower().replace(" ", "_")}',
+            "static_configs": [
+                {
+                    "targets": [clean_target],
+                    "labels": {
+                        "service": "sui_fullnode",
+                        "alias": alias,
+                        "configured": "true",
+                    },
+                }
+            ],
+            "scrape_interval": "15s",
+            "metrics_path": "/metrics",
+            "scrape_timeout": "10s",
+            "scheme": scheme,
+            "honor_labels": True,
+        }
+        prometheus_config["scrape_configs"].append(fullnode_job)
 
     # Write configuration file
     try:
@@ -1335,6 +1391,28 @@ def export_validator_variables(validators: List[Dict[str, Any]]) -> None:
         f.write(validators_json)
 
 
+def export_fullnode_variables(fullnodes: List[Dict[str, Any]]) -> None:
+    """Export fullnode configuration as shell environment variables."""
+    print("# Fullnode configuration variables")
+    print(f"export SUI_FULLNODES_COUNT={len(fullnodes)}")
+
+    for i, fullnode in enumerate(fullnodes):
+        alias = fullnode["alias"]
+        target = fullnode["target"]
+
+        # Export individual fullnode variables
+        print(f"export SUI_FULLNODE_{i}_ALIAS='{alias}'")
+        print(f"export SUI_FULLNODE_{i}_TARGET='{target}'")
+
+    # Export as JSON for complex parsing - write to separate file to avoid shell parsing issues
+    fullnodes_json = json.dumps(fullnodes, indent=2)
+    print(f"export SUI_FULLNODES_CONFIG_FILE='generated_configs/fullnodes.json'")
+
+    # Write JSON to file
+    with open("generated_configs/fullnodes.json", "w") as f:
+        f.write(fullnodes_json)
+
+
 def export_bridge_variables(bridges: List[Dict[str, Any]], sui_validator: str) -> None:
     """Export bridge configuration as shell environment variables."""
     print("# Bridge configuration variables")
@@ -1396,11 +1474,16 @@ def main():
     if validators:
         validate_validators_config(validators)
 
+    # Validate fullnodes configuration (optional)
+    fullnodes = config.get("fullnodes", [])
+    if fullnodes:
+        validate_fullnodes_config(fullnodes)
+
     # Get SUI_VALIDATOR from config
     sui_validator = config.get("sui", {}).get("validator", "")
 
     # Generate Prometheus configuration
-    generate_prometheus_config(bridges, validators, prometheus_file)
+    generate_prometheus_config(bridges, validators, fullnodes, prometheus_file)
 
     # Generate bridge-specific alert rules
     generate_alert_rules(bridges, alert_rules_dir)
@@ -1420,9 +1503,15 @@ def main():
     if validators:
         export_validator_variables(validators)
 
+    # Export fullnode variables if configured
+    if fullnodes:
+        export_fullnode_variables(fullnodes)
+
     print(f"Successfully parsed {len(bridges)} bridge(s)", file=sys.stderr)
     if validators:
         print(f"Successfully parsed {len(validators)} validator(s)", file=sys.stderr)
+    if fullnodes:
+        print(f"Successfully parsed {len(fullnodes)} fullnode(s)", file=sys.stderr)
 
 
 if __name__ == "__main__":

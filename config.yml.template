@@ -110,6 +110,14 @@ validators:
       tx_processing_latency_p95_3s: true        # Warning: P95 transaction latency > 3s
       sequencing_latency_high: true             # Warning: P99 sequencing latency > 10s           
 
+# Sui Fullnodes Configuration
+# Add as many fullnodes as needed - each fullnode requires alias and target
+fullnodes:
+  - alias: "Mainnet Fullnode"
+    target: localhost:9184
+  - alias: "Testnet Fullnode"
+    target: localhost:9185
+
 # Sui Validator
 sui:
   validator: your_validator_name

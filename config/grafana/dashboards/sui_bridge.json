@@ -19,6 +19,7 @@
             "type": "dashboard"
         }]
     },
+    "description": "Sui bridge dashboard",
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,

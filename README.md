@@ -9,6 +9,7 @@ This repository provides a comprehensive **end-to-end monitoring solution** for 
 Currently supported services:
 - **Sui Bridge** - Cross-chain bridge monitoring (Mainnet & Testnet)
 - **Sui Validator** - Validator node performance and health monitoring
+- **Sui Fullnode** - Fullnode monitoring and performance tracking
 
 *Additional Sui services will be added in future releases*
 
