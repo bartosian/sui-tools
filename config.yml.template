@@ -98,13 +98,17 @@ validators:
       tx_processing_latency_p95: true           # Critical: P95 transaction latency > 15s
       tx_processing_latency_p50: true           # Critical: P50 transaction latency > 5s
       proposal_latency: true                    # Critical: Consensus proposal latency > 2s
-      consensus_block_commit_rate: true         # Critical: Consensus block commit rate < 3 blocks/s
+      consensus_proposals_rate: true            # Critical: Consensus proposals rate < 3 blocks/s
       committed_round_rate: true                # Critical: Committed round rate < 3 rounds/s
       fullnode_connectivity: true               # Critical: RPC errors indicating connectivity issues
+      safe_mode: true                           # Critical: Network is running in safe mode
+      randomness_dkg_failure: true              # Critical: Random beacon DKG protocol failed
+      checkpoint_execution_rate: true           # Critical: Checkpoint execution rate < 2 checkpoints/s
       
       # Warning alerts
       tx_processing_latency_p95_10s: true       # Warning: P95 transaction latency > 10s
-      tx_processing_latency_p95_3s: true        # Warning: P95 transaction latency > 3s           
+      tx_processing_latency_p95_3s: true        # Warning: P95 transaction latency > 3s
+      sequencing_latency_high: true             # Warning: P99 sequencing latency > 10s           
 
 # Sui Validator
 sui:

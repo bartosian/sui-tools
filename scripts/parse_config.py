@@ -130,9 +130,13 @@ def validate_validator_alerts_config(
         "tx_processing_latency_p95_3s",
         "tx_processing_latency_p50",
         "proposal_latency",
-        "consensus_block_commit_rate",
+        "consensus_proposals_rate",
         "committed_round_rate",
         "fullnode_connectivity",
+        "safe_mode",
+        "randomness_dkg_failure",
+        "checkpoint_execution_rate",
+        "sequencing_latency_high",
     }
 
     for alert_type, enabled in alerts.items():
@@ -178,9 +182,13 @@ def get_default_validator_alerts() -> Dict[str, bool]:
         "tx_processing_latency_p95_3s": True,
         "tx_processing_latency_p50": True,
         "proposal_latency": True,
-        "consensus_block_commit_rate": True,
+        "consensus_proposals_rate": True,
         "committed_round_rate": True,
         "fullnode_connectivity": True,
+        "safe_mode": True,
+        "randomness_dkg_failure": True,
+        "checkpoint_execution_rate": True,
+        "sequencing_latency_high": True,
     }
 
 
@@ -763,10 +771,10 @@ def generate_validator_alert_rules(
                 }
             )
 
-        if alerts.get("consensus_block_commit_rate", False):
+        if alerts.get("consensus_proposals_rate", False):
             critical_alerts.append(
                 {
-                    "alert": f"SuiValidator_ConsensusBlockCommitRate_{alias.replace(' ', '_')}",
+                    "alert": f"SuiValidator_ConsensusProposalsRate_{alias.replace(' ', '_')}",
                     "expr": f'sum(rate(consensus_proposed_blocks{{alias="{alias}", force="false"}}[5m])) + sum(rate(consensus_proposed_blocks{{alias="{alias}", force="true"}}[5m])) < 3',
                     "for": "5m",
                     "labels": {
@@ -774,15 +782,87 @@ def generate_validator_alert_rules(
                         "service": "sui_validator",
                         "instance": "{{ $labels.instance }}",
                         "alias": f'"{alias}"',
-                        "alert_type": "consensus_block_commit_rate",
+                        "alert_type": "consensus_proposals_rate",
                         "validator_index": str(i),
                         "validator_alias": alias,
                     },
                     "annotations": {
-                        "summary": f"Low Consensus Block Commit Rate (Instance: {{ $labels.instance }}, Environment: {alias})",
-                        "description": f"The consensus block commit rate for SUI Validator instance {{ $labels.instance }} ({alias}) is below 3 blocks per second.",
+                        "summary": f"Low Consensus Proposals Rate (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The consensus proposals rate for SUI Validator instance {{ $labels.instance }} ({alias}) is below 3 blocks per second.",
                         "__dashboardUid__": "d3sdas8bbprlibnio2n0",
                         "__panelId__": "295",
+                    },
+                }
+            )
+
+        if alerts.get("safe_mode", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_SafeMode_{alias.replace(' ', '_')}",
+                    "expr": f'is_safe_mode{{alias="{alias}"}} > 0.5 or absent(is_safe_mode{{alias="{alias}"}})',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "safe_mode",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Safe Mode during Reconfiguration (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"Epoch failed to advance; chain entered safe mode for SUI Validator instance {{ $labels.instance }} ({alias}).",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "256",
+                    },
+                }
+            )
+
+        if alerts.get("randomness_dkg_failure", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_RandomnessBeaconDKGFailed_{alias.replace(' ', '_')}",
+                    "expr": f'epoch_random_beacon_dkg_failed{{alias="{alias}"}} > 0 or absent(epoch_random_beacon_dkg_failed{{alias="{alias}"}})',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "randomness_dkg_failure",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Randomness DKG Failure (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"Random beacon DKG has failed on one or more hosts for SUI Validator instance {{ $labels.instance }} ({alias}).",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "400",
+                    },
+                }
+            )
+
+        if alerts.get("checkpoint_execution_rate", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiValidator_CheckpointExecutionRateLow_{alias.replace(' ', '_')}",
+                    "expr": f'rate(last_executed_checkpoint{{alias="{alias}"}}[5m]) < 2',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "checkpoint_execution_rate",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Checkpoint Execution Rate Is Low (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"The checkpoint execution rate for SUI Validator instance {{ $labels.instance }} ({alias}) is below 2 checkpoints per second.",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "274",
                     },
                 }
             )
@@ -831,6 +911,30 @@ def generate_validator_alert_rules(
                         "description": f"The SUI Validator instance {{ $labels.instance }} ({alias}) is experiencing RPC errors indicating connectivity issues with fullnodes.",
                         "__dashboardUid__": "d3sdas8bbprlibnio2n0",
                         "__panelId__": "390",
+                    },
+                }
+            )
+
+        if alerts.get("sequencing_latency_high", False):
+            warning_alerts.append(
+                {
+                    "alert": f"SuiValidator_SequencingLatencyHigh_{alias.replace(' ', '_')}",
+                    "expr": f'histogram_quantile(0.99, sum by(le) (rate(sequencing_certificate_latency_bucket{{alias="{alias}", position="0", tx_type=~"shared_certificate|owned_certificate|soft_bundle"}}[2m]))) > 10',
+                    "for": "1m",
+                    "labels": {
+                        "severity": "warning",
+                        "service": "sui_validator",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "sequencing_latency",
+                        "validator_index": str(i),
+                        "validator_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Consensus Sequencing p99 Latencies are High (Instance: {{ $labels.instance }}, Environment: {alias})",
+                        "description": f"Consensus sequencing latency is too high for SUI Validator instance {{ $labels.instance }} ({alias}).",
+                        "__dashboardUid__": "d3sdas8bbprlibnio2n0",
+                        "__panelId__": "258",
                     },
                 }
             )
