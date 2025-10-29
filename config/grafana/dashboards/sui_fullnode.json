@@ -65,8 +65,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -127,8 +126,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -206,8 +204,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -288,8 +285,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -358,8 +354,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -415,8 +410,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     },
                     "unit": "s"
@@ -473,8 +467,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -530,8 +523,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -614,8 +606,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -733,8 +724,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -819,8 +809,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "orange",
@@ -890,8 +879,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -983,8 +971,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1050,8 +1037,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1120,8 +1106,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1178,8 +1163,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1269,8 +1253,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1395,8 +1378,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "orange",
@@ -1460,369 +1442,12 @@
             "type": "timeseries"
         },
         {
-            "collapsed": true,
-            "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 38
-            },
-            "id": 354,
-            "panels": [{
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "description": "Displays end-to-end latency of transaction processing through consensus.",
-                    "fieldConfig": {
-                        "defaults": {
-                            "color": {
-                                "mode": "palette-classic"
-                            },
-                            "custom": {
-                                "axisBorderShow": false,
-                                "axisCenteredZero": false,
-                                "axisColorMode": "text",
-                                "axisLabel": "",
-                                "axisPlacement": "auto",
-                                "barAlignment": 0,
-                                "drawStyle": "line",
-                                "fillOpacity": 10,
-                                "gradientMode": "none",
-                                "hideFrom": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": false
-                                },
-                                "insertNulls": false,
-                                "lineInterpolation": "linear",
-                                "lineWidth": 1,
-                                "pointSize": 1,
-                                "scaleDistribution": {
-                                    "type": "linear"
-                                },
-                                "showPoints": "auto",
-                                "spanNulls": false,
-                                "stacking": {
-                                    "group": "A",
-                                    "mode": "none"
-                                },
-                                "thresholdsStyle": {
-                                    "mode": "off"
-                                }
-                            },
-                            "mappings": [],
-                            "thresholds": {
-                                "mode": "absolute",
-                                "steps": [{
-                                        "color": "green"
-                                    },
-                                    {
-                                        "color": "red",
-                                        "value": 80
-                                    }
-                                ]
-                            },
-                            "unit": "s"
-                        },
-                        "overrides": [{
-                            "__systemRef": "hideSeriesFrom",
-                            "matcher": {
-                                "id": "byNames",
-                                "options": {
-                                    "mode": "exclude",
-                                    "names": [
-                                        "quantile(0.67, (sequencing_certificate_latency_sum{instance=\"Sui Mainnet\"} / sequencing_certificate_latency_count{instance=\"Sui Mainnet\"})) / 1000"
-                                    ],
-                                    "prefix": "All except:",
-                                    "readOnly": true
-                                }
-                            },
-                            "properties": [{
-                                "id": "custom.hideFrom",
-                                "value": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": false
-                                }
-                            }]
-                        }]
-                    },
-                    "gridPos": {
-                        "h": 9,
-                        "w": 8,
-                        "x": 0,
-                        "y": 46
-                    },
-                    "id": 258,
-                    "options": {
-                        "legend": {
-                            "calcs": [],
-                            "displayMode": "list",
-                            "placement": "bottom",
-                            "showLegend": true
-                        },
-                        "tooltip": {
-                            "mode": "single",
-                            "sort": "none"
-                        }
-                    },
-                    "targets": [{
-                            "datasource": {
-                                "type": "prometheus",
-                                "uid": "ctles38bbprkmttbdkv0"
-                            },
-                            "editorMode": "code",
-                            "expr": "histogram_quantile(0.50, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[$__rate_interval])))",
-                            "hide": false,
-                            "instant": false,
-                            "legendFormat": "p50",
-                            "range": true,
-                            "refId": "A"
-                        },
-                        {
-                            "datasource": {
-                                "type": "prometheus",
-                                "uid": "ctles38bbprkmttbdkv0"
-                            },
-                            "editorMode": "code",
-                            "expr": "histogram_quantile(0.95, sum by(le) (rate(sequencing_certificate_latency_bucket{alias=\"$instance\"}[$__rate_interval])))",
-                            "hide": false,
-                            "instant": false,
-                            "legendFormat": "p95",
-                            "range": true,
-                            "refId": "B"
-                        }
-                    ],
-                    "title": "Consensus Adapter e2e latency",
-                    "type": "timeseries"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "description": "Displays consensus proposal latency (quorum receive latency) for the fullnode.",
-                    "fieldConfig": {
-                        "defaults": {
-                            "color": {
-                                "mode": "palette-classic"
-                            },
-                            "custom": {
-                                "axisBorderShow": false,
-                                "axisCenteredZero": false,
-                                "axisColorMode": "text",
-                                "axisLabel": "",
-                                "axisPlacement": "auto",
-                                "barAlignment": 0,
-                                "drawStyle": "line",
-                                "fillOpacity": 10,
-                                "gradientMode": "none",
-                                "hideFrom": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": false
-                                },
-                                "insertNulls": false,
-                                "lineInterpolation": "linear",
-                                "lineWidth": 1,
-                                "pointSize": 1,
-                                "scaleDistribution": {
-                                    "type": "linear"
-                                },
-                                "showPoints": "auto",
-                                "spanNulls": false,
-                                "stacking": {
-                                    "group": "A",
-                                    "mode": "none"
-                                },
-                                "thresholdsStyle": {
-                                    "mode": "off"
-                                }
-                            },
-                            "mappings": [],
-                            "thresholds": {
-                                "mode": "absolute",
-                                "steps": [{
-                                    "color": "green"
-                                }]
-                            },
-                            "unit": "s"
-                        },
-                        "overrides": []
-                    },
-                    "gridPos": {
-                        "h": 9,
-                        "w": 8,
-                        "x": 8,
-                        "y": 46
-                    },
-                    "id": 342,
-                    "options": {
-                        "legend": {
-                            "calcs": [],
-                            "displayMode": "list",
-                            "placement": "bottom",
-                            "showLegend": true
-                        },
-                        "tooltip": {
-                            "mode": "single",
-                            "sort": "none"
-                        }
-                    },
-                    "targets": [{
-                        "datasource": {
-                            "type": "prometheus"
-                        },
-                        "editorMode": "code",
-                        "expr": "rate(consensus_quorum_receive_latency_sum{alias=\"$instance\"}[$__rate_interval]) / rate(consensus_quorum_receive_latency_count{alias=\"$instance\"}[$__rate_interval])",
-                        "legendFormat": "Proposal Latency",
-                        "range": true,
-                        "refId": "A"
-                    }],
-                    "title": "Consensus Proposal Latency",
-                    "type": "timeseries"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "description": "Displays p50 and p95 certificate processing latencies for the fullnode.",
-                    "fieldConfig": {
-                        "defaults": {
-                            "color": {
-                                "mode": "palette-classic"
-                            },
-                            "custom": {
-                                "axisBorderShow": false,
-                                "axisCenteredZero": false,
-                                "axisColorMode": "text",
-                                "axisLabel": "",
-                                "axisPlacement": "auto",
-                                "barAlignment": 0,
-                                "drawStyle": "line",
-                                "fillOpacity": 10,
-                                "gradientMode": "none",
-                                "hideFrom": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": false
-                                },
-                                "insertNulls": false,
-                                "lineInterpolation": "linear",
-                                "lineWidth": 1,
-                                "pointSize": 2,
-                                "scaleDistribution": {
-                                    "type": "linear"
-                                },
-                                "showPoints": "auto",
-                                "spanNulls": false,
-                                "stacking": {
-                                    "group": "A",
-                                    "mode": "none"
-                                },
-                                "thresholdsStyle": {
-                                    "mode": "dashed"
-                                }
-                            },
-                            "mappings": [],
-                            "thresholds": {
-                                "mode": "absolute",
-                                "steps": [{
-                                        "color": "green"
-                                    },
-                                    {
-                                        "color": "#EAB839",
-                                        "value": 7000
-                                    },
-                                    {
-                                        "color": "red",
-                                        "value": 10000
-                                    }
-                                ]
-                            },
-                            "unit": "ms"
-                        },
-                        "overrides": []
-                    },
-                    "gridPos": {
-                        "h": 9,
-                        "w": 8,
-                        "x": 16,
-                        "y": 46
-                    },
-                    "id": 246,
-                    "options": {
-                        "legend": {
-                            "calcs": [],
-                            "displayMode": "list",
-                            "placement": "bottom",
-                            "showLegend": true
-                        },
-                        "tooltip": {
-                            "mode": "single",
-                            "sort": "none"
-                        }
-                    },
-                    "targets": [{
-                            "datasource": {
-                                "type": "prometheus"
-                            },
-                            "editorMode": "code",
-                            "expr": "histogram_quantile(0.50, rate(fullnode_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
-                            "legendFormat": "Shared Obj p50",
-                            "range": true,
-                            "refId": "A"
-                        },
-                        {
-                            "datasource": {
-                                "type": "prometheus"
-                            },
-                            "editorMode": "code",
-                            "expr": "histogram_quantile(0.50, rate(fullnode_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
-                            "hide": false,
-                            "legendFormat": "Owned Obj p50",
-                            "range": true,
-                            "refId": "B"
-                        },
-                        {
-                            "datasource": {
-                                "type": "prometheus"
-                            },
-                            "editorMode": "code",
-                            "expr": "histogram_quantile(0.95, rate(fullnode_service_handle_certificate_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
-                            "hide": false,
-                            "legendFormat": "Shared Obj p95",
-                            "range": true,
-                            "refId": "C"
-                        },
-                        {
-                            "datasource": {
-                                "type": "prometheus"
-                            },
-                            "editorMode": "code",
-                            "expr": "histogram_quantile(0.95, rate(fullnode_service_handle_certificate_non_consensus_latency_bucket{alias=\"$instance\"}[$__rate_interval]))",
-                            "hide": false,
-                            "legendFormat": "Owned Obj p95",
-                            "range": true,
-                            "refId": "D"
-                        }
-                    ],
-                    "title": "Cert Processing Latencies",
-                    "type": "timeseries"
-                }
-            ],
-            "title": "Latency",
-            "type": "row"
-        },
-        {
             "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 39
+                "y": 38
             },
             "id": 247,
             "panels": [],
@@ -1844,8 +1469,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1855,7 +1479,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 40
+                "y": 39
             },
             "id": 383,
             "options": {
@@ -1938,8 +1562,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -1949,7 +1572,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 44
+                "y": 43
             },
             "id": 384,
             "interval": "2m",
@@ -1986,7 +1609,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 52
+                "y": 51
             },
             "id": 310,
             "panels": [],
@@ -2008,8 +1631,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2024,7 +1646,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 53
+                "y": 52
             },
             "id": 312,
             "options": {
@@ -2101,8 +1723,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2112,7 +1733,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 57
+                "y": 56
             },
             "id": 393,
             "options": {
@@ -2146,7 +1767,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 65
+                "y": 64
             },
             "id": 320,
             "panels": [],
@@ -2167,8 +1788,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2178,7 +1798,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 0,
-                "y": 66
+                "y": 65
             },
             "id": 322,
             "options": {
@@ -2223,8 +1843,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2234,7 +1853,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 4,
-                "y": 66
+                "y": 65
             },
             "id": 380,
             "options": {
@@ -2279,8 +1898,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2290,7 +1908,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 8,
-                "y": 66
+                "y": 65
             },
             "id": 377,
             "options": {
@@ -2335,8 +1953,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2346,7 +1963,7 @@
                 "h": 4,
                 "w": 4,
                 "x": 12,
-                "y": 66
+                "y": 65
             },
             "id": 378,
             "options": {
@@ -2429,8 +2046,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2440,7 +2056,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 70
+                "y": 69
             },
             "id": 289,
             "interval": "2m",
@@ -2520,8 +2136,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green",
-                            "value": null
+                            "color": "green"
                         }]
                     }
                 },
@@ -2531,7 +2146,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 70
+                "y": 69
             },
             "id": 381,
             "interval": "2m",
@@ -2630,6 +2245,6 @@
     "timezone": "",
     "title": "Sui Fullnode",
     "uid": "f3sdas8bbprlibnio2f0",
-    "version": 15,
+    "version": 19,
     "weekStart": "monday"
 }
