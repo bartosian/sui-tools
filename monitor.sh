@@ -104,12 +104,22 @@ parse_yaml_config() {
         cp generated_configs/validators.json config/grafana/generated_validators.json
     fi
     
+    # Copy fullnodes.json if it exists
+    if [ -f "generated_configs/fullnodes.json" ]; then
+        cp generated_configs/fullnodes.json config/grafana/generated_fullnodes.json
+    fi
+    
     # Copy all bridge-specific alert rule files
     cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
     
     # Copy all validator-specific alert rule files if they exist
     if ls generated_configs/alert_rules/sui_validator_*_alerts.yml 1> /dev/null 2>&1; then
         cp generated_configs/alert_rules/sui_validator_*_alerts.yml config/prometheus/rules/
+    fi
+    
+    # Copy all fullnode-specific alert rule files if they exist
+    if ls generated_configs/alert_rules/sui_fullnode_*_alerts.yml 1> /dev/null 2>&1; then
+        cp generated_configs/alert_rules/sui_fullnode_*_alerts.yml config/prometheus/rules/
     fi
     
     # Source the exported variables from Python parser
@@ -219,6 +229,9 @@ parse_yaml_config() {
     log_info "Parsed $SUI_BRIDGES_COUNT bridge(s)"
     if [ -n "${SUI_VALIDATORS_COUNT:-}" ] && [ "$SUI_VALIDATORS_COUNT" -gt 0 ]; then
         log_info "Parsed $SUI_VALIDATORS_COUNT validator(s)"
+    fi
+    if [ -n "${SUI_FULLNODES_COUNT:-}" ] && [ "$SUI_FULLNODES_COUNT" -gt 0 ]; then
+        log_info "Parsed $SUI_FULLNODES_COUNT fullnode(s)"
     fi
 }
 
@@ -398,8 +411,10 @@ cleanup_generated_files() {
     rm -f config/prometheus/generated_bridges.json
     rm -f config/alertmanager/generated_alertmanager.yml
     rm -f config/grafana/generated_validators.json
+    rm -f config/grafana/generated_fullnodes.json
     rm -f config/prometheus/rules/sui_bridge_*_alerts.yml
     rm -f config/prometheus/rules/sui_validator_*_alerts.yml
+    rm -f config/prometheus/rules/sui_fullnode_*_alerts.yml
 }
 
 # Clean up

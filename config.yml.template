@@ -91,32 +91,39 @@ validators:
   - alias: "Production Validator"
     target: localhost:9184
     alerts:
-      # Critical alerts
-      uptime: true                              # Monitor validator uptime
-      reputation_rank: true                     # Alert if validator is consistently in bottom N (30m window)
-      voting_power: true                        # Alert if validator has zero voting power
-      tx_processing_latency_p95: true           # Critical: P95 transaction latency > 15s
-      tx_processing_latency_p50: true           # Critical: P50 transaction latency > 5s
-      proposal_latency: true                    # Critical: Consensus proposal latency > 2s
-      consensus_proposals_rate: true            # Critical: Consensus proposals rate < 3 blocks/s
-      committed_round_rate: true                # Critical: Committed round rate < 3 rounds/s
-      fullnode_connectivity: true               # Critical: RPC errors indicating connectivity issues
-      safe_mode: true                           # Critical: Network is running in safe mode
-      randomness_dkg_failure: true              # Critical: Random beacon DKG protocol failed
-      checkpoint_execution_rate: true           # Critical: Checkpoint execution rate < 2 checkpoints/s
+      uptime: true
+      reputation_rank: true
+      voting_power: true
+      tx_processing_latency_p95: true
+      tx_processing_latency_p50: true
+      proposal_latency: true
+      consensus_proposals_rate: true
+      committed_round_rate: true
+      fullnode_connectivity: true
+      safe_mode: true
+      randomness_dkg_failure: true
+      checkpoint_execution_rate: true
       
       # Warning alerts
-      tx_processing_latency_p95_10s: true       # Warning: P95 transaction latency > 10s
-      tx_processing_latency_p95_3s: true        # Warning: P95 transaction latency > 3s
-      sequencing_latency_high: true             # Warning: P99 sequencing latency > 10s           
+      tx_processing_latency_p95_10s: true
+      tx_processing_latency_p95_3s: true
+      sequencing_latency_high: true          
 
 # Sui Fullnodes Configuration
 # Add as many fullnodes as needed - each fullnode requires alias and target
 fullnodes:
   - alias: "Mainnet Fullnode"
     target: localhost:9184
+    alerts:
+      uptime: true
+      checkpoint_execution_rate: true 
+      checkpoint_sync_status: true
   - alias: "Testnet Fullnode"
     target: localhost:9185
+    alerts:
+      uptime: true
+      checkpoint_execution_rate: true
+      checkpoint_sync_status: true
 
 # Sui Validator
 sui:

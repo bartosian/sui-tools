@@ -72,6 +72,13 @@ def validate_fullnodes_config(fullnodes: List[Dict[str, Any]]) -> None:
             if not fullnode[field]:
                 raise ValueError(f"Fullnode {i} field '{field}' cannot be empty")
 
+        # Validate alerts configuration if present
+        if "alerts" in fullnode:
+            validate_fullnode_alerts_config(fullnode["alerts"], i)
+        else:
+            # Set default alerts if not specified
+            fullnode["alerts"] = get_default_fullnode_alerts()
+
 
 def validate_bridges_config(bridges: List[Dict[str, Any]]) -> None:
     """Validate bridges configuration structure."""
@@ -167,6 +174,30 @@ def validate_validator_alerts_config(
             )
 
 
+def validate_fullnode_alerts_config(
+    alerts: Dict[str, Any], fullnode_index: int
+) -> None:
+    """Validate fullnode alerts configuration structure."""
+    if not isinstance(alerts, dict):
+        raise ValueError(f"Fullnode {fullnode_index} alerts must be a dictionary")
+
+    valid_alert_types = {
+        "uptime",
+        "checkpoint_execution_rate",
+        "checkpoint_sync_status",
+    }
+
+    for alert_type, enabled in alerts.items():
+        if alert_type not in valid_alert_types:
+            raise ValueError(
+                f"Fullnode {fullnode_index} has invalid alert type: {alert_type}"
+            )
+        if not isinstance(enabled, bool):
+            raise ValueError(
+                f"Fullnode {fullnode_index} alert '{alert_type}' must be a boolean"
+            )
+
+
 def get_default_alerts() -> Dict[str, bool]:
     """Get default alerts configuration with all alerts enabled."""
     return {
@@ -206,6 +237,15 @@ def get_default_validator_alerts() -> Dict[str, bool]:
         "randomness_dkg_failure": True,
         "checkpoint_execution_rate": True,
         "sequencing_latency_high": True,
+    }
+
+
+def get_default_fullnode_alerts() -> Dict[str, bool]:
+    """Get default fullnode alerts configuration with all alerts enabled."""
+    return {
+        "uptime": True,
+        "checkpoint_execution_rate": True,
+        "checkpoint_sync_status": True,
     }
 
 
@@ -565,6 +605,128 @@ def generate_alert_rules(bridges: List[Dict[str, Any]], output_dir: str) -> None
         except Exception as e:
             print(
                 f"ERROR: Failed to write bridge alert rules for {alias}: {e}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+
+def generate_fullnode_alert_rules(
+    fullnodes: List[Dict[str, Any]], output_dir: str
+) -> None:
+    """Generate fullnode-specific alert rules organized by fullnode."""
+
+    import os
+
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Generate individual fullnode alert files
+    for i, fullnode in enumerate(fullnodes):
+        alias = fullnode["alias"]
+        alerts = fullnode.get("alerts", get_default_fullnode_alerts())
+
+        # Sanitize alias for filename
+        safe_alias = alias.lower().replace(" ", "_").replace("-", "_")
+        fullnode_file = os.path.join(
+            output_dir, f"sui_fullnode_{i}_{safe_alias}_alerts.yml"
+        )
+
+        fullnode_rules = {"groups": []}
+        critical_alerts = []
+
+        # Generate fullnode-specific alert rules based on enabled alerts
+        if alerts.get("uptime", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiFullnode_Uptime_{alias.replace(' ', '_')}",
+                    "expr": f'rate(uptime{{alias="{alias}"}}[5m]) == 0',
+                    "for": "2m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_fullnode",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "uptime",
+                        "fullnode_index": str(i),
+                        "fullnode_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Fullnode Uptime Issue (Instance: {{{{ $labels.instance }}}}, Environment: {alias})",
+                        "description": f"The uptime for SUI Fullnode instance {{{{ $labels.instance }}}} ({alias}) is not increasing, suggesting a potential restart or failure.",
+                        "__dashboardUid__": "f3sdas8bbprlibnio2f0",
+                        "__panelId__": "347",
+                    },
+                }
+            )
+
+        if alerts.get("checkpoint_execution_rate", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiFullnode_CheckpointExecutionRateLow_{alias.replace(' ', '_')}",
+                    "expr": f'rate(last_executed_checkpoint{{alias="{alias}"}}[5m]) < 2',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_fullnode",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "checkpoint_execution_rate",
+                        "fullnode_index": str(i),
+                        "fullnode_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Checkpoint Execution Rate Is Low (Instance: {{{{ $labels.instance }}}}, Environment: {alias})",
+                        "description": f"The checkpoint execution rate for SUI Fullnode instance {{{{ $labels.instance }}}} ({alias}) is below 2 checkpoints per second.",
+                        "__dashboardUid__": "f3sdas8bbprlibnio2f0",
+                        "__panelId__": "274",
+                    },
+                }
+            )
+
+        if alerts.get("checkpoint_sync_status", False):
+            critical_alerts.append(
+                {
+                    "alert": f"SuiFullnode_CheckpointSyncLow_{alias.replace(' ', '_')}",
+                    "expr": f'(last_executed_checkpoint{{alias="{alias}"}}/highest_synced_checkpoint{{alias="{alias}"}}) < 0.95',
+                    "for": "5m",
+                    "labels": {
+                        "severity": "critical",
+                        "service": "sui_fullnode",
+                        "instance": "{{ $labels.instance }}",
+                        "alias": f'"{alias}"',
+                        "alert_type": "checkpoint_sync_status",
+                        "fullnode_index": str(i),
+                        "fullnode_alias": alias,
+                    },
+                    "annotations": {
+                        "summary": f"Checkpoint Sync Status Low (Instance: {{{{ $labels.instance }}}}, Environment: {alias})",
+                        "description": f"The checkpoint sync ratio for SUI Fullnode instance {{{{ $labels.instance }}}} ({alias}) is below 95%, indicating the fullnode is falling behind.",
+                        "__dashboardUid__": "f3sdas8bbprlibnio2f0",
+                        "__panelId__": "280",
+                    },
+                }
+            )
+
+        # Add critical alerts group to fullnode rules
+        if critical_alerts:
+            fullnode_rules["groups"].append(
+                {
+                    "name": f"sui_fullnode_critical_alerts_{alias.replace(' ', '_')}",
+                    "rules": critical_alerts,
+                }
+            )
+
+        # Write fullnode-specific alert rules file
+        try:
+            with open(fullnode_file, "w") as f:
+                yaml.dump(fullnode_rules, f, default_flow_style=False, sort_keys=False)
+            print(
+                f"Generated fullnode-specific alert rules: {fullnode_file}",
+                file=sys.stderr,
+            )
+        except Exception as e:
+            print(
+                f"ERROR: Failed to write fullnode alert rules for {alias}: {e}",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -1491,6 +1653,10 @@ def main():
     # Generate validator-specific alert rules if validators are configured
     if validators:
         generate_validator_alert_rules(validators, sui_validator, alert_rules_dir)
+
+    # Generate fullnode-specific alert rules if fullnodes are configured
+    if fullnodes:
+        generate_fullnode_alert_rules(fullnodes, alert_rules_dir)
 
     # Generate Alertmanager configuration
     alertmanager_file = "generated_configs/alertmanager.yml"
