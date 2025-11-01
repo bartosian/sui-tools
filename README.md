@@ -995,6 +995,8 @@ ls -la generated_configs/alert_rules/
 
 ## 📝 **License**
 
+Copyright (c) 2025 BartestneT
+
 This repository is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
 ---
