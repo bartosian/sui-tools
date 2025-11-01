@@ -240,22 +240,186 @@ parse_yaml_config() {
     fi
 }
 
-# Check if required tools are installed
+# Detect OS and package manager
+detect_os() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "macos"
+    elif [[ -f /etc/os-release ]]; then
+        . /etc/os-release
+        echo "${ID:-linux}"
+    else
+        echo "linux"
+    fi
+}
+
+# Install Docker on different systems
+install_docker() {
+    local os=$(detect_os)
+    
+    log_info "Installing Docker..."
+    
+    case "$os" in
+        macos)
+            if ! command -v brew &> /dev/null; then
+                log_error "Homebrew is not installed. Please install Homebrew first:"
+                log_info "Visit: https://brew.sh"
+                return 1
+            fi
+            brew install --cask docker
+            log_info "Docker installed. Please start Docker Desktop from Applications."
+            ;;
+        ubuntu|debian)
+            sudo apt-get update
+            sudo apt-get install -y ca-certificates curl gnupg lsb-release
+            sudo mkdir -p /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/${os}/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${os} $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            sudo apt-get update
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            log_success "Docker installed successfully"
+            ;;
+        centos|rhel|fedora)
+            sudo yum install -y yum-utils
+            sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+            sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            log_success "Docker installed successfully"
+            ;;
+        *)
+            log_error "Unsupported OS: $os"
+            log_info "Please install Docker manually from: https://docs.docker.com/get-docker/"
+            return 1
+            ;;
+    esac
+}
+
+# Install Python3 and pip
+install_python() {
+    local os=$(detect_os)
+    
+    log_info "Installing Python3..."
+    
+    case "$os" in
+        macos)
+            if ! command -v brew &> /dev/null; then
+                log_error "Homebrew is not installed. Please install Homebrew first:"
+                log_info "Visit: https://brew.sh"
+                return 1
+            fi
+            brew install python3
+            ;;
+        ubuntu|debian)
+            sudo apt-get update
+            sudo apt-get install -y python3 python3-pip
+            ;;
+        centos|rhel|fedora)
+            sudo yum install -y python3 python3-pip
+            ;;
+        *)
+            log_error "Unsupported OS: $os"
+            log_info "Please install Python3 manually"
+            return 1
+            ;;
+    esac
+    
+    log_success "Python3 installed successfully"
+}
+
+# Install PyYAML
+install_pyyaml() {
+    log_info "Installing PyYAML..."
+    
+    if command -v pip3 &> /dev/null; then
+        pip3 install PyYAML 2>/dev/null || pip3 install PyYAML --break-system-packages
+    elif command -v pip &> /dev/null; then
+        pip install PyYAML 2>/dev/null || pip install PyYAML --break-system-packages
+    else
+        log_error "pip is not available. Please install Python and pip first."
+        return 1
+    fi
+    
+    log_success "PyYAML installed successfully"
+}
+
+# Check if required tools are installed and offer to install them
 check_dependencies() {
     local missing_deps=()
+    local need_docker=false
+    local need_python=false
+    local need_pyyaml=false
     
+    # Check Docker
     if ! command -v docker &> /dev/null; then
         missing_deps+=("docker")
+        need_docker=true
     fi
     
-    if ! command -v docker-compose &> /dev/null && ! command -v docker compose &> /dev/null; then
-        missing_deps+=("docker-compose")
+    # Check Docker Compose (plugin or standalone)
+    if ! docker compose version &> /dev/null && ! command -v docker-compose &> /dev/null; then
+        if ! $need_docker; then
+            missing_deps+=("docker-compose")
+        fi
     fi
     
-    if [ ${#missing_deps[@]} -ne 0 ]; then
-        log_error "Missing required dependencies: ${missing_deps[*]}"
-        log_info "Please install the missing dependencies and try again."
+    # Check Python3
+    if ! command -v python3 &> /dev/null; then
+        missing_deps+=("python3")
+        need_python=true
+    fi
+    
+    # Check PyYAML
+    if command -v python3 &> /dev/null; then
+        if ! python3 -c "import yaml" 2>/dev/null; then
+            missing_deps+=("PyYAML")
+            need_pyyaml=true
+        fi
+    fi
+    
+    # If no missing dependencies, return success
+    if [ ${#missing_deps[@]} -eq 0 ]; then
+        return 0
+    fi
+    
+    # Report missing dependencies
+    log_error "Missing required dependencies: ${missing_deps[*]}"
+    echo ""
+    log_info "Would you like to install the missing dependencies automatically? (y/n)"
+    read -r response
+    
+    if [[ ! "$response" =~ ^[Yy]$ ]]; then
+        log_info "Installation cancelled. Please install the missing dependencies manually."
+        log_info ""
+        log_info "Installation guides:"
+        log_info "  - Docker: https://docs.docker.com/get-docker/"
+        log_info "  - Python3: https://www.python.org/downloads/"
+        log_info "  - PyYAML: pip3 install PyYAML"
         exit 1
+    fi
+    
+    # Install missing dependencies
+    if $need_docker; then
+        install_docker || exit 1
+    fi
+    
+    if $need_python; then
+        install_python || exit 1
+    fi
+    
+    if $need_pyyaml; then
+        install_pyyaml || exit 1
+    fi
+    
+    log_success "All dependencies installed successfully!"
+    
+    # Verify Docker is running (especially important on macOS)
+    if $need_docker && [[ "$(detect_os)" == "macos" ]]; then
+        log_info ""
+        log_info "⚠️  On macOS, Docker Desktop needs to be started manually."
+        log_info "Please open Docker Desktop from Applications, then run this script again."
+        exit 0
     fi
 }
 

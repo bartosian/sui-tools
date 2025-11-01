@@ -15,26 +15,34 @@ Currently supported services:
 
 ## 📋 **Prerequisites**
 
-Before starting, ensure you have the following installed:
+The monitoring stack requires:
 
 - **Docker** (20.10+) and **Docker Compose** (2.0+)
 - **Python 3.6+** with PyYAML library
 - **Git** for cloning the repository
 
-> 💡 **Note**: The `monitor.sh` script automatically checks for required dependencies and will guide you through installation if anything is missing.
+> 💡 **Automatic Installation**: The `monitor.sh` script can automatically install missing dependencies for you! When you run `./monitor.sh start`, it will:
+> - Detect your operating system (Linux/macOS)
+> - Check for missing dependencies
+> - Offer to install them automatically with your confirmation
+> - Support for Ubuntu, Debian, CentOS, RHEL, Fedora, and macOS
 
-**Quick prerequisite check:**
+**Supported Package Managers:**
+- **macOS**: Homebrew (requires Homebrew to be installed first)
+- **Ubuntu/Debian**: apt-get
+- **CentOS/RHEL/Fedora**: yum
+
+**Manual Installation** (if you prefer):
 ```bash
-# The monitor.sh script will verify these are installed
+# Verify what's installed
 docker --version
 docker compose version
 python3 --version
-```
+python3 -c "import yaml" && echo "PyYAML is installed"
 
-**Install PyYAML if needed:**
-```bash
+# Install PyYAML manually if needed
 pip3 install PyYAML
-# On macOS, if the above fails, use:
+# On macOS with newer Python, use:
 # pip3 install PyYAML --break-system-packages
 ```
 
@@ -510,21 +518,35 @@ Check service status using the management script:
 
 ### **Common Issues**
 
-**1. Services Not Starting**
-```bash
-# Check what went wrong
-./monitor.sh logs
+**1. Missing Dependencies**
 
-# Verify prerequisites
+If you see an error about missing dependencies:
+```bash
+# The script will offer to install missing dependencies automatically
+./monitor.sh start
+
+# Or verify prerequisites manually
 python3 --version  # Should be 3.6+
 docker --version
 docker compose version
+python3 -c "import yaml" && echo "PyYAML is installed"
+```
+
+The script supports automatic installation on:
+- Ubuntu/Debian (using apt-get)
+- CentOS/RHEL/Fedora (using yum)
+- macOS (using Homebrew - must be installed first)
+
+**2. Services Not Starting**
+```bash
+# Check what went wrong
+./monitor.sh logs
 
 # Restart services
 ./monitor.sh restart
 ```
 
-**2. Configuration Issues**
+**3. Configuration Issues**
 ```bash
 # After editing config.yml, always restart
 ./monitor.sh restart
@@ -532,14 +554,14 @@ docker compose version
 # This will regenerate all configurations and restart services
 ```
 
-**3. Permission Errors**
+**4. Permission Errors**
 ```bash
 # Ensure data directories have proper permissions
 mkdir -p data/grafana data/prometheus data/alertmanager
 chmod -R 755 data/
 ```
 
-**4. Port Conflicts**
+**5. Port Conflicts**
 
 Check if required ports (3000, 9090, 9093) are available:
 ```bash
@@ -558,24 +580,27 @@ alertmanager:
   port: 9094
 ```
 
-**5. Python/PyYAML Issues**
+**6. Python/PyYAML Issues**
 ```bash
-# Install or upgrade PyYAML
+# The script can install PyYAML automatically
+./monitor.sh start
+
+# Or install manually
 pip3 install PyYAML
 
-# On macOS, if the above fails:
+# On macOS with newer Python:
 pip3 install PyYAML --break-system-packages
 ```
 
-**6. Configuration Validation**
+**7. Configuration Validation**
 
 The `monitor.sh` script validates configurations during start/restart. To manually check:
 ```bash
 # Test configuration parsing
-python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml
+python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml generated_configs/alert_rules
 ```
 
-**7. Network/Target Issues**
+**8. Network/Target Issues**
 - Verify bridge and validator targets are accessible
 - Check bridge aliases are unique
 - Ensure public addresses (for ingress monitoring) are reachable
