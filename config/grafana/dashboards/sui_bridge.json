@@ -23,7 +23,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 2,
+    "id": 1,
     "links": [],
     "liveNow": false,
     "panels": [{
@@ -1634,121 +1634,6 @@
                 "useBackend": false
             }],
             "title": "Request Received Over Time",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "ctles38bbprkmttbdkv0"
-            },
-            "description": "Displays the rate of error requests over time, categorized by request type.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": true,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
-                        "axisPlacement": "left",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [{
-                            "color": "red"
-                        }]
-                    },
-                    "unit": "none"
-                },
-                "overrides": [{
-                        "matcher": {
-                            "id": "byName",
-                            "options": "handle_eth_tx_hash"
-                        },
-                        "properties": [{
-                            "id": "color",
-                            "value": {
-                                "fixedColor": "red",
-                                "mode": "fixed"
-                            }
-                        }]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "handle_sui_tx_digest"
-                        },
-                        "properties": [{
-                            "id": "color",
-                            "value": {
-                                "fixedColor": "red",
-                                "mode": "fixed"
-                            }
-                        }]
-                    }
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 27
-            },
-            "id": 294,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "pluginVersion": "11.4.0",
-            "targets": [{
-                "disableTextWrap": false,
-                "editorMode": "code",
-                "expr": "rate(bridge_err_requests{alias=\"$instance\"}[$__rate_interval])",
-                "fullMetaSearch": false,
-                "hide": false,
-                "includeNullMetadata": true,
-                "legendFormat": "{{type}}",
-                "range": true,
-                "refId": "A",
-                "useBackend": false
-            }],
-            "title": "Error Requests Rate Over Time",
             "type": "timeseries"
         },
         {
@@ -4150,21 +4035,290 @@
             "type": "timeseries"
         },
         {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 116
+            },
+            "id": 332,
+            "panels": [],
+            "title": "Errors",
+            "type": "row"
+        },
+        {
             "datasource": {
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays error metrics for the Bridge Action Executor, including failures during Sui transaction execution, submission errors, and continuous submission failures, helping identify and address recurring issues.",
+            "description": "Total number of error requests in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 117
+            },
+            "id": 333,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_requests{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Request Errors (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of signature aggregation errors in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 6,
+                "y": 117
+            },
+            "id": 335,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_signature_aggregation{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Signature Aggregation Errors (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of continuous signature aggregation failures in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 12,
+                "y": 117
+            },
+            "id": 336,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_signature_aggregation_too_many_failures{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Sig Aggregation Too Many Failures (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of errors building Sui transactions in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 18,
+                "y": 117
+            },
+            "id": 334,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_build_sui_transaction{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Build Sui Transaction Errors (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of error requests over time, categorized by request type.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
                         "mode": "palette-classic"
                     },
                     "custom": {
-                        "axisBorderShow": true,
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Errors",
+                        "axisLabel": "Rate (err/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4176,14 +4330,14 @@
                             "viz": false
                         },
                         "insertNulls": false,
-                        "lineInterpolation": "smooth",
+                        "lineInterpolation": "linear",
                         "lineWidth": 1,
-                        "pointSize": 5,
+                        "pointSize": 2,
                         "scaleDistribution": {
                             "type": "linear"
                         },
                         "showPoints": "auto",
-                        "spanNulls": true,
+                        "spanNulls": false,
                         "stacking": {
                             "group": "A",
                             "mode": "none"
@@ -4196,7 +4350,7 @@
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "red"
+                            "color": "green"
                         }]
                     },
                     "unit": "none"
@@ -4205,11 +4359,11 @@
             },
             "gridPos": {
                 "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 108
+                "w": 6,
+                "x": 0,
+                "y": 121
             },
-            "id": 230,
+            "id": 340,
             "options": {
                 "legend": {
                     "calcs": [],
@@ -4224,87 +4378,772 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [{
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_build_sui_transaction{alias=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "build sui tx {{host}} ",
-                    "range": true,
-                    "refId": "B",
-                    "useBackend": false
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_requests{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "{{type}}",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Request Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of signature aggregation errors over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
                     },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_signature_aggregation{alias=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "sig aggregation {{host}} ",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (err/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 2,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_sui_transaction_submission{alias=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "submit sui tx {{host}} ",
-                    "range": true,
-                    "refId": "C",
-                    "useBackend": false
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 6,
+                "y": 121
+            },
+            "id": 342,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
                 },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_sui_transaction_submission_too_many_failures{alias=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "submit sui tx too many failure {{host}} ",
-                    "range": true,
-                    "refId": "D",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "ctles38bbprkmttbdkv0"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "expr": "rate(bridge_err_sui_transaction_execution{alias=\"$instance\"}[$__rate_interval])",
-                    "fullMetaSearch": false,
-                    "hide": false,
-                    "includeNullMetadata": true,
-                    "legendFormat": "execute sui tx {{host}} ",
-                    "range": true,
-                    "refId": "E",
-                    "useBackend": false
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
                 }
-            ],
-            "title": "Action Executor Errors Over Time",
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_signature_aggregation{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Signature Aggregation",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Signature Aggregation Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of continuous signature aggregation failures over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (err/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 2,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 12,
+                "y": 121
+            },
+            "id": 343,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_signature_aggregation_too_many_failures{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Too Many Failures",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Sig Aggregation Too Many Failures Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of errors building Sui transactions over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (err/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 2,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 18,
+                "y": 121
+            },
+            "id": 341,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_build_sui_transaction{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Build Transaction Errors",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Build Sui Transaction Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of Sui transaction submission errors in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 129
+            },
+            "id": 338,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_sui_transaction_submission{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "TX Submission Errors (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of Sui transaction execution errors in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 6,
+                "y": 129
+            },
+            "id": 337,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_sui_transaction_execution{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Sui Transaction Execution Errors (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of continuous failures submitting Sui transactions in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 12,
+                "y": 129
+            },
+            "id": 339,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_err_sui_transaction_submission_too_many_failures{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "TX Submission Too Many Failures (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of Sui transaction submission errors and continuous submission failures over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (err/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 2,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 0,
+                "y": 133
+            },
+            "id": 345,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_sui_transaction_submission{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Submission Errors",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "TX Submission Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of Sui transaction execution errors over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (err/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 2,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 6,
+                "y": 133
+            },
+            "id": 344,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_sui_transaction_execution{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Execution Errors",
+                "range": true,
+                "refId": "A",
+                "useBackend": false
+            }],
+            "title": "Sui Transaction Execution Errors Over Time",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Displays the rate of Sui transaction submission errors and continuous submission failures over time.",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "Rate (err/sec)",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 2,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 12,
+                "y": 133
+            },
+            "id": 346,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "disableTextWrap": false,
+                "editorMode": "code",
+                "expr": "rate(bridge_err_sui_transaction_submission_too_many_failures{alias=\"$instance\"}[$__rate_interval])",
+                "fullMetaSearch": false,
+                "hide": false,
+                "includeNullMetadata": true,
+                "legendFormat": "Too Many Failures",
+                "range": true,
+                "refId": "B",
+                "useBackend": false
+            }],
+            "title": "TX Submission Errors Over Time",
             "type": "timeseries"
         },
         {
@@ -4313,7 +5152,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 116
+                "y": 141
             },
             "id": 327,
             "panels": [],
@@ -4382,7 +5221,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 117
+                "y": 142
             },
             "id": 328,
             "options": {
@@ -4430,15 +5269,15 @@
                 "hide": 2,
                 "label": "Validator",
                 "name": "SUI_VALIDATOR",
-                "query": "${SUI_VALIDATOR}",
+                "query": "BartestneT",
                 "skipUrlSync": false,
                 "type": "constant"
             },
             {
                 "current": {
                     "selected": false,
-                    "text": "Testnet Bridge",
-                    "value": "Testnet Bridge"
+                    "text": "Mainnet Bridge",
+                    "value": "Mainnet Bridge"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -4483,6 +5322,6 @@
     "timezone": "",
     "title": "Sui Bridge",
     "uid": "d3sdagobbprlcrf8dh3g",
-    "version": 23,
+    "version": 5,
     "weekStart": "monday"
 }
