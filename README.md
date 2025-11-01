@@ -202,37 +202,6 @@ Check that everything is working:
 # Open http://localhost:9090/alerts in your browser
 ```
 
-### **6. Next Steps**
-
-After setting up, here's what to do next:
-
-1. **Configure Your Services**
-   - Add your bridge targets with custom aliases (if monitoring bridges)
-   - Add your validator targets (if monitoring validators)
-   - Add your fullnode targets (if monitoring fullnodes)
-   - Enable specific alerts for each service in `config.yml`
-   - Configure notification channels (PagerDuty, Telegram, Discord)
-
-2. **Test Your Setup**
-   - Verify Prometheus is scraping your targets: http://localhost:9090/targets
-   - Check that alert rules are loaded: http://localhost:9090/alerts
-   - Browse Grafana dashboards: http://localhost:3000
-   - Test notifications by triggering a test alert
-
-3. **Monitor Your Services**
-   - View real-time metrics in Grafana dashboards
-   - Set up alert thresholds based on your requirements
-   - Review and adjust alert configurations
-   - Monitor service health using `./monitor.sh status`
-
-4. **Maintain Your Setup**
-   - Regularly backup your data: `./monitor.sh backup`
-   - Review logs for issues: `./monitor.sh logs`
-   - Update configurations as needed and restart: `./monitor.sh restart`
-   - Keep services updated to latest versions
-
-> 💡 **Tip**: Start with a minimal configuration (few alerts enabled) and gradually add more as you understand your baseline metrics and requirements.
-
 ---
 
 ## 🏗️ **Architecture & Structure**
@@ -314,9 +283,39 @@ The monitoring stack automatically adapts based on your configuration:
 
 ### **Pre-configured Dashboards**
 
-- **Sui Bridge Dashboard**: Comprehensive monitoring of Sui Bridge Node performance
-- **Sui Validator Dashboard**: Complete validator node performance and health monitoring
-- **Sui Fullnode Dashboard**: Fullnode monitoring and performance tracking
+The system includes three pre-configured Grafana dashboards for comprehensive monitoring:
+
+#### **Sui Bridge Dashboard**
+
+<img src="./assets/sui_bridge.png" alt="Sui Bridge Dashboard" width="800"/>
+
+Comprehensive monitoring of Sui Bridge Node performance including:
+- Bridge health and uptime metrics
+- ETH and SUI synchronization status
+- Transaction processing rates
+- Gas balance monitoring
+- RPC latency and error rates
+
+#### **Sui Validator Dashboard**
+
+<img src="./assets/sui_validator.png" alt="Sui Validator Dashboard" width="800"/>
+
+Complete validator node performance and health monitoring including:
+- Validator uptime and voting power
+- Transaction processing latency (P50, P95)
+- Consensus metrics (proposals, commits)
+- Reputation and performance rankings
+- Checkpoint execution rates
+
+#### **Sui Fullnode Dashboard**
+
+<img src="./assets/sui_fullnode.png" alt="Sui Fullnode Dashboard" width="800"/>
+
+Fullnode monitoring and performance tracking including:
+- Fullnode uptime and health
+- Checkpoint execution and sync status
+- Network connectivity metrics
+- Transaction processing performance
 
 ### **Alert Rules**
 
