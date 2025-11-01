@@ -4318,7 +4318,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4343,15 +4343,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -4411,7 +4416,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4436,15 +4441,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -4504,7 +4514,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4529,15 +4539,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -4597,7 +4612,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4622,15 +4637,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -4872,7 +4892,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays the rate of Sui transaction submission errors and continuous submission failures over time.",
+            "description": "Displays the rate of Sui transaction submission errors over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4882,7 +4902,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4907,15 +4927,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -4975,7 +5000,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -5000,15 +5025,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -5058,7 +5088,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Displays the rate of Sui transaction submission errors and continuous submission failures over time.",
+            "description": "Displays the rate of continuous Sui transaction submission failures over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -5068,7 +5098,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Rate (err/sec)",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "left",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -5093,15 +5123,20 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
                     },
                     "unit": "none"
                 },
@@ -5143,7 +5178,7 @@
                 "refId": "B",
                 "useBackend": false
             }],
-            "title": "TX Submission Errors Over Time",
+            "title": "TX Submission Too Many Failures Over Time",
             "type": "timeseries"
         },
         {

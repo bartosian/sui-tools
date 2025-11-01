@@ -4464,7 +4464,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Transaction signature errors over time",
+            "description": "Displays the rate of transaction signature errors over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4474,7 +4474,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Errors",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4499,16 +4499,22 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
-                    }
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
+                    },
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -4548,7 +4554,7 @@
             "datasource": {
                 "type": "prometheus"
             },
-            "description": "Displays checkpoint execution errors over time.",
+            "description": "Displays the rate of checkpoint execution errors over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4558,7 +4564,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Errors",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4583,16 +4589,22 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
-                    }
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
+                    },
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -4633,7 +4645,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "Transaction Processing Errors Over Time",
+            "description": "Displays the rate of transaction processing errors over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4643,7 +4655,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Errors",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4668,16 +4680,22 @@
                             "mode": "normal"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
-                    }
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
+                    },
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -4718,7 +4736,7 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
-            "description": "RPC errors over time",
+            "description": "Displays the rate of total RPC errors over time.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -4728,7 +4746,7 @@
                         "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
-                        "axisLabel": "Errors",
+                        "axisLabel": "Rate (errors/sec)",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
@@ -4753,16 +4771,22 @@
                             "mode": "normal"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "line"
                         }
                     },
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [{
-                            "color": "green"
-                        }]
-                    }
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.01
+                            }
+                        ]
+                    },
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -4795,7 +4819,7 @@
                 "range": true,
                 "refId": "A"
             }],
-            "title": "RPC Errors Over Time",
+            "title": "Total RPC Errors Over Time",
             "type": "timeseries"
         },
         {
