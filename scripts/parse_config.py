@@ -733,7 +733,7 @@ def generate_fullnode_alert_rules(
 
 
 def generate_validator_alert_rules(
-    validators: List[Dict[str, Any]], sui_validator: str, output_dir: str
+    validators: List[Dict[str, Any]], authority: str, output_dir: str
 ) -> None:
     """Generate validator-specific alert rules organized by validator."""
 
@@ -786,7 +786,7 @@ def generate_validator_alert_rules(
             warning_alerts.append(
                 {
                     "alert": f"SuiValidator_ReputationRank_{alias.replace(' ', '_')}",
-                    "expr": f'(scalar(consensus_reputation_scores{{alias="{alias}", authority="{sui_validator}"}}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{{alias="{alias}"}}), consensus_reputation_scores{{alias="{alias}"}}))) == 1',
+                    "expr": f'(scalar(consensus_reputation_scores{{alias="{alias}", authority="{authority}"}}) <= bool max(bottomk(scalar(consensus_handler_num_low_scoring_authorities{{alias="{alias}"}}), consensus_reputation_scores{{alias="{alias}"}}))) == 1',
                     "for": "30m",
                     "labels": {
                         "severity": "warning",
@@ -1074,7 +1074,7 @@ def generate_validator_alert_rules(
             critical_alerts.append(
                 {
                     "alert": f"SuiValidator_FullnodeConnectivity_{alias.replace(' ', '_')}",
-                    "expr": f'rate(total_rpc_err{{alias="{alias}", name="{sui_validator}"}}[2m]) > 0',
+                    "expr": f'rate(total_rpc_err{{alias="{alias}", name="{authority}"}}[2m]) > 0',
                     "for": "5m",
                     "labels": {
                         "severity": "critical",
@@ -1575,11 +1575,11 @@ def export_fullnode_variables(fullnodes: List[Dict[str, Any]]) -> None:
         f.write(fullnodes_json)
 
 
-def export_bridge_variables(bridges: List[Dict[str, Any]], sui_validator: str) -> None:
+def export_bridge_variables(bridges: List[Dict[str, Any]], authority: str) -> None:
     """Export bridge configuration as shell environment variables."""
     print("# Bridge configuration variables")
     print(f"export SUI_BRIDGES_COUNT={len(bridges)}")
-    print(f"export SUI_VALIDATOR='{sui_validator}'")
+    print(f"export SUI_VALIDATOR='{authority}'")
 
     for i, bridge in enumerate(bridges):
         alias = bridge["alias"]
@@ -1641,8 +1641,12 @@ def main():
     if fullnodes:
         validate_fullnodes_config(fullnodes)
 
-    # Get SUI_VALIDATOR from config
-    sui_validator = config.get("sui", {}).get("validator", "")
+    # Get authority name from config (for validator monitoring)
+    # Support both old 'sui.validator' and new 'authority' field for backwards compatibility
+    authority = config.get("authority", "")
+    if not authority:
+        # Fall back to old format for backwards compatibility
+        authority = config.get("sui", {}).get("validator", "")
 
     # Generate Prometheus configuration
     generate_prometheus_config(bridges, validators, fullnodes, prometheus_file)
@@ -1652,7 +1656,7 @@ def main():
 
     # Generate validator-specific alert rules if validators are configured
     if validators:
-        generate_validator_alert_rules(validators, sui_validator, alert_rules_dir)
+        generate_validator_alert_rules(validators, authority, alert_rules_dir)
 
     # Generate fullnode-specific alert rules if fullnodes are configured
     if fullnodes:
@@ -1663,7 +1667,7 @@ def main():
     generate_alertmanager_config(config, alertmanager_file)
 
     # Export bridge variables
-    export_bridge_variables(bridges, sui_validator)
+    export_bridge_variables(bridges, authority)
 
     # Export validator variables if configured
     if validators:

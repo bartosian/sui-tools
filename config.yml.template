@@ -125,9 +125,9 @@ fullnodes:
       checkpoint_execution_rate: true
       checkpoint_sync_status: true
 
-# Sui Validator
-sui:
-  validator: your_validator_name
+# Authority Name (for validator monitoring)
+# This is the validator's authority name as it appears in metrics
+authority: your_validator_authority_name
 
 # Notification Services (Optional)
 # Alertmanager config is auto-generated based on what you configure here

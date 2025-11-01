@@ -141,8 +141,9 @@ fullnodes:
       checkpoint_execution_rate: true
       checkpoint_sync_status: true
 
-sui:
-  validator: your_validator_name      
+# Authority Name
+# This is your validator's authority name as it appears in metrics
+authority: your_validator_authority_name      
 
 # Notification Services (Optional)
 pagerduty:
@@ -430,7 +431,7 @@ The `config.yml` file supports the following configuration sections:
 | **validators** | `alias` | Human-readable validator name | ❌** |
 | | `target` | Validator metrics endpoint (IP:port) | ❌** |
 | | `alerts` | Per-validator alert enable/disable flags | ❌ |
-| **sui** | `validator` | Validator authority name for alerts | ❌** |
+| **authority** | - | Validator authority name (as shown in metrics) | ❌** |
 | **fullnodes** | `alias` | Human-readable fullnode name | ❌*** |
 | | `target` | Fullnode metrics endpoint (IP:port) | ❌*** |
 | | `alerts` | Per-fullnode alert enable/disable flags | ❌ |
@@ -441,7 +442,7 @@ The `config.yml` file supports the following configuration sections:
 
 *Required only if you want to monitor Sui Bridge services. You can configure any number of bridges with custom aliases. If no bridges are configured, bridge monitoring will be skipped.
 
-**Required only if you want to monitor Sui Validator nodes. You can configure any number of validators with custom aliases. The `sui.validator` field is required when configuring validators to set the authority name for alerts.
+**Required only if you want to monitor Sui Validator nodes. You can configure any number of validators with custom aliases. The `authority` field is required when configuring validators to set the authority name for alerts and metrics.
 
 ***Required only if you want to monitor Sui Fullnode services. You can configure any number of fullnodes with custom aliases. If no fullnodes are configured, fullnode monitoring will be skipped.
 
