@@ -203,12 +203,6 @@ Check that everything is working:
 ./monitor.sh logs grafana
 ./monitor.sh logs prometheus
 ./monitor.sh logs alertmanager
-
-# Verify Prometheus targets
-# Open http://localhost:9090/targets in your browser
-
-# Verify alert rules
-# Open http://localhost:9090/alerts in your browser
 ```
 
 ---
@@ -459,12 +453,6 @@ alertmanager:
 
 All alerts can be sent to your custom webhook receiver at `http://localhost:3001`.
 
-#### **Alert Routing**
-
-**Default routing behavior:**
-- **Critical alerts** → Sent to all configured channels (PagerDuty, Telegram, Discord, Webhook)
-- **Warning alerts** → Sent to Telegram, Discord, and Webhook
-
 You can configure any combination of notification channels. The system will:
 - Only send alerts to channels you've configured
 - Automatically validate your configuration
@@ -493,105 +481,6 @@ telegram:
 discord:
   webhook_url: "your_webhook"
 ```
-
-Simply configure the channels you want, leave others empty, and the system handles the rest!
-
-#### **Verifying Your Configuration**
-
-After configuring your notification channels, verify they're set up correctly:
-
-**1. Check Configuration During Startup**
-
-When you start or restart the monitoring stack, the script shows which channels are configured:
-
-```bash
-./monitor.sh restart
-
-# Look for this output:
-Generated Alertmanager configuration with: PagerDuty, Telegram, Discord
-```
-
-**2. View Generated Alertmanager Configuration**
-
-Check the generated configuration to see your contact points:
-
-```bash
-# View the generated Alertmanager config
-cat generated_configs/alertmanager.yml
-
-# Check for your notification channels
-cat generated_configs/alertmanager.yml | grep -A 10 "receivers:"
-```
-
-**3. Check Alertmanager Status**
-
-Access the Alertmanager UI to verify it's running and see active configuration:
-
-```bash
-# Open in your browser
-open http://localhost:9093
-
-# Or check status
-curl http://localhost:9093/-/healthy
-```
-
-**4. View Alertmanager Logs**
-
-Check logs for any configuration errors or connection issues:
-
-```bash
-# View real-time logs
-./monitor.sh logs alertmanager
-
-# Look for messages like:
-# - "Completed loading of configuration file"
-# - Any error messages about notification channels
-```
-
-**5. Test Your Notifications**
-
-To verify notifications are working, you can:
-
-**Option A: Trigger a test alert manually**
-
-```bash
-# Send a test alert to Alertmanager
-curl -X POST http://localhost:9093/api/v1/alerts -d '[
-  {
-    "labels": {
-      "alertname": "TestAlert",
-      "severity": "warning",
-      "service": "test",
-      "instance": "test-instance"
-    },
-    "annotations": {
-      "summary": "Test alert from monitoring system",
-      "description": "This is a test alert to verify notification channels are working correctly."
-    }
-  }
-]'
-```
-
-**Option B: Wait for a real alert**
-
-Enable a simple alert and wait for it to trigger naturally. For example, if you have a service that's not running.
-
-**6. Check Alert Status in Alertmanager UI**
-
-1. Open http://localhost:9093
-2. Go to "Alerts" tab to see active alerts
-3. Go to "Status" to see:
-   - Configuration status
-   - Active receivers (PagerDuty, Telegram, Discord, etc.)
-   - Notification inhibition rules
-
-**7. Verify Notification Delivery**
-
-After an alert triggers, verify you received notifications:
-
-- **PagerDuty**: Check your PagerDuty incidents dashboard
-- **Telegram**: Check your Telegram chat for messages from your bot
-- **Discord**: Check your Discord channel for webhook messages
 
 **Common Issues:**
 
