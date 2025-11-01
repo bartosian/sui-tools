@@ -1,4 +1,4 @@
-# 🚀 **Sui Tools**
+# 💧 **Sui Tools**
 
 <img src="./assets/sui_header.png" alt="Sui Tools Header"/>
 
@@ -11,7 +11,32 @@ Currently supported services:
 - **Sui Validator** - Validator node performance and health monitoring
 - **Sui Fullnode** - Fullnode monitoring and performance tracking
 
-*Additional Sui services will be added in future releases*
+---
+
+## 📋 **Prerequisites**
+
+Before starting, ensure you have the following installed:
+
+- **Docker** (20.10+) and **Docker Compose** (2.0+)
+- **Python 3.6+** with PyYAML library
+- **Git** for cloning the repository
+
+> 💡 **Note**: The `monitor.sh` script automatically checks for required dependencies and will guide you through installation if anything is missing.
+
+**Quick prerequisite check:**
+```bash
+# The monitor.sh script will verify these are installed
+docker --version
+docker compose version
+python3 --version
+```
+
+**Install PyYAML if needed:**
+```bash
+pip3 install PyYAML
+# On macOS, if the above fails, use:
+# pip3 install PyYAML --break-system-packages
+```
 
 ---
 
@@ -24,8 +49,6 @@ git clone https://github.com/sui-network/sui-tools.git
 cd sui-tools
 cp config.yml.template config.yml
 ```
-
-> 📋 **For detailed setup instructions, see [SETUP.md](SETUP.md)**
 
 ### **2. Configure Services**
 
@@ -81,27 +104,45 @@ bridges:
       # ... configure alerts per bridge
 
 # Sui Validator Configuration
-sui:
-  validator: your_validator_name
-
 validators:
   - alias: "Production Validator"
     target: localhost:9184
     alerts:
-      # Critical alerts
       uptime: true
       voting_power: true
       tx_processing_latency_p95: true
       tx_processing_latency_p50: true
       proposal_latency: true
-      consensus_block_commit_rate: true
+      consensus_proposals_rate: true
       committed_round_rate: true
       fullnode_connectivity: true
+      safe_mode: true
+      randomness_dkg_failure: true
+      checkpoint_execution_rate: true
       
       # Warning alerts
       reputation_rank: true
       tx_processing_latency_p95_10s: true
       tx_processing_latency_p95_3s: true
+      sequencing_latency_high: true
+
+# Sui Fullnode Configuration (Optional)
+fullnodes:
+  - alias: "Mainnet Fullnode"
+    target: localhost:9184
+    alerts:
+      uptime: true
+      checkpoint_execution_rate: true
+      checkpoint_sync_status: true
+  - alias: "Testnet Fullnode"
+    target: localhost:9185
+    alerts:
+      uptime: true
+      checkpoint_execution_rate: true
+      checkpoint_sync_status: true
+
+sui:
+  validator: your_validator_name      
 
 # Notification Services (Optional)
 pagerduty:
@@ -115,32 +156,82 @@ discord:
   webhook_url: your_discord_webhook_url
 ```
 
-> **💡 Dynamic Configuration**: The system automatically detects configured bridges and creates monitoring for each one. You can add any number of bridges with custom aliases. If no bridges are configured, bridge monitoring will be automatically skipped.
+> **💡 Dynamic Configuration**: The system automatically detects configured services (bridges, validators, fullnodes) and creates monitoring for each one. You can add any number of services with custom aliases. If a service type is not configured, its monitoring will be automatically skipped.
 
-### **3. Deploy Services**
+### **3. Start Monitoring**
 
-**Using the management script (recommended):**
+Start all services using the management script:
+
 ```bash
 ./monitor.sh start
 ```
 
-**Manual deployment:**
-
-**For Linux (recommended):**
-```bash
-docker compose up -d
-```
-
-**For macOS:**
-```bash
-docker compose -f docker-compose.macos.yml up -d
-```
+The script will automatically:
+- Detect your platform (Linux/macOS) and use the appropriate configuration
+- Validate your `config.yml` configuration
+- Generate all necessary configurations (Prometheus, Alertmanager, alert rules)
+- Start all services with proper health checks
+- Display service status and access URLs
 
 ### **4. Access Services**
 
+Once services are running, access them at:
+
 - **Grafana Dashboard**: [http://localhost:3000](http://localhost:3000)
+  - Login with credentials from your `config.yml`
 - **Prometheus**: [http://localhost:9090](http://localhost:9090)
 - **Alertmanager**: [http://localhost:9093](http://localhost:9093)
+
+### **5. Verify Setup**
+
+Check that everything is working:
+
+```bash
+# View service status
+./monitor.sh status
+
+# Check service logs
+./monitor.sh logs grafana
+./monitor.sh logs prometheus
+./monitor.sh logs alertmanager
+
+# Verify Prometheus targets
+# Open http://localhost:9090/targets in your browser
+
+# Verify alert rules
+# Open http://localhost:9090/alerts in your browser
+```
+
+### **6. Next Steps**
+
+After setting up, here's what to do next:
+
+1. **Configure Your Services**
+   - Add your bridge targets with custom aliases (if monitoring bridges)
+   - Add your validator targets (if monitoring validators)
+   - Add your fullnode targets (if monitoring fullnodes)
+   - Enable specific alerts for each service in `config.yml`
+   - Configure notification channels (PagerDuty, Telegram, Discord)
+
+2. **Test Your Setup**
+   - Verify Prometheus is scraping your targets: http://localhost:9090/targets
+   - Check that alert rules are loaded: http://localhost:9090/alerts
+   - Browse Grafana dashboards: http://localhost:3000
+   - Test notifications by triggering a test alert
+
+3. **Monitor Your Services**
+   - View real-time metrics in Grafana dashboards
+   - Set up alert thresholds based on your requirements
+   - Review and adjust alert configurations
+   - Monitor service health using `./monitor.sh status`
+
+4. **Maintain Your Setup**
+   - Regularly backup your data: `./monitor.sh backup`
+   - Review logs for issues: `./monitor.sh logs`
+   - Update configurations as needed and restart: `./monitor.sh restart`
+   - Keep services updated to latest versions
+
+> 💡 **Tip**: Start with a minimal configuration (few alerts enabled) and gradually add more as you understand your baseline metrics and requirements.
 
 ---
 
@@ -151,9 +242,9 @@ docker compose -f docker-compose.macos.yml up -d
 ```
 sui-tools/
 ├── README.md                        # Project documentation
-├── SETUP.md                         # Quick setup guide
 ├── config.yml                       # Main configuration file (user-editable)
 ├── config.yml.template              # Configuration template
+├── monitor.sh                       # Management script
 ├── assets/                          # Project assets
 │   ├── sui_bridge.png
 │   └── sui_header.png
@@ -167,35 +258,43 @@ sui-tools/
 │   ├── grafana/
 │   │   ├── dashboards/
 │   │   │   ├── dashboards.yml
-│   │   │   └── sui_bridge.json
+│   │   │   ├── sui_bridge.json
+│   │   │   ├── sui_fullnode.json
+│   │   │   └── sui_validator.json
 │   │   ├── datasources/
 │   │   │   └── datasources.yml
-│   │   └── entrypoint.sh
+│   │   ├── entrypoint.sh
+│   │   ├── generated_fullnodes.json   # Auto-generated fullnodes metadata
+│   │   └── generated_validators.json  # Auto-generated validators metadata
 │   └── prometheus/
 │       ├── entrypoint.sh
+│       ├── generated_bridges.json      # Auto-generated bridges metadata
 │       ├── generated_prometheus.yml    # Auto-generated (used by container)
 │       └── rules/
 │           ├── sui_bridge_*_alerts.yml     # Auto-generated per bridge
+│           ├── sui_fullnode_*_alerts.yml   # Auto-generated per fullnode
 │           └── sui_validator_*_alerts.yml  # Auto-generated per validator
-├── scripts/                          # Configuration processing
-│   └── parse_config.py               # Python parser (generates all configs)
-├── generated_configs/                # Auto-generated configs (runtime)
-│   ├── prometheus.yml                # Generated Prometheus config
-│   ├── alertmanager.yml              # Generated Alertmanager config
-│   ├── bridges.json                  # Bridge metadata JSON
-│   ├── validators.json               # Validator metadata JSON
-│   └── alert_rules/                  # Generated alert rules per service
-│       ├── sui_bridge_0_*_alerts.yml     # Per-bridge alerts
-│       ├── sui_bridge_1_*_alerts.yml
-│       ├── sui_validator_0_*_alerts.yml  # Per-validator alerts
-│       └── sui_validator_1_*_alerts.yml
 ├── data/                            # Persistent data storage
 │   ├── alertmanager/
 │   ├── grafana/
 │   └── prometheus/
-├── docker-compose.macos.yml         # macOS configuration
 ├── docker-compose.yml               # Linux configuration
-└── monitor.sh                       # Management script
+├── docker-compose.macos.yml         # macOS configuration
+├── generated_configs/               # Auto-generated configs (runtime)
+│   ├── prometheus.yml               # Generated Prometheus config
+│   ├── alertmanager.yml             # Generated Alertmanager config
+│   ├── bridges.json                 # Bridge metadata JSON
+│   ├── validators.json              # Validator metadata JSON
+│   ├── fullnodes.json               # Fullnode metadata JSON
+│   └── alert_rules/                 # Generated alert rules per service
+│       ├── sui_bridge_0_*_alerts.yml      # Per-bridge alerts
+│       ├── sui_bridge_1_*_alerts.yml
+│       ├── sui_validator_0_*_alerts.yml   # Per-validator alerts
+│       ├── sui_validator_1_*_alerts.yml
+│       ├── sui_fullnode_0_*_alerts.yml    # Per-fullnode alerts
+│       └── sui_fullnode_1_*_alerts.yml
+└── scripts/                         # Configuration processing
+    └── parse_config.py              # Python parser (generates all configs)
 ```
 
 ---
@@ -206,10 +305,10 @@ sui-tools/
 
 The monitoring stack automatically adapts based on your configuration:
 
-- **Dynamic Bridge Detection**: Automatically detects and monitors any number of configured bridges
-- **Custom Bridge Aliases**: Use human-readable names instead of hardcoded "mainnet"/"testnet"
-- **Dashboard Provisioning**: Service-specific dashboards are only loaded when bridges are configured
-- **Alert Rules**: Only active for configured services
+- **Dynamic Service Detection**: Automatically detects and monitors any number of configured bridges, validators, and fullnodes
+- **Custom Aliases**: Use human-readable names instead of hardcoded "mainnet"/"testnet" labels
+- **Dashboard Provisioning**: Service-specific dashboards are only loaded when services are configured
+- **Alert Rules**: Only active for configured services with explicitly enabled alerts
 - **Resource Optimization**: Unused monitoring components are automatically skipped
 - **Python-based Configuration**: Dynamic Prometheus config generation with proper validation
 
@@ -217,57 +316,58 @@ The monitoring stack automatically adapts based on your configuration:
 
 - **Sui Bridge Dashboard**: Comprehensive monitoring of Sui Bridge Node performance
 - **Sui Validator Dashboard**: Complete validator node performance and health monitoring
+- **Sui Fullnode Dashboard**: Fullnode monitoring and performance tracking
 
 ### **Alert Rules**
 
-The system includes comprehensive alert rules for configured services. Alerts are **opt-in** - you must explicitly enable each alert type in your `config.yml` for each bridge.
+The system includes comprehensive alert rules for configured services. Alerts are **opt-in** - you must explicitly enable each alert type in your `config.yml` for each service.
 
-**Sui Bridge Alerts** (12 alert types available per bridge):
+#### **Sui Bridge Alerts**
 
-**Common Alerts** (recommended for all bridges):
-1. **Uptime** - Detects unexpected node restarts or failures
-2. **Metrics Public Key Availability** - Monitors metrics endpoint accessibility  
-3. **Ingress Access** - Monitors public bridge endpoint availability
-4. **Voting Power** - Critical validator voting rights issues
+Available alert types per bridge (12 alerts):
 
-**Client-Disabled Alerts** (for bridge client node issues):
-5. **Bridge Request Errors** - Transaction digest handling failures
-6. **High ETH RPC Latency** - ETH RPC query performance issues
-7. **High Cache Misses** - Inefficient cache utilization
-8. **SUI RPC Errors** - SUI RPC query failures
+1. **uptime** - Detects unexpected node restarts or failures
+2. **metrics_public_key_availability** - Monitors metrics endpoint accessibility
+3. **ingress_access** - Monitors public bridge endpoint availability
+4. **voting_power** - Critical validator voting rights issues
+5. **bridge_requests_errors** - Transaction digest handling failures
+6. **bridge_high_latency** - ETH RPC query performance issues
+7. **bridge_high_cache_misses** - Inefficient cache utilization
+8. **bridge_rpc_errors** - SUI RPC query failures
+9. **stale_sui_sync** - SUI checkpoint synchronization stalled
+10. **stale_eth_sync** - ETH block synchronization stalled
+11. **stale_eth_finalization** - ETH finalization not progressing
+12. **low_gas_balance** - Bridge client gas balance below threshold (10 SUI)
 
-**Client-Enabled Alerts** (for bridge client synchronization):
-9. **Stale SUI Sync** - SUI checkpoint synchronization stalled
-10. **Stale ETH Sync** - ETH block synchronization stalled
-11. **Stale ETH Finalization** - ETH finalization not progressing
-12. **Low Gas Balance** - Bridge client gas balance below threshold (10 SUI)
+Each bridge can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
 
-**Alert Configuration**: Each bridge can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
+#### **Sui Validator Alerts**
 
-**Sui Validator Alerts** (11 alert types available per validator):
+Available alert types per validator (11 alerts):
 
-**Critical Alerts** (severity: critical):
-1. **Uptime** - Detects unexpected validator restarts or failures (5m window)
-2. **Voting Power** - Critical validator voting rights issues (5m window)
-3. **Tx Processing Latency P95** - P95 transaction latency > 15s (5m window)
-4. **Tx Processing Latency P50** - P50 transaction latency > 5s (5m window)
-5. **Proposal Latency** - Consensus proposal latency > 2s (5m window)
-6. **Consensus Block Commit Rate** - Block commit rate < 3 blocks/s (5m window)
-7. **Committed Round Rate** - Committed round rate < 3 rounds/s (5m window)
-8. **Fullnode Connectivity** - RPC errors indicating connectivity issues (5m window)
+1. **uptime** - Detects unexpected validator restarts or failures (5m window)
+2. **voting_power** - Critical validator voting rights issues (5m window)
+3. **tx_processing_latency_p50** - P50 transaction latency threshold monitoring (5m window)
+4. **proposal_latency** - Consensus proposal latency monitoring (5m window)
+5. **consensus_proposals_rate** - Consensus proposals rate monitoring (5m window)
+6. **safe_mode** - Safe mode activation detection (5m window)
+7. **randomness_dkg_failure** - Randomness beacon DKG failure detection (5m window)
+8. **checkpoint_execution_rate** - Checkpoint execution rate monitoring (5m window)
+9. **reputation_rank** - Validator reputation rank monitoring (30m window)
+10. **sequencing_latency_high** - Sequencing latency monitoring (5m window)
+11. **committed_round_rate** - Committed round rate monitoring (5m window)
 
-**Warning Alerts** (severity: warning):
-9. **Reputation Rank** - Validator consistently in bottom N low-scoring validators (30m window)
-10. **Tx Processing Latency P95 (10s)** - P95 transaction latency > 10s (5m window)
-11. **Tx Processing Latency P95 (3s)** - P95 transaction latency > 3s (5m window)
+Each validator can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
 
-**Alert Routing**:
-- **Critical alerts** → PagerDuty + Telegram + Discord + Webhook
-- **Warning alerts** → Telegram + Discord + Webhook (no PagerDuty)
+#### **Sui Fullnode Alerts**
 
-**Alert Configuration**: Each validator can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
+Available alert types per fullnode (3 alerts):
 
-*Additional alert rules will be added as more Sui services are supported*
+1. **uptime** - Detects unexpected fullnode restarts or failures (2m window)
+2. **checkpoint_execution_rate** - Checkpoint execution rate < 2 checkpoints/s (5m window)
+3. **checkpoint_sync_status** - Checkpoint sync ratio < 95%, indicating node is falling behind (5m window)
+
+Each fullnode can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
 
 ### **Notification Channels**
 
@@ -278,19 +378,17 @@ All notification channels are **automatically configured** based on credentials 
 - **Discord**: Both critical and warning alerts with webhook integration
 - **Webhook**: Fallback for all alerts to custom endpoint
 
-**Configuration is automatic**: Simply add your integration keys/tokens to `config.yml` and the system will generate the appropriate Alertmanager configuration. Alerts are routed based on severity:
-- **Critical alerts** → PagerDuty + Telegram + Discord + Webhook
-- **Warning alerts** → Telegram + Discord + Webhook
+**Configuration is automatic**: Simply add your integration keys/tokens to `config.yml` and the system will generate the appropriate Alertmanager configuration.
 
 ### **Configuration Processing**
 
 The system uses a **Python-based configuration parser** (`scripts/parse_config.py`) that automatically generates all service configurations from your `config.yml`:
 
 **Generated Configurations:**
-- **Prometheus config** (`generated_configs/prometheus.yml`) - Dynamic scrape targets for all bridges
-- **Alert rules** (`generated_configs/alert_rules/*.yml`) - Bridge-specific alert rules based on enabled alerts
+- **Prometheus config** (`generated_configs/prometheus.yml`) - Dynamic scrape targets for all services
+- **Alert rules** (`generated_configs/alert_rules/*.yml`) - Service-specific alert rules based on enabled alerts
 - **Alertmanager config** (`generated_configs/alertmanager.yml`) - Notification receivers based on configured integrations
-- **Bridge metadata** (`generated_configs/bridges.json`) - Bridge configuration for Grafana dashboards
+- **Service metadata** (`generated_configs/*.json`) - Bridge, validator, and fullnode configuration for Grafana dashboards
 
 **Features:**
 - **Validates YAML configuration** with comprehensive error handling
@@ -334,6 +432,9 @@ The `config.yml` file supports the following configuration sections:
 | | `target` | Validator metrics endpoint (IP:port) | ❌** |
 | | `alerts` | Per-validator alert enable/disable flags | ❌ |
 | **sui** | `validator` | Validator authority name for alerts | ❌** |
+| **fullnodes** | `alias` | Human-readable fullnode name | ❌*** |
+| | `target` | Fullnode metrics endpoint (IP:port) | ❌*** |
+| | `alerts` | Per-fullnode alert enable/disable flags | ❌ |
 | **pagerduty** | `integration_key` | PagerDuty integration key | ❌ |
 | **telegram** | `bot_token` | Telegram bot token | ❌ |
 | | `chat_id` | Telegram chat ID | ❌ |
@@ -342,6 +443,8 @@ The `config.yml` file supports the following configuration sections:
 *Required only if you want to monitor Sui Bridge services. You can configure any number of bridges with custom aliases. If no bridges are configured, bridge monitoring will be skipped.
 
 **Required only if you want to monitor Sui Validator nodes. You can configure any number of validators with custom aliases. The `sui.validator` field is required when configuring validators to set the authority name for alerts.
+
+***Required only if you want to monitor Sui Fullnode services. You can configure any number of fullnodes with custom aliases. If no fullnodes are configured, fullnode monitoring will be skipped.
 
 ### **Service Configuration**
 
@@ -384,142 +487,195 @@ Install Grafana plugins using the `GF_GITHUB_PLUGINS` environment variable:
 GF_GITHUB_PLUGINS="https://github.com/grafana/grafana-clock-panel/releases/download/v1.3.0/grafana-clock-panel-1.3.0.zip"
 ```
 
-### **Data Backup**
-
-Create backups using the management script:
-
-```bash
-# Create backup
-./monitor.sh backup
-
-# Restore from backup
-./monitor.sh restore backup-file.tar.gz
-```
-
-Or manually:
-```bash
-tar -czf sui-monitoring-backup.tar.gz data/
-```
 
 ---
 
 ## 🚨 **Troubleshooting**
 
-> 📋 **For detailed troubleshooting steps, see [SETUP.md](SETUP.md)**
-
 ### **Service Health Checks**
 
-Check service status:
+Check service status using the management script:
 ```bash
-docker compose ps
-```
+# View overall service status
+./monitor.sh status
 
-View service logs:
-```bash
-docker compose logs grafana
-docker compose logs prometheus
-docker compose logs alertmanager
-```
+# View detailed logs for specific services
+./monitor.sh logs grafana
+./monitor.sh logs prometheus
+./monitor.sh logs alertmanager
 
-### **Configuration Validation**
-
-Validate Prometheus configuration:
-```bash
-docker compose exec prometheus promtool check config /etc/prometheus/prometheus.yml
-```
-
-Validate Alertmanager configuration:
-```bash
-docker compose exec alertmanager amtool check-config /etc/alertmanager/alertmanager.yml
+# View logs for all services
+./monitor.sh logs
 ```
 
 ### **Common Issues**
 
-1. **Permission Errors**: Ensure the `data/` directory has proper permissions
-2. **Port Conflicts**: Check if ports 3000, 9090, 9093 are available
-3. **Configuration Errors**: Validate environment variables and template files
-4. **Network Issues**: Verify target endpoints are accessible
-5. **Python Parser Issues**: 
-   - Ensure Python 3.6+ is installed: `python3 --version`
-   - Install PyYAML: `pip3 install PyYAML` (or `pip3 install PyYAML --break-system-packages` on macOS)
-   - Check parser output: `python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml`
-6. **Bridge Configuration**: Verify bridge aliases are unique and targets are accessible
-
-### **Management Script**
-
-The `monitor.sh` script provides comprehensive management capabilities:
-
+**1. Services Not Starting**
 ```bash
-# Start all services
-./monitor.sh start
+# Check what went wrong
+./monitor.sh logs
 
-# Stop all services  
-./monitor.sh stop
+# Verify prerequisites
+python3 --version  # Should be 3.6+
+docker --version
+docker compose version
 
-# Restart all services
+# Restart services
 ./monitor.sh restart
-
-# Check service status
-./monitor.sh status
-
-# View service logs
-./monitor.sh logs [service_name]
-
-# Create backup
-./monitor.sh backup
-
-# Restore from backup
-./monitor.sh restore backup-file.tar.gz
-
-# Clean up old data
-./monitor.sh clean
 ```
 
-**Features:**
-- **Automatic configuration parsing** using Python parser
-- **Dynamic bridge detection** and monitoring setup
-- **Service health monitoring** and status reporting
-- **Backup and restore** functionality
-- **Log aggregation** across all services
+**2. Configuration Issues**
+```bash
+# After editing config.yml, always restart
+./monitor.sh restart
+
+# This will regenerate all configurations and restart services
+```
+
+**3. Permission Errors**
+```bash
+# Ensure data directories have proper permissions
+mkdir -p data/grafana data/prometheus data/alertmanager
+chmod -R 755 data/
+```
+
+**4. Port Conflicts**
+
+Check if required ports (3000, 9090, 9093) are available:
+```bash
+lsof -i :3000  # Grafana
+lsof -i :9090  # Prometheus
+lsof -i :9093  # Alertmanager
+```
+
+If ports are in use, you can customize them in `config.yml`:
+```yaml
+grafana:
+  port: 3001  # Change to available port
+prometheus:
+  port: 9091
+alertmanager:
+  port: 9094
+```
+
+**5. Python/PyYAML Issues**
+```bash
+# Install or upgrade PyYAML
+pip3 install PyYAML
+
+# On macOS, if the above fails:
+pip3 install PyYAML --break-system-packages
+```
+
+**6. Configuration Validation**
+
+The `monitor.sh` script validates configurations during start/restart. To manually check:
+```bash
+# Test configuration parsing
+python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml
+```
+
+**7. Network/Target Issues**
+- Verify bridge and validator targets are accessible
+- Check bridge aliases are unique
+- Ensure public addresses (for ingress monitoring) are reachable
+- On macOS, use `host.docker.internal` instead of `localhost` for host services
+
+### **Management Script Reference**
+
+The `monitor.sh` script is your primary tool for managing the monitoring stack:
+
+**Core Commands:**
+```bash
+./monitor.sh start     # Start all services (auto-detects platform)
+./monitor.sh stop      # Stop all services gracefully
+./monitor.sh restart   # Restart with fresh configurations
+./monitor.sh status    # Show service health status
+```
+
+**Monitoring Commands:**
+```bash
+./monitor.sh logs                 # View logs from all services
+./monitor.sh logs grafana         # View logs from specific service
+./monitor.sh logs prometheus -f   # Follow logs in real-time
+```
+
+**Data Management:**
+```bash
+./monitor.sh backup                        # Create backup of all data
+./monitor.sh restore backup-file.tar.gz    # Restore from backup
+./monitor.sh clean                         # Clean up old data
+```
+
+**Key Features:**
+- ✅ **Automatic platform detection** (Linux vs macOS)
+- ✅ **Configuration validation** before starting services
+- ✅ **Dependency checking** (Docker, Python, PyYAML)
+- ✅ **Dynamic config generation** from your `config.yml`
+- ✅ **Health monitoring** with automatic status checks
+- ✅ **Error handling** with helpful error messages
+
+### **Platform-Specific Behavior**
+
+The monitoring stack automatically adapts to your platform:
+
+**Linux:**
+- Uses `network_mode: host` for optimal performance
+- Services communicate via `localhost`
+- Direct access to host network interfaces
+- Use `localhost` for bridge/validator targets
+
+**macOS:**
+- Uses bridge networking (macOS doesn't support host mode)
+- Services communicate via Docker network
+- Use `host.docker.internal` instead of `localhost` for host services
+- Example: `target: host.docker.internal:9186`
+
+The `monitor.sh` script automatically selects the correct Docker Compose file for your platform.
 
 ---
 
 ### **Updating Services**
 
-To update to newer versions, modify the image tags in `docker-compose.yml` and restart:
+To update to newer versions, modify the image tags in `docker-compose.yml` or `docker-compose.macos.yml`, then restart:
 
 ```bash
-docker compose pull
-docker compose up -d
+./monitor.sh stop
+./monitor.sh start
 ```
 
 ### **Configuration Changes**
 
-After modifying `config.yml`:
+After modifying `config.yml`, always use the restart command:
 
 ```bash
-# Use the management script (recommended - regenerates all configs)
 ./monitor.sh restart
-
-# Or manually
-python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml generated_configs/alert_rules
-# Then copy generated configs
-cp generated_configs/*.yml config/*/
-docker compose down && docker compose up -d
 ```
 
-**Important**: The `restart` command in `monitor.sh` now:
-1. Regenerates all configurations from `config.yml`
-2. Stops all containers
-3. Starts containers with fresh configurations
+**What this does:**
+1. Validates your `config.yml` for errors
+2. Regenerates all configurations (Prometheus targets, alert rules, Alertmanager notifications)
+3. Stops all containers gracefully
+4. Starts containers with fresh configurations
+5. Verifies service health
 
-This ensures all configuration changes (bridges, alerts, notifications) are properly applied.
+> ⚠️ **Important**: Always use `./monitor.sh restart` after editing `config.yml`. This ensures all configuration changes (bridges, validators, alerts, notifications) are properly regenerated and applied.
 
-### **Data Cleanup**
+### **Data Management**
 
-Clean up old Prometheus data:
+**Backup your data:**
 ```bash
-docker compose exec prometheus promtool tsdb clean --retention.time=7d /prometheus
+./monitor.sh backup
+```
+
+**Restore from backup:**
+```bash
+./monitor.sh restore backup-YYYYMMDD.tar.gz
+```
+
+**Clean up old data:**
+```bash
+./monitor.sh clean
 ```
 
 ---
@@ -536,15 +692,85 @@ Contributions are welcome! Please:
 
 ### **Development Setup**
 
-For development, you can run services individually:
+For local development and testing:
 
 ```bash
-# Start only Prometheus
-docker compose up prometheus
+# Start services in foreground to see logs
+./monitor.sh start
 
-# Start with custom configuration
-docker compose -f docker-compose.yml -f docker-compose.override.yml up
+# In another terminal, make changes to config.yml
+# Then restart to apply changes
+./monitor.sh restart
+
+# Check logs in real-time
+./monitor.sh logs -f
+
+# Stop services when done
+./monitor.sh stop
 ```
+
+**Testing configuration changes:**
+```bash
+# Validate config without starting services
+python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml
+
+# Check generated configurations
+cat generated_configs/prometheus.yml
+cat generated_configs/alertmanager.yml
+ls -la generated_configs/alert_rules/
+```
+
+---
+
+## ⚡ **Quick Reference**
+
+### **Common Commands**
+
+```bash
+# Service Management
+./monitor.sh start           # Start all services
+./monitor.sh stop            # Stop all services
+./monitor.sh restart         # Restart with new config
+./monitor.sh status          # Check service health
+
+# Monitoring & Logs
+./monitor.sh logs            # View all logs
+./monitor.sh logs grafana    # View specific service logs
+./monitor.sh logs -f         # Follow logs in real-time
+
+# Data Management
+./monitor.sh backup          # Backup all data
+./monitor.sh restore FILE    # Restore from backup
+./monitor.sh clean           # Clean up old data
+```
+
+### **Access URLs**
+
+| Service | URL | Purpose |
+|---------|-----|---------|
+| **Grafana** | http://localhost:3000 | Dashboards and visualization |
+| **Prometheus** | http://localhost:9090 | Metrics database and queries |
+| **Prometheus Targets** | http://localhost:9090/targets | Check scraping status |
+| **Prometheus Alerts** | http://localhost:9090/alerts | View alert rules and status |
+| **Alertmanager** | http://localhost:9093 | Alert routing and notifications |
+
+### **Configuration Files**
+
+| File | Purpose |
+|------|---------|
+| `config.yml` | Main configuration (edit this) |
+| `config.yml.template` | Configuration template with examples |
+| `generated_configs/` | Auto-generated configs (don't edit) |
+| `data/` | Persistent data storage |
+| `monitor.sh` | Management script |
+
+### **Key Concepts**
+
+- **Always use `./monitor.sh restart`** after editing `config.yml`
+- **Alerts are opt-in** - explicitly enable each alert type per service
+- **Platform auto-detection** - script automatically uses correct config for Linux/macOS
+- **Dynamic configuration** - add any number of bridges/validators with custom aliases
+- **On macOS** - use `host.docker.internal` instead of `localhost` for host services
 
 ---
 
