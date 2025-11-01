@@ -107,9 +107,22 @@ providers:
       path: /tmp/processed_dashboards
 EOF
     
-    # Copy datasources provisioning
+    # Copy and process datasources provisioning
     if [ -d "/etc/grafana/provisioning/datasources" ]; then
-        cp -r /etc/grafana/provisioning/datasources /tmp/grafana_provisioning/
+        mkdir -p /tmp/grafana_provisioning/datasources
+        
+        # Process datasources.yml to substitute environment variables
+        for datasource in /etc/grafana/provisioning/datasources/*.yml; do
+            if [ -f "$datasource" ]; then
+                filename=$(basename "$datasource")
+                log_info "Processing datasource: $filename"
+                
+                # Substitute PROMETHEUS_TARGET and ALERTMANAGER_TARGET
+                sed "s|\${PROMETHEUS_TARGET}|${PROMETHEUS_TARGET:-localhost:9090}|g; s|\${ALERTMANAGER_TARGET}|${ALERTMANAGER_TARGET:-localhost:9093}|g" "$datasource" > "/tmp/grafana_provisioning/datasources/$filename"
+                
+                log_info "Datasource processed: $filename (Prometheus: ${PROMETHEUS_TARGET:-localhost:9090}, Alertmanager: ${ALERTMANAGER_TARGET:-localhost:9093})"
+            fi
+        done
     fi
     
     # Update Grafana to use our processed provisioning
@@ -163,16 +176,50 @@ providers:
       path: /tmp/processed_dashboards
 EOF
         
-        # Copy datasources provisioning
+        # Copy and process datasources provisioning
         if [ -d "/etc/grafana/provisioning/datasources" ]; then
-            cp -r /etc/grafana/provisioning/datasources /tmp/grafana_provisioning/
+            mkdir -p /tmp/grafana_provisioning/datasources
+            
+            # Process datasources.yml to substitute environment variables
+            for datasource in /etc/grafana/provisioning/datasources/*.yml; do
+                if [ -f "$datasource" ]; then
+                    filename=$(basename "$datasource")
+                    log_info "Processing datasource: $filename"
+                    
+                    # Substitute PROMETHEUS_TARGET and ALERTMANAGER_TARGET
+                    sed "s|\${PROMETHEUS_TARGET}|${PROMETHEUS_TARGET:-localhost:9090}|g; s|\${ALERTMANAGER_TARGET}|${ALERTMANAGER_TARGET:-localhost:9093}|g" "$datasource" > "/tmp/grafana_provisioning/datasources/$filename"
+                    
+                    log_info "Datasource processed: $filename (Prometheus: ${PROMETHEUS_TARGET:-localhost:9090}, Alertmanager: ${ALERTMANAGER_TARGET:-localhost:9093})"
+                fi
+            done
         fi
         
         # Update Grafana to use our processed provisioning
         export GF_PATHS_PROVISIONING=/tmp/grafana_provisioning
         log_info "Updated Grafana provisioning path to use processed dashboards"
     else
-        log_info "No targets configured - using default provisioning (no dashboards)"
+        log_info "No targets configured - processing datasources only"
+        
+        # Still need to process datasources even if no dashboards
+        mkdir -p /tmp/grafana_provisioning/datasources
+        
+        if [ -d "/etc/grafana/provisioning/datasources" ]; then
+            for datasource in /etc/grafana/provisioning/datasources/*.yml; do
+                if [ -f "$datasource" ]; then
+                    filename=$(basename "$datasource")
+                    log_info "Processing datasource: $filename"
+                    
+                    # Substitute PROMETHEUS_TARGET and ALERTMANAGER_TARGET
+                    sed "s|\${PROMETHEUS_TARGET}|${PROMETHEUS_TARGET:-localhost:9090}|g; s|\${ALERTMANAGER_TARGET}|${ALERTMANAGER_TARGET:-localhost:9093}|g" "$datasource" > "/tmp/grafana_provisioning/datasources/$filename"
+                    
+                    log_info "Datasource processed: $filename (Prometheus: ${PROMETHEUS_TARGET:-localhost:9090}, Alertmanager: ${ALERTMANAGER_TARGET:-localhost:9093})"
+                fi
+            done
+            
+            # Update Grafana to use our processed provisioning
+            export GF_PATHS_PROVISIONING=/tmp/grafana_provisioning
+            log_info "Updated Grafana provisioning path to use processed datasources"
+        fi
     fi
 fi
 

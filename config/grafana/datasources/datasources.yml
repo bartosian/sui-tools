@@ -4,7 +4,7 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus:9090
+    url: http://${PROMETHEUS_TARGET}
     isDefault: true
     uid: ctles38bbprkmttbdkv0
     editable: true
@@ -21,7 +21,7 @@ datasources:
   - name: Alertmanager
     type: alertmanager
     access: proxy
-    url: http://alertmanager:9093
+    url: http://${ALERTMANAGER_TARGET}
     uid: alertmanager-datasource
     editable: true
     jsonData:

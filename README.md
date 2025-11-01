@@ -627,10 +627,45 @@ python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml gene
 ```
 
 **9. Network/Target Issues**
-- Verify bridge and validator targets are accessible
+
+**Platform-Specific Networking:**
+
+The monitoring stack uses different networking modes on different platforms:
+- **Linux**: Uses `network_mode: host` (all containers share host network)
+- **macOS**: Uses bridge networking (containers have their own network)
+
+**Configuration Guidelines:**
+
+For `prometheus.target` and `alertmanager.target` in `config.yml`:
+```yaml
+# Linux: Use localhost (services are on host network)
+prometheus:
+  target: localhost:9090
+alertmanager:
+  target: localhost:9093
+
+# macOS: Can use localhost or prometheus/alertmanager service names
+# The defaults work on both platforms
+```
+
+For monitoring your own services (bridges, validators, fullnodes):
+```yaml
+# Linux: Use your server's IP or localhost
+bridges:
+  - alias: "My Bridge"
+    target: localhost:9186  # or your_server_ip:9186
+
+# macOS: Use host.docker.internal to reach host services
+bridges:
+  - alias: "My Bridge"
+    target: host.docker.internal:9186
+```
+
+**Common Issues:**
+- Verify bridge and validator targets are accessible from the monitoring server
 - Check bridge aliases are unique
 - Ensure public addresses (for ingress monitoring) are reachable
-- On macOS, use `host.docker.internal` instead of `localhost` for host services
+- Test connectivity: `curl http://your_target:port/metrics`
 
 ### **Management Script Reference**
 
