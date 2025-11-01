@@ -3803,6 +3803,301 @@
                 "type": "prometheus",
                 "uid": "ctles38bbprkmttbdkv0"
             },
+            "description": "Total number of actions received in signing queue in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 108
+            },
+            "id": 400,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_action_executor_signing_queue_received_actions{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Signing Queue Received (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of already processed actions in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 4,
+                "y": 108
+            },
+            "id": 401,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_action_executor_already_processed_actions{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Already Processed Actions (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of actions skipped in signing queue in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 8,
+                "y": 108
+            },
+            "id": 402,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_action_executor_signing_queue_skipped_actions{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Signing Queue Skipped (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of actions received in execution queue in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 12,
+                "y": 108
+            },
+            "id": 403,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_action_executor_execution_queue_received_actions{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Execution Queue Received (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
+            "description": "Total number of actions skipped in execution queue due to pausing in the last 24 hours",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "green"
+                        }]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 16,
+                "y": 108
+            },
+            "id": 404,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "10.2.0",
+            "targets": [{
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ctles38bbprkmttbdkv0"
+                },
+                "editorMode": "code",
+                "expr": "sum(increase(bridge_action_executor_execution_queue_skipped_actions_due_to_pausing{alias=\"$instance\"}[24h]))",
+                "legendFormat": "__auto",
+                "range": true,
+                "refId": "A"
+            }],
+            "title": "Execution Queue Skipped (24h)",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "ctles38bbprkmttbdkv0"
+            },
             "description": "Shows key metrics for the Bridge Action Executor queue, including totals for received, skipped, and already processed actions, helping monitor queue performance and efficiency.",
             "fieldConfig": {
                 "defaults": {
@@ -3856,7 +4151,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 108
+                "y": 112
             },
             "id": 292,
             "options": {
@@ -3982,7 +4277,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 108
+                "y": 112
             },
             "id": 232,
             "options": {
@@ -4040,7 +4335,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 116
+                "y": 120
             },
             "id": 332,
             "panels": [],
@@ -4077,7 +4372,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 117
+                "y": 121
             },
             "id": 333,
             "options": {
@@ -4141,7 +4436,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 117
+                "y": 121
             },
             "id": 335,
             "options": {
@@ -4205,7 +4500,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 117
+                "y": 121
             },
             "id": 336,
             "options": {
@@ -4269,7 +4564,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 18,
-                "y": 117
+                "y": 121
             },
             "id": 334,
             "options": {
@@ -4366,7 +4661,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 121
+                "y": 125
             },
             "id": 340,
             "options": {
@@ -4464,7 +4759,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 6,
-                "y": 121
+                "y": 125
             },
             "id": 342,
             "options": {
@@ -4562,7 +4857,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 12,
-                "y": 121
+                "y": 125
             },
             "id": 343,
             "options": {
@@ -4660,7 +4955,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 18,
-                "y": 121
+                "y": 125
             },
             "id": 341,
             "options": {
@@ -4725,7 +5020,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 0,
-                "y": 129
+                "y": 133
             },
             "id": 338,
             "options": {
@@ -4789,7 +5084,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 6,
-                "y": 129
+                "y": 133
             },
             "id": 337,
             "options": {
@@ -4853,7 +5148,7 @@
                 "h": 4,
                 "w": 6,
                 "x": 12,
-                "y": 129
+                "y": 133
             },
             "id": 339,
             "options": {
@@ -4950,7 +5245,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 133
+                "y": 137
             },
             "id": 345,
             "options": {
@@ -5048,7 +5343,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 6,
-                "y": 133
+                "y": 137
             },
             "id": 344,
             "options": {
@@ -5146,7 +5441,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 12,
-                "y": 133
+                "y": 137
             },
             "id": 346,
             "options": {
@@ -5187,7 +5482,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 141
+                "y": 145
             },
             "id": 327,
             "panels": [],
@@ -5256,7 +5551,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 142
+                "y": 146
             },
             "id": 328,
             "options": {
@@ -5357,6 +5652,6 @@
     "timezone": "",
     "title": "Sui Bridge",
     "uid": "d3sdagobbprlcrf8dh3g",
-    "version": 5,
+    "version": 9,
     "weekStart": "monday"
 }
