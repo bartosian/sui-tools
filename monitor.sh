@@ -109,8 +109,13 @@ parse_yaml_config() {
         cp generated_configs/fullnodes.json config/grafana/generated_fullnodes.json
     fi
     
-    # Copy all bridge-specific alert rule files
-    cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
+    # Ensure alert rules directory exists
+    mkdir -p config/prometheus/rules/
+    
+    # Copy all bridge-specific alert rule files if they exist
+    if ls generated_configs/alert_rules/sui_bridge_*_alerts.yml 1> /dev/null 2>&1; then
+        cp generated_configs/alert_rules/sui_bridge_*_alerts.yml config/prometheus/rules/
+    fi
     
     # Copy all validator-specific alert rule files if they exist
     if ls generated_configs/alert_rules/sui_validator_*_alerts.yml 1> /dev/null 2>&1; then
