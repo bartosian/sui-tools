@@ -17,6 +17,19 @@ COMPOSE_FILE_LINUX="docker-compose.yml"
 COMPOSE_FILE_MACOS="docker-compose.macos.yml"
 CONFIG_FILE="config.yml"
 
+# Check if running with sudo and warn about environment variables
+if [ -n "${SUDO_USER:-}" ]; then
+    echo -e "${YELLOW}[WARNING] Running with sudo detected!${NC}"
+    echo ""
+    echo -e "${BLUE}[INFO] To avoid environment variable issues, consider:${NC}"
+    echo -e "${BLUE}  1. Add your user to the docker group: sudo usermod -aG docker \$USER${NC}"
+    echo -e "${BLUE}  2. Log out and back in for the changes to take effect${NC}"
+    echo -e "${BLUE}  3. Run this script without sudo: ./monitor.sh [command]${NC}"
+    echo ""
+    echo -e "${YELLOW}[INFO] Continuing with sudo, but environment variables will be preserved...${NC}"
+    echo ""
+fi
+
 # Logging functions
 log_info() {
     echo -e "${GREEN}[INFO]${NC} $1"
@@ -229,6 +242,13 @@ parse_yaml_config() {
     export ALERTMANAGER_DEFAULT_WEBHOOK_PORT="${ALERTMANAGER_DEFAULT_WEBHOOK_PORT:-3001}"
     export PROMETHEUS_TARGET="${PROMETHEUS_TARGET:-localhost:9090}"
     export ALERTMANAGER_TARGET="${ALERTMANAGER_TARGET:-localhost:9093}"
+    
+    # Verify critical Grafana variables are set
+    if [ -z "$GF_SECURITY_ADMIN_USER" ] || [ -z "$GF_SECURITY_ADMIN_PASSWORD" ]; then
+        log_error "Grafana admin credentials not found in config.yml"
+        log_info "Please ensure 'grafana.admin_user' and 'grafana.admin_password' are set in config.yml"
+        exit 1
+    fi
     
     log_success "Configuration loaded successfully"
     log_info "Parsed $SUI_BRIDGES_COUNT bridge(s)"

@@ -554,14 +554,40 @@ The script supports automatic installation on:
 # This will regenerate all configurations and restart services
 ```
 
-**4. Permission Errors**
+**4. Docker Permission Issues**
+
+If you see warnings about environment variables or need to run with `sudo`:
+
+```bash
+# Add your user to the docker group (Linux only)
+sudo usermod -aG docker $USER
+
+# Log out and log back in for changes to take effect
+# Or use: newgrp docker
+
+# Now you can run without sudo
+./monitor.sh start
+```
+
+**Why this matters:**
+- Running with `sudo` can cause environment variable issues
+- Docker group membership allows running Docker commands without sudo
+- Provides better security and cleaner environment handling
+
+**If you must use sudo:**
+```bash
+# The script will warn you but continue to work
+sudo ./monitor.sh start
+```
+
+**5. Data Directory Permission Errors**
 ```bash
 # Ensure data directories have proper permissions
 mkdir -p data/grafana data/prometheus data/alertmanager
 chmod -R 755 data/
 ```
 
-**5. Port Conflicts**
+**6. Port Conflicts**
 
 Check if required ports (3000, 9090, 9093) are available:
 ```bash
@@ -580,7 +606,7 @@ alertmanager:
   port: 9094
 ```
 
-**6. Python/PyYAML Issues**
+**7. Python/PyYAML Issues**
 ```bash
 # The script can install PyYAML automatically
 ./monitor.sh start
@@ -592,7 +618,7 @@ pip3 install PyYAML
 pip3 install PyYAML --break-system-packages
 ```
 
-**7. Configuration Validation**
+**8. Configuration Validation**
 
 The `monitor.sh` script validates configurations during start/restart. To manually check:
 ```bash
@@ -600,7 +626,7 @@ The `monitor.sh` script validates configurations during start/restart. To manual
 python3 scripts/parse_config.py config.yml generated_configs/prometheus.yml generated_configs/alert_rules
 ```
 
-**8. Network/Target Issues**
+**9. Network/Target Issues**
 - Verify bridge and validator targets are accessible
 - Check bridge aliases are unique
 - Ensure public addresses (for ingress monitoring) are reachable
