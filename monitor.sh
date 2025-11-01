@@ -475,6 +475,11 @@ start_services() {
 # Stop services
 stop_services() {
     local compose_file=$(get_compose_file)
+    
+    # Load configuration to set environment variables
+    # This prevents warnings about unset variables in docker-compose
+    parse_yaml_config > /dev/null 2>&1
+    
     log_info "Stopping services..."
     
     if command -v docker-compose &> /dev/null; then
@@ -513,6 +518,11 @@ restart_services() {
 # Show service status
 show_status() {
     local compose_file=$(get_compose_file)
+    
+    # Load configuration to set environment variables
+    # This prevents warnings about unset variables in docker-compose
+    parse_yaml_config > /dev/null 2>&1
+    
     log_info "Service status:"
     
     if command -v docker-compose &> /dev/null; then
@@ -526,6 +536,10 @@ show_status() {
 show_logs() {
     local service="$1"
     local compose_file=$(get_compose_file)
+    
+    # Load configuration to set environment variables
+    # This prevents warnings about unset variables in docker-compose
+    parse_yaml_config > /dev/null 2>&1
     
     if [ -z "$service" ]; then
         log_error "Please specify a service name (grafana, prometheus, alertmanager)"
@@ -543,6 +557,9 @@ show_logs() {
 
 # Validate configuration
 validate_config() {
+    # Load configuration to set environment variables
+    parse_yaml_config > /dev/null 2>&1
+    
     log_info "Validating configuration..."
     
     # Check Prometheus config
@@ -615,7 +632,8 @@ cleanup() {
     if [[ "$response" =~ ^[Yy]$ ]]; then
         log_info "Cleaning up..."
         
-        parse_yaml_config
+        # Load configuration to set environment variables
+        parse_yaml_config > /dev/null 2>&1
         
         if command -v docker-compose &> /dev/null; then
             docker-compose -f "$compose_file" down -v --remove-orphans
