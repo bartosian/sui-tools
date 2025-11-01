@@ -377,16 +377,124 @@ Available alert types per fullnode (3 alerts):
 
 Each fullnode can have its own alert configuration. Only explicitly enabled alerts will be generated and monitored.
 
-### **Notification Channels**
+### **Notification Channels (Contact Points)**
 
-All notification channels are **automatically configured** based on credentials provided in `config.yml`:
+The monitoring stack supports multiple notification channels that are **automatically configured** based on credentials provided in `config.yml`. Configure any combination of channels that work best for your team.
 
-- **PagerDuty**: Critical alerts only (severity: critical) with automatic escalation
-- **Telegram**: Both critical and warning alerts with HTML formatting
-- **Discord**: Both critical and warning alerts with webhook integration
-- **Webhook**: Fallback for all alerts to custom endpoint
+#### **PagerDuty**
 
-**Configuration is automatic**: Simply add your integration keys/tokens to `config.yml` and the system will generate the appropriate Alertmanager configuration.
+Professional incident management with escalation policies.
+
+```yaml
+pagerduty:
+  integration_key: "your_pagerduty_integration_key"  # Events API v2 routing key
+```
+
+**Features:**
+- Automatic incident creation and tracking
+- Rich alert details (severity, service, instance, summary, description)
+- Auto-resolve when alert clears
+- Integrates with your existing escalation policies
+
+**Setup:**
+1. Log into PagerDuty
+2. Go to Services → Select/Create Service
+3. Click "Integrations" → "Add Integration"
+4. Choose "Events API v2"
+5. Copy the Integration Key (routing key)
+
+#### **Telegram**
+
+Instant mobile and desktop notifications.
+
+```yaml
+telegram:
+  bot_token: "your_telegram_bot_token"  # From @BotFather
+  chat_id: "your_chat_id"               # Your Telegram chat ID (can be negative for groups)
+```
+
+**Features:**
+- HTML formatted messages with emojis (🚨 for critical, ⚠️ for warnings)
+- Detailed alert information
+- Resolved notifications
+- Works on any device (mobile, desktop, web)
+
+**Setup:**
+1. Create a bot: Message @BotFather on Telegram → `/newbot`
+2. Copy the bot token
+3. Start a chat with your bot → Send any message
+4. Get your chat ID: `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
+5. Look for "chat":{"id": number} in the response
+
+#### **Discord**
+
+Team notifications in your Discord server.
+
+```yaml
+discord:
+  webhook_url: "your_discord_webhook_url"
+```
+
+**Features:**
+- Markdown formatted messages
+- Visual distinction between critical and warning alerts
+- Detailed alert information with service and instance details
+- Resolved notifications
+
+**Setup:**
+1. Open Discord → Go to your channel
+2. Click channel settings (gear icon)
+3. Go to "Integrations" → "Webhooks"
+4. Click "New Webhook" or "Copy Webhook URL"
+5. Paste the URL in `config.yml`
+
+#### **Webhook**
+
+Generic HTTP endpoint for custom integrations.
+
+```yaml
+alertmanager:
+  default_webhook_port: 3001  # Your webhook receiver port
+```
+
+All alerts can be sent to your custom webhook receiver at `http://localhost:3001`.
+
+#### **Alert Routing**
+
+**Default routing behavior:**
+- **Critical alerts** → Sent to all configured channels (PagerDuty, Telegram, Discord, Webhook)
+- **Warning alerts** → Sent to Telegram, Discord, and Webhook
+
+You can configure any combination of notification channels. The system will:
+- Only send alerts to channels you've configured
+- Automatically validate your configuration
+- Show which channels are active when you start the monitoring stack
+
+**Example configurations:**
+
+```yaml
+# Option 1: PagerDuty for incidents, Telegram for all alerts
+pagerduty:
+  integration_key: "your_key"
+telegram:
+  bot_token: "your_token"
+  chat_id: "your_id"
+
+# Option 2: Discord only for team notifications
+discord:
+  webhook_url: "your_webhook"
+
+# Option 3: All channels for maximum coverage
+pagerduty:
+  integration_key: "your_key"
+telegram:
+  bot_token: "your_token"
+  chat_id: "your_id"
+discord:
+  webhook_url: "your_webhook"
+```
+
+Simply configure the channels you want, leave others empty, and the system handles the rest!
 
 ### **Configuration Processing**
 

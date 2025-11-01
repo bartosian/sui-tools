@@ -1379,10 +1379,22 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
     discord_webhook_url = config.get("discord", {}).get("webhook_url", "")
     webhook_port = config.get("alertmanager", {}).get("default_webhook_port", "3001")
 
+    # Validate and convert Telegram chat_id to integer if provided
+    telegram_chat_id_int = None
+    if telegram_chat_id:
+        try:
+            telegram_chat_id_int = int(str(telegram_chat_id).strip())
+        except (ValueError, AttributeError):
+            print(
+                f"WARNING: Invalid Telegram chat_id '{telegram_chat_id}'. Telegram notifications will be disabled.",
+                file=sys.stderr,
+            )
+            telegram_chat_id = ""
+
     # Check which notification services are configured
-    has_pagerduty = bool(pagerduty_key)
-    has_telegram = bool(telegram_bot_token and telegram_chat_id)
-    has_discord = bool(discord_webhook_url)
+    has_pagerduty = bool(pagerduty_key and pagerduty_key.strip())
+    has_telegram = bool(telegram_bot_token and telegram_bot_token.strip() and telegram_chat_id_int is not None)
+    has_discord = bool(discord_webhook_url and discord_webhook_url.strip())
 
     # Base alertmanager configuration
     alertmanager_config = {
@@ -1440,10 +1452,18 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
     if has_pagerduty:
         critical_receiver["pagerduty_configs"] = [
             {
-                "service_key": pagerduty_key,
+                "routing_key": pagerduty_key,
                 "send_resolved": True,
                 "description": "{{ .GroupLabels.alertname }} - {{ .CommonAnnotations.summary }}",
-                "severity": "{{ .CommonLabels.severity }}",
+                "details": {
+                    "severity": "{{ .CommonLabels.severity }}",
+                    "alertname": "{{ .GroupLabels.alertname }}",
+                    "service": "{{ .CommonLabels.service }}",
+                    "instance": "{{ .CommonLabels.instance }}",
+                    "summary": "{{ .CommonAnnotations.summary }}",
+                    "description": "{{ .CommonAnnotations.description }}",
+                },
+                "severity": "critical",
             }
         ]
 
@@ -1452,10 +1472,10 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
             {
                 "api_url": "https://api.telegram.org",
                 "bot_token": telegram_bot_token,
-                "chat_id": int(telegram_chat_id),
+                "chat_id": telegram_chat_id_int,
                 "send_resolved": True,
                 "parse_mode": "HTML",
-                "message": "<b>🚨 CRITICAL Alert</b>\n<b>Alert:</b> {{ .GroupLabels.alertname }}\n<b>Severity:</b> {{ .CommonLabels.severity }}\n<b>Summary:</b> {{ .CommonAnnotations.summary }}\n<b>Description:</b> {{ .CommonAnnotations.description }}",
+                "message": "<b>🚨 CRITICAL Alert</b>\n\n<b>Alert:</b> {{ .GroupLabels.alertname }}\n<b>Service:</b> {{ .CommonLabels.service }}\n<b>Instance:</b> {{ .CommonLabels.instance }}\n<b>Severity:</b> {{ .CommonLabels.severity }}\n\n<b>Summary:</b> {{ .CommonAnnotations.summary }}\n\n<b>Description:</b> {{ .CommonAnnotations.description }}",
             }
         ]
 
@@ -1464,8 +1484,8 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
             {
                 "webhook_url": discord_webhook_url,
                 "send_resolved": True,
-                "title": "🚨 {{ .GroupLabels.alertname }}",
-                "message": "**Severity:** {{ .CommonLabels.severity }}\n**Summary:** {{ .CommonAnnotations.summary }}\n**Description:** {{ .CommonAnnotations.description }}",
+                "title": "🚨 CRITICAL Alert: {{ .GroupLabels.alertname }}",
+                "message": "**Service:** {{ .CommonLabels.service }}\n**Instance:** {{ .CommonLabels.instance }}\n**Severity:** {{ .CommonLabels.severity }}\n\n**Summary:** {{ .CommonAnnotations.summary }}\n\n**Description:** {{ .CommonAnnotations.description }}",
             }
         ]
 
@@ -1482,10 +1502,10 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
             {
                 "api_url": "https://api.telegram.org",
                 "bot_token": telegram_bot_token,
-                "chat_id": int(telegram_chat_id),
+                "chat_id": telegram_chat_id_int,
                 "send_resolved": True,
                 "parse_mode": "HTML",
-                "message": "<b>⚠️ WARNING Alert</b>\n<b>Alert:</b> {{ .GroupLabels.alertname }}\n<b>Severity:</b> {{ .CommonLabels.severity }}\n<b>Summary:</b> {{ .CommonAnnotations.summary }}\n<b>Description:</b> {{ .CommonAnnotations.description }}",
+                "message": "<b>⚠️ WARNING Alert</b>\n\n<b>Alert:</b> {{ .GroupLabels.alertname }}\n<b>Service:</b> {{ .CommonLabels.service }}\n<b>Instance:</b> {{ .CommonLabels.instance }}\n<b>Severity:</b> {{ .CommonLabels.severity }}\n\n<b>Summary:</b> {{ .CommonAnnotations.summary }}\n\n<b>Description:</b> {{ .CommonAnnotations.description }}",
             }
         ]
 
@@ -1494,8 +1514,8 @@ def generate_alertmanager_config(config: Dict[str, Any], output_file: str) -> No
             {
                 "webhook_url": discord_webhook_url,
                 "send_resolved": True,
-                "title": "⚠️ {{ .GroupLabels.alertname }}",
-                "message": "**Severity:** {{ .CommonLabels.severity }}\n**Summary:** {{ .CommonAnnotations.summary }}\n**Description:** {{ .CommonAnnotations.description }}",
+                "title": "⚠️ WARNING Alert: {{ .GroupLabels.alertname }}",
+                "message": "**Service:** {{ .CommonLabels.service }}\n**Instance:** {{ .CommonLabels.instance }}\n**Severity:** {{ .CommonLabels.severity }}\n\n**Summary:** {{ .CommonAnnotations.summary }}\n\n**Description:** {{ .CommonAnnotations.description }}",
             }
         ]
 
